@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TogatherWithJpaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(TogatherWithJpaApplication.class, args);
+		SpringApplication.run(TogatherWithJpaApplication.class, args); 
 	}
 
 }
