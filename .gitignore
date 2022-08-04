@@ -35,3 +35,11 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### 부트스트랩 폴더 무시 ###
+assets/
+fonts/
+css/
+forms/
+img/
+table/
