@@ -1,0 +1,28 @@
+package team1.togather.security.auth;
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import team1.togather.domain.Member;
+import team1.togather.repository.MemberRepository;
+
+@Service
+@RequiredArgsConstructor
+public class PrincipalDetailsService implements UserDetailsService {
+
+    private final MemberRepository memberRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
+        Member findMember = memberRepository.findByPhone(phone);
+        if (findMember == null) {
+            throw new UsernameNotFoundException("UsernameNotFoundException");
+        }
+        if (findMember != null) {
+            return new PrincipalDetails(findMember);
+        }
+        return null;
+    }
+}

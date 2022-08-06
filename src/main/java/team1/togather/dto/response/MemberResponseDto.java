@@ -12,8 +12,6 @@ public class MemberResponseDto {
 
     private String email;
 
-    private String pwd;
-
     private String username;
 
     private String nickname;

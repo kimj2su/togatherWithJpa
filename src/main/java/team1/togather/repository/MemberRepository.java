@@ -7,4 +7,8 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Integer countByNickname(String nickname);
+
+    Member findByEmail(String email);
+
+    Member findByPhone(String phone);
 }

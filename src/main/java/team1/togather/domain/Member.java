@@ -3,13 +3,15 @@ package team1.togather.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
-@ToString
 @Table(indexes = {
         @Index(columnList = "email"),
-        @Index(columnList = "nickname",unique = true)
+        @Index(columnList = "nickname", unique = true),
+        @Index(columnList = "phone", unique = true)
 })
 @Entity
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -37,7 +39,17 @@ public class Member {
     private String category_second;
     private String category_third;
 
-    public Member(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third) {
+    private LocalDateTime createdDate;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+    @JoinTable(
+            name = "member_roles",
+            joinColumns = @JoinColumn(name = "member_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> memberRoles = new HashSet<>();
+
+    public Member(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
         this.email = email;
         this.pwd = pwd;
         this.username = username;
@@ -48,10 +60,12 @@ public class Member {
         this.category_first = category_first;
         this.category_second = category_second;
         this.category_third = category_third;
+        this.memberRoles = memberRoles;
+        this.createdDate = LocalDateTime.now();
     }
 
     public static Member of(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first,
-                            String category_second, String category_third) {
+                            String category_second, String category_third,Set<Role> memberRoles) {
         return new Member(
                 email,
                 pwd,
@@ -62,7 +76,9 @@ public class Member {
                 phone,
                 category_first,
                 category_second,
-                category_third
+                category_third,
+                memberRoles
         );
     }
+
 }

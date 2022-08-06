@@ -1,12 +1,14 @@
 package team1.togather.dto.request;
 
 import lombok.Data;
+import team1.togather.domain.Role;
 import team1.togather.dto.MemberDto;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Set;
 
 @Data
 public class MemberRequestDto {
@@ -36,6 +38,7 @@ public class MemberRequestDto {
     private final String category_first;
     private final String category_second;
     private final String category_third;
+    private final Set<Role> userRoles;
 
     public MemberDto toDto() {
         return MemberDto.of(

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="#header" th:replace="header :: header"></attr>
+    <attr sel="#footer" th:replace="footer :: footer"></attr>
+
+    <attr sel="#login-form" th:action="@{/login}" th:method="post">
+        <attr sel="#phone" th:name="phone" />
+        <attr sel="#pwd" th:name="pwd" />
+    </attr>
+</thlogic>

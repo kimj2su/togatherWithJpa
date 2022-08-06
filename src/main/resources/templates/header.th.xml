@@ -11,7 +11,7 @@
     <attr sel="#faq" sec:authorize="!isAuthenticated()" th:href="@{../faq/faqList}" />
     <attr sel="#qa" sec:authorize="!isAuthenticated()" th:href="@{/qa}" />
     <attr sel="#contact" sec:authorize="!isAuthenticated()" th:href="@{/contact}" />
-    <attr sel="#login" sec:authorize="!isAuthenticated()" th:href="@{../member/login.do}" />
+    <attr sel="#login" sec:authorize="!isAuthenticated()" th:href="@{/loginForm}" />
     <attr sel="#logout" sec:authorize="isAuthenticated()" th:href="@{/logout}" />
     <attr sel="#myPage" sec:authorize="isAuthenticated()" th:href="@{/myPage}" />
     <attr sel="#sign-up" sec:authorize="!isAuthenticated()" th:href="@{/members/new}" />
