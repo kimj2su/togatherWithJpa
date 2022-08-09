@@ -1,13 +1,10 @@
 package team1.togather.dto.request;
 
 import lombok.Data;
-import team1.togather.domain.Role;
+import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Set;
 
 @Data
@@ -33,6 +30,7 @@ public class MemberRequestDto {
     private final String gender;
 
     @NotBlank
+//    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$")
     private final String phone;
 
     private final String category_first;
