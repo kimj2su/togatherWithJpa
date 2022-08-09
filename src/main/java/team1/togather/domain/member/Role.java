@@ -1,11 +1,11 @@
-package team1.togather.domain;
+package team1.togather.domain.member;
 
 import lombok.*;
+import team1.togather.domain.member.Member;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.Set;
 
 @Entity

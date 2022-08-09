@@ -4,7 +4,7 @@
     <attr sel="#footer" th:replace="footer :: footer"></attr>
 
     <attr sel="#login-form" th:action="@{/login}" th:method="post">
-        <attr sel="#phone" th:name="phone" />
+        <attr sel="#email" th:name="email" />
         <attr sel="#pwd" th:name="pwd" />
     </attr>
 </thlogic>

@@ -1,4 +1,4 @@
-package team1.togather.domain;
+package team1.togather.domain.member;
 
 import lombok.*;
 
@@ -19,6 +19,7 @@ public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "member_id")
     private Long id;
 
     private String email;
@@ -35,13 +36,17 @@ public class Member {
 
     private String phone;
 
+    private String provider;
+
+    private String providerId;
+
     private String category_first;
     private String category_second;
     private String category_third;
 
     private LocalDateTime createdDate;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade={CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "member_roles",
             joinColumns = @JoinColumn(name = "member_id"),
@@ -81,4 +86,14 @@ public class Member {
         );
     }
 
+    @Builder(builderMethodName = "oauth2Builder")
+    public Member(String email, String username,
+                  Set<Role> memberRoles, String provider, String providerId) {
+        this.email = email;
+        this.username = username;
+        this.createdDate = LocalDateTime.now();
+        this.memberRoles = memberRoles;
+        this.provider = provider;
+        this.providerId = providerId;
+    }
 }

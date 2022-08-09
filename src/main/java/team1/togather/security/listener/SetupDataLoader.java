@@ -1,13 +1,12 @@
 package team1.togather.security.listener;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import team1.togather.domain.Role;
+import team1.togather.domain.member.Role;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
 

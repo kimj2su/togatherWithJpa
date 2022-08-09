@@ -13,9 +13,15 @@ spring:
         format_sql: true
   thymeleaf3:
     decoupled-logic: true
+  profiles:
+    include: oauth
 
 logging.level:
   org.hibernate.SQL: debug
   org.hibernate.type: trace
+
+file:
+  dir=C:/Users/kjs76/Desktop/jisu/file/:
+
 
 

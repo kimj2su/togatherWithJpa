@@ -43,3 +43,6 @@ css/
 forms/
 img/
 table/
+
+### oauth 개인정보 무시 ###
+application-oauth.yml
