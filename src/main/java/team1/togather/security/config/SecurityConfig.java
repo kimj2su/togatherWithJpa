@@ -5,24 +5,19 @@ import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import team1.togather.security.auth.PrincipalDetailsService;
-import team1.togather.security.provider.CustomAuthenticationProvider;
-
-import static org.springframework.security.config.Customizer.withDefaults;
+import team1.togather.security.auth.oauth2.PrincipalOauth2UserService;
 
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final PrincipalDetailsService principalDetailsService;
+//    private final PrincipalDetailsService principalDetailsService;
+    private final PrincipalOauth2UserService principalOauth2UserService;
 
 
     @Bean
@@ -38,20 +33,27 @@ public class SecurityConfig {
                         ).permitAll()
                         .mvcMatchers(
                                 HttpMethod.POST,
-                                "/members/*"
+                                "/members/*",
+                                "/login"
                         ).permitAll()
                         .anyRequest().permitAll()
                 )
                 .formLogin()
                 .loginPage("/loginForm")
-                .usernameParameter("phone")
+                .usernameParameter("email")
                 .passwordParameter("pwd")
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/")
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
-                .and();
+                .and()
+                .oauth2Login()
+                .loginPage("/loginForm")
+                .failureUrl("/loginForm")
+                .userInfoEndpoint()
+                .userService(principalOauth2UserService);
+
         return http.build();
     }
 

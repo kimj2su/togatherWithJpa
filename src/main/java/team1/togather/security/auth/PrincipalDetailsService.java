@@ -5,7 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import team1.togather.domain.Member;
+import team1.togather.domain.member.Member;
 import team1.togather.repository.MemberRepository;
 
 @Service
@@ -15,8 +15,8 @@ public class PrincipalDetailsService implements UserDetailsService {
     private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String phone) throws UsernameNotFoundException {
-        Member findMember = memberRepository.findByPhone(phone);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Member findMember = memberRepository.findByEmailAndProvider(email);
         if (findMember == null) {
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }

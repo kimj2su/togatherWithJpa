@@ -1,11 +1,9 @@
 package team1.togather.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import team1.togather.domain.Member;
-import team1.togather.domain.Role;
+import team1.togather.domain.member.Member;
+import team1.togather.domain.member.Role;
 
-import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -30,6 +28,10 @@ public class MemberDto {
     private String category_third;
     private Set<Role> memberRoles;
 
+    private String provider;
+
+    private String providerId;
+
     public MemberDto(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third) {
         this.email = email;
         this.pwd = pwd;
@@ -52,6 +54,17 @@ public class MemberDto {
                 email, pwd, username, nickname, birth, gender, phone,category_first, category_second, category_third, memberRoles
         );
     }
+
+    public Member oauth2toEntity() {
+        return Member.oauth2Builder()
+                .username(username)
+                .email(email)
+                .memberRoles(memberRoles)
+                .provider(provider)
+                .providerId(providerId)
+                .build();
+    }
+
 
     public void hasRoleMember(Set<Role> roles) {
         this.memberRoles = roles;
