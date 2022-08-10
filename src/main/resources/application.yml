@@ -1,3 +1,4 @@
+
 spring:
   datasource:
     url: jdbc:mysql://localhost:3307/togatherjpa
@@ -6,10 +7,10 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
-      ddl-auto: update #create update none
+      ddl-auto: create #create update none
     properties:
       hibernate:
-#        show_sql: true
+        show_sql: true
         format_sql: true
   thymeleaf3:
     decoupled-logic: true
@@ -18,10 +19,15 @@ spring:
 
 logging.level:
   org.hibernate.SQL: debug
-  org.hibernate.type: trace
+#  org.hibernate.type: trace
 
 file:
-  dir=C:/Users/kjs76/Desktop/jisu/file/:
+  dir: C:/Users/kjs76/Desktop/jisu/file/
+
+
+
+
+
 
 
 
