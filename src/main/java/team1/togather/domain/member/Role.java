@@ -12,7 +12,6 @@ import java.util.Set;
 @Table(name = "ROLE")
 @Getter
 @Setter
-@ToString(exclude = {"users"})
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
