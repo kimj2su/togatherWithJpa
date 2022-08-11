@@ -34,12 +34,13 @@ public class GroupTab extends AuditingFields {
 
     private int memberLimit;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_upload_file_id")
     private GroupUploadFile groupUploadFile;
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
 
     public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
         this.groupLocation = groupLocation;

@@ -32,6 +32,21 @@ public class GroupTabRequestDto {
 
     private UploadFile uploadFile;
 
+    public GroupTabRequestDto() {
+    }
+
+    public GroupTabRequestDto(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, MultipartFile attachFile) {
+        this.groupLocation = groupLocation;
+        this.groupName = groupName;
+        this.groupIntro = groupIntro;
+        this.interest = interest;
+        this.memberLimit = memberLimit;
+        this.attachFile = attachFile;
+    }
+
+    public static GroupTabRequestDto of(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, MultipartFile attachFile) {
+        return new GroupTabRequestDto(groupLocation, groupName, groupIntro, interest, memberLimit, attachFile);
+    }
 
     public GroupTabDto toDto(Long member_id) {
         return GroupTabDto.of(
