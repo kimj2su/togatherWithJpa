@@ -26,7 +26,7 @@ public class GroupTabService {
     public Page<GroupTabDto> indexGroupTabs(Pageable pageable) {
        return groupTabRepository.findAll(pageable).map(GroupTabDto::from);
     }
-    
+
     @Transactional
     public void saveGroupTab(GroupTabDto dto) {
         Member member = memberRepository.getReferenceById(dto.getMember_id());

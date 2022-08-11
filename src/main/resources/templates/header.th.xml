@@ -15,5 +15,5 @@
     <attr sel="#logout" sec:authorize="isAuthenticated()" th:href="@{/logout}" />
     <attr sel="#myPage" sec:authorize="isAuthenticated()" th:href="@{/myPage}" />
     <attr sel="#sign-up" sec:authorize="!isAuthenticated()" th:href="@{/members/new}" />
-    <attr sel="#newGroup" sec:authorize="isAuthenticated()" th:href="@{/newGroup}" />
+    <attr sel="#groupTabs_new" sec:authorize="isAuthenticated()" th:href="@{/groupTabs/new}" />
 </thlogic>
