@@ -5,10 +5,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import team1.togather.domain.member.Member;
+import team1.togather.dto.MemberDto;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Optional;
 
 @Data
 public class PrincipalDetails implements UserDetails, OAuth2User {
@@ -24,6 +26,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.member = member;
         this.attributes = attributes;
     }
+
 
 
     @Override
@@ -77,5 +80,29 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     @Override
     public String getName() {
         return  (String) attributes.get("sub");
+    }
+
+    public MemberDto toDto(Member member) {
+        return MemberDto.of(
+                member.getEmail(),
+                member.getPwd(),
+                member.getUsername(),
+                member.getNickname(),
+                member.getBirth(),
+                member.getGender(),
+                member.getPhone(),
+                member.getCategory_first(),
+                member.getCategory_second(),
+                member.getCategory_third()
+        );
+    }
+
+    public static PrincipalDetails of(Member member) {
+        return new PrincipalDetails(member);
+    }
+    public static PrincipalDetails from(MemberDto memberDto) {
+        return PrincipalDetails.of(
+                memberDto.toEntity()
+        );
     }
 }

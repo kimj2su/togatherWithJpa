@@ -32,6 +32,8 @@ public class MemberDto {
 
     private String providerId;
 
+    private Long member_id;
+
     public MemberDto(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third) {
         this.email = email;
         this.pwd = pwd;
@@ -45,8 +47,37 @@ public class MemberDto {
         this.category_third = category_third;
     }
 
+    public MemberDto(String nickname, String birth, String gender, String category_first, String category_second, String category_third, Long member_id) {
+        this.nickname = nickname;
+        this.birth = birth;
+        this.gender = gender;
+        this.category_first = category_first;
+        this.category_second = category_second;
+        this.category_third = category_third;
+        this.member_id = member_id;
+    }
+
+    public static MemberDto of(String nickname, String birth, String gender, String category_first, String category_second, String category_third, Long member_id) {
+        return new MemberDto(nickname, birth, gender, category_first, category_second, category_third, member_id);
+    }
+
     public static MemberDto of(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third) {
         return new MemberDto(email, pwd, username, nickname, birth, gender, phone, category_first, category_second, category_third);
+    }
+
+    public static MemberDto from(Member entity) {
+        return new MemberDto(
+                entity.getEmail(),
+                entity.getPwd(),
+                entity.getUsername(),
+                entity.getNickname(),
+                entity.getBirth(),
+                entity.getGender(),
+                entity.getPhone(),
+                entity.getCategory_first(),
+                entity.getCategory_second(),
+                entity.getCategory_third()
+        );
     }
 
     public Member toEntity() {

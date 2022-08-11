@@ -5,12 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -41,5 +43,18 @@ public class MemberService {
     public Role findUserRole() {
         Role userRole = roleRepository.findByRoleName("ROLE_USER");
         return userRole;
+    }
+
+    @Transactional
+    public void saveOauth2Member(MemberDto toDto) {
+        Member member = memberRepository.getReferenceById(toDto.getMember_id());
+        member.oauth2Member(
+                toDto.getNickname(),
+                toDto.getBirth(),
+                toDto.getGender(),
+                toDto.getCategory_first(),
+                toDto.getCategory_second(),
+                toDto.getCategory_third()
+        );
     }
 }

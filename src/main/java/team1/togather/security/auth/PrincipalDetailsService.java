@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import team1.togather.domain.member.Member;
 import team1.togather.repository.MemberRepository;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class PrincipalDetailsService implements UserDetailsService {
@@ -16,12 +18,13 @@ public class PrincipalDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Member findMember = memberRepository.findByEmailAndProvider(email);
-        if (findMember == null) {
+        Optional<Member> findMember = memberRepository.findByEmailAndProvider(email);
+        if (findMember.isEmpty()) {
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }
         if (findMember != null) {
-            return new PrincipalDetails(findMember);
+            return new PrincipalDetails(findMember.get());
+
         }
         return null;
     }
