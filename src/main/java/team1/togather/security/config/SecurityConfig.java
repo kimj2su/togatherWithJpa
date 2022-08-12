@@ -4,18 +4,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import team1.togather.dto.MemberDto;
-import team1.togather.repository.MemberRepository;
-import team1.togather.security.auth.PrincipalDetails;
-import team1.togather.security.auth.PrincipalDetailsService;
 import team1.togather.security.auth.oauth2.PrincipalOauth2UserService;
 import team1.togather.security.handler.FormCustomAuthenticationSuccessHandler;
 
@@ -46,11 +39,11 @@ public class SecurityConfig {
                         ).permitAll()
                         .mvcMatchers(
                                 HttpMethod.GET,
-                                "/groupTabs/*"
+                                "/groupTabs/**"
                         ).authenticated()
                         .mvcMatchers(
                                 HttpMethod.POST,
-                                "/groupTabs/*"
+                                "/groupTabs/**"
                         ).authenticated()
                         .anyRequest().permitAll()
                 )
@@ -81,3 +74,4 @@ public class SecurityConfig {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 }
+//todo : 이해도가 낮아 필터등록말고 WebSecurityConfigurerAdapter로 다시 설계해야 될 것 같다.
