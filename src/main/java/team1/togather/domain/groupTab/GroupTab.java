@@ -1,4 +1,4 @@
-package team1.togather.domain.group;
+package team1.togather.domain.groupTab;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -37,9 +37,11 @@ public class GroupTab extends AuditingFields {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_upload_file_id")
     private GroupUploadFile groupUploadFile;
-    @ManyToOne(fetch = LAZY)
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    private String userId;
 
 
     public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
@@ -50,6 +52,7 @@ public class GroupTab extends AuditingFields {
         this.memberLimit = memberLimit;
         this.groupUploadFile = groupUploadFile;
         this.member = member;
+        this.userId = member.getUserId();
     }
 
     public static GroupTab of(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {

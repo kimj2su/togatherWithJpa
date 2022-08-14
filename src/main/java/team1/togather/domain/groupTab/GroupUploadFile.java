@@ -1,4 +1,4 @@
-package team1.togather.domain.group;
+package team1.togather.domain.groupTab;
 
 import lombok.AccessLevel;
 import lombok.Getter;

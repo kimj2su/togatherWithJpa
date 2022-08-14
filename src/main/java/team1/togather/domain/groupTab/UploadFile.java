@@ -1,9 +1,8 @@
-package team1.togather.domain.group;
+package team1.togather.domain.groupTab;
 
 import lombok.Data;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 
 @Embeddable //jpa의 내장 타입, 어딘가에 내장 될 수 있다.
 @Data
