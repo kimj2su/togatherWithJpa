@@ -4,7 +4,6 @@ import lombok.Data;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -15,7 +14,7 @@ public class MemberOauth2RequestDto {
 
     @Size(min = 2, max = 6)
     @NotBlank
-    private final String nickname;
+    private final String userId;
 
     @NotEmpty
     private final String birth;
@@ -29,7 +28,7 @@ public class MemberOauth2RequestDto {
 
     public MemberDto toDto(Long member_id) {
         return MemberDto.of(
-                this.nickname,
+                this.userId,
                 this.birth,
                 this.gender,
                 this.category_first,

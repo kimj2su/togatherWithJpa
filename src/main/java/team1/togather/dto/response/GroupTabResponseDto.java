@@ -1,12 +1,8 @@
 package team1.togather.dto.response;
 
 import lombok.Data;
-import org.springframework.web.multipart.MultipartFile;
-import team1.togather.domain.group.UploadFile;
+import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.GroupTabDto;
-
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 @Data
 public class GroupTabResponseDto {
@@ -17,7 +13,7 @@ public class GroupTabResponseDto {
     private final String interest;
     private final int memberLimit;
     private final UploadFile uploadFile;
-    private final String createBy;
+    private final String userId;
 
     public static GroupTabResponseDto from(GroupTabDto dto) {
         return new GroupTabResponseDto(
@@ -27,7 +23,7 @@ public class GroupTabResponseDto {
                 dto.getInterest(),
                 dto.getMemberLimit(),
                 dto.getUploadFile(),
-                dto.getCreatedBy()
+                dto.getUserId()
         );
     }
 }

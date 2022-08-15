@@ -9,19 +9,17 @@ import java.util.Set;
 @Data
 public class MemberDto {
 
-    private String email;
-
-    private String pwd;
-
     private String username;
 
-    private String nickname;
+    private String userId;
+
+    private String password;
+
+    private String email;
 
     private String birth;
 
     private String gender;
-
-    private String phone;
 
     private String category_first;
     private String category_second;
@@ -34,21 +32,20 @@ public class MemberDto {
 
     private Long member_id;
 
-    public MemberDto(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third) {
-        this.email = email;
-        this.pwd = pwd;
+    public MemberDto(String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third) {
         this.username = username;
-        this.nickname = nickname;
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
         this.birth = birth;
         this.gender = gender;
-        this.phone = phone;
         this.category_first = category_first;
         this.category_second = category_second;
         this.category_third = category_third;
     }
 
-    public MemberDto(String nickname, String birth, String gender, String category_first, String category_second, String category_third, Long member_id) {
-        this.nickname = nickname;
+    public MemberDto(String userId, String birth, String gender, String category_first, String category_second, String category_third, Long member_id) {
+        this.userId = userId;
         this.birth = birth;
         this.gender = gender;
         this.category_first = category_first;
@@ -61,19 +58,18 @@ public class MemberDto {
         return new MemberDto(nickname, birth, gender, category_first, category_second, category_third, member_id);
     }
 
-    public static MemberDto of(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third) {
-        return new MemberDto(email, pwd, username, nickname, birth, gender, phone, category_first, category_second, category_third);
+    public static MemberDto of(String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third) {
+        return new MemberDto(username, userId, password, email, birth, gender, category_first, category_second, category_third);
     }
 
     public static MemberDto from(Member entity) {
         return new MemberDto(
-                entity.getEmail(),
-                entity.getPwd(),
                 entity.getUsername(),
-                entity.getNickname(),
+                entity.getUserId(),
+                entity.getPassword(),
+                entity.getEmail(),
                 entity.getBirth(),
                 entity.getGender(),
-                entity.getPhone(),
                 entity.getCategory_first(),
                 entity.getCategory_second(),
                 entity.getCategory_third()
@@ -82,7 +78,7 @@ public class MemberDto {
 
     public Member toEntity() {
         return Member.of(
-                email, pwd, username, nickname, birth, gender, phone,category_first, category_second, category_third, memberRoles
+                username, userId, password, email, birth, gender,category_first, category_second, category_third, memberRoles
         );
     }
 
@@ -102,7 +98,7 @@ public class MemberDto {
     }
 
     public void encodingPassword(String pwd) {
-        this.pwd = pwd;
+        this.password = password;
     }
 
 }

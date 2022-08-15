@@ -2,11 +2,8 @@ package team1.togather.dto.request;
 
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
-import team1.togather.domain.group.GroupUploadFile;
-import team1.togather.domain.group.UploadFile;
-import team1.togather.domain.member.Member;
+import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.GroupTabDto;
-import team1.togather.dto.MemberDto;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -48,7 +45,7 @@ public class GroupTabRequestDto {
         return new GroupTabRequestDto(groupLocation, groupName, groupIntro, interest, memberLimit, attachFile);
     }
 
-    public GroupTabDto toDto(Long member_id) {
+    public GroupTabDto toDto(Long member_id, String userId) {
         return GroupTabDto.of(
                 this.groupLocation,
                 this.groupName,
@@ -56,7 +53,8 @@ public class GroupTabRequestDto {
                 this.interest,
                 this.memberLimit,
                 this.uploadFile,
-                member_id
+                member_id,
+                userId
         );
     }
 }

@@ -1,23 +1,20 @@
 package team1.togather.domain.member;
 
 import lombok.*;
-import org.springframework.security.core.GrantedAuthority;
-import team1.togather.domain.member.Member;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
 @Table(name = "ROLE")
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(of = "id")
 public class Role{
 
     @Id
@@ -38,4 +35,22 @@ public class Role{
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "memberRoles")
     private Set<Member> members = new HashSet<>();
 
+    @Builder
+    public Role(String roleName, String roleDesc) {
+        this.roleName = roleName;
+        this.roleDesc = roleDesc;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Role role = (Role) o;
+        return id != null && Objects.equals(id, role.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

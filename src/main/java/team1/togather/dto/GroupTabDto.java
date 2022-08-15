@@ -1,9 +1,9 @@
 package team1.togather.dto;
 
 import lombok.Data;
-import team1.togather.domain.group.GroupTab;
-import team1.togather.domain.group.GroupUploadFile;
-import team1.togather.domain.group.UploadFile;
+import team1.togather.domain.groupTab.GroupTab;
+import team1.togather.domain.groupTab.GroupUploadFile;
+import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.member.Member;
 
 import java.time.LocalDateTime;
@@ -29,6 +29,8 @@ public class GroupTabDto {
     private final LocalDateTime modifiedAt;
     private final String modifiedBy;
 
+    private final String userId;
+
 
     private GroupUploadFile groupUploadFile;
 
@@ -38,7 +40,7 @@ public class GroupTabDto {
     public static GroupTabDto of(String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 Long member_id) {
+                                 Long member_id, String userId) {
         return new GroupTabDto(
                 groupLocation,
                 groupName,
@@ -50,14 +52,15 @@ public class GroupTabDto {
                 null,
                 null,
                 null,
-                null
+                null,
+                userId
         );
     }
 
     public static GroupTabDto of(String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 Long member_id, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+                                 Long member_id, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String userId) {
         return new GroupTabDto(
                 groupLocation,
                 groupName,
@@ -69,7 +72,8 @@ public class GroupTabDto {
                 createdAt,
                 createdBy,
                 modifiedAt,
-                modifiedBy
+                modifiedBy,
+                userId
         );
     }
 
@@ -85,7 +89,8 @@ public class GroupTabDto {
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
-                entity.getModifiedBy()
+                entity.getModifiedBy(),
+                entity.getUserId()
         );
     }
 
