@@ -7,12 +7,18 @@ import team1.togather.domain.member.Member;
 import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
-    Integer countByNickname(String nickname);
+    Integer countByUserId(String userId);
 
-    @Query("select m from Member m where m.email= :email and m.provider is null")
-    Optional<Member> findByEmailAndProvider(String email);
-
-    Member findByPhone(String phone);
+    @Query("select m from Member m inner join fetch m.memberRoles where m.email= :email and m.provider is null")
+    Member findByEmailAndProvider(String email);
 
     Member findByUsername(String username);
+
+    @Query("select count(m) from Member m where m.userId= :userId and m.provider is null")
+    int countByUserIdAndProviderIsNull(String userId);
+
+//    Member findByUserId(String userId);
+
+
+    Optional<Member> findByUserId(String userId);
 }

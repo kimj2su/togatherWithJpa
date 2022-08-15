@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Data
 public class GroupTabDto {
-
+    private final Long id;
     private final String groupLocation;
 
     private final String groupName;
@@ -23,14 +23,12 @@ public class GroupTabDto {
 
     private final UploadFile uploadFile;
 
-    private final Long member_id;
+    private final MemberDto memberDto;
+
     private final LocalDateTime createdAt;
     private final String createdBy;
     private final LocalDateTime modifiedAt;
     private final String modifiedBy;
-
-    private final String userId;
-
 
     private GroupUploadFile groupUploadFile;
 
@@ -40,57 +38,57 @@ public class GroupTabDto {
     public static GroupTabDto of(String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 Long member_id, String userId) {
+                                 MemberDto memberDto) {
         return new GroupTabDto(
+                null,
                 groupLocation,
                 groupName,
                 groupIntro,
                 interest,
                 memberLimit,
                 uploadFile,
-                member_id,
+                memberDto,
                 null,
                 null,
                 null,
-                null,
-                userId
+                null
         );
     }
 
-    public static GroupTabDto of(String groupLocation, String groupName,
+    public static GroupTabDto of(Long id, String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 Long member_id, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String userId) {
+                                 MemberDto memberDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String userId) {
         return new GroupTabDto(
+                id,
                 groupLocation,
                 groupName,
                 groupIntro,
                 interest,
                 memberLimit,
                 uploadFile,
-                member_id,
+                memberDto,
                 createdAt,
                 createdBy,
                 modifiedAt,
-                modifiedBy,
-                userId
+                modifiedBy
         );
     }
 
     public static GroupTabDto from(GroupTab entity) {
         return new GroupTabDto(
+                entity.getId(),
                 entity.getGroupLocation(),
                 entity.getGroupName(),
                 entity.getGroupIntro(),
                 entity.getInterest(),
                 entity.getMemberLimit(),
                 entity.getGroupUploadFile().getAttachFile(),
-                entity.getMember().getId(),
+                MemberDto.from(entity.getMember()),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
-                entity.getModifiedBy(),
-                entity.getUserId()
+                entity.getModifiedBy()
         );
     }
 

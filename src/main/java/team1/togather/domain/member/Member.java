@@ -58,11 +58,11 @@ public class Member implements Serializable {
     }
 
     @Builder
-    public Member(String email, String password, String username, String userId, String birth, String gender, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
-        this.email = email;
-        this.password = password;
+    public Member(String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
         this.username = username;
         this.userId = userId;
+        this.email = email;
+        this.password = password;
         this.birth = birth;
         this.gender = gender;
         this.category_first = category_first;
@@ -72,13 +72,13 @@ public class Member implements Serializable {
         this.createdDate = LocalDateTime.now();
     }
 
-    public static Member of(String email, String password, String username, String userId, String birth, String gender, String category_first,
+    public static Member of(String username, String userId, String password, String email,  String birth, String gender, String category_first,
                             String category_second, String category_third, Set<Role> memberRoles) {
         return new Member(
-                email,
-                password,
                 username,
                 userId,
+                password,
+                email,
                 birth,
                 gender,
                 category_first,

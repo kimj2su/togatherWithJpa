@@ -6,7 +6,7 @@ import team1.togather.dto.GroupTabDto;
 
 @Data
 public class GroupTabResponseDto {
-
+    private final Long id;
     private final String groupLocation;
     private final String groupName;
     private final String groupIntro;
@@ -17,13 +17,14 @@ public class GroupTabResponseDto {
 
     public static GroupTabResponseDto from(GroupTabDto dto) {
         return new GroupTabResponseDto(
+                dto.getId(),
                 dto.getGroupLocation(),
                 dto.getGroupName(),
                 dto.getGroupIntro(),
                 dto.getInterest(),
                 dto.getMemberLimit(),
                 dto.getUploadFile(),
-                dto.getUserId()
+                dto.getMemberDto().getUserId()
         );
     }
 }

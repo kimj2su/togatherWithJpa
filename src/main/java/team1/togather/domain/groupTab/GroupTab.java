@@ -66,4 +66,24 @@ public class GroupTab extends AuditingFields {
             member
         );
     }
+
+    public void modifyGroupTabName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public void modifyGroupTabLocation(String groupLocation) {
+        this.groupLocation = groupLocation;
+    }
+
+    public void modifyGroupTabIntro(String groupIntro) {
+        this.groupIntro = groupIntro;
+    }
+
+    public void modifyGroupTabMemberLimit(int memberLimit) {
+        this.memberLimit = memberLimit;
+    }
+
+    public void modifyGroupTabUploadFile(GroupUploadFile groupUploadFile) {
+        this.groupUploadFile = groupUploadFile;
+    }
 }
