@@ -66,7 +66,7 @@
                                 <!-- col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1 -->
                                 <div style="width:auto">
                                     <!--모임지역/이름/모임소개/관심사/정원/모임사진-->
-                                    <form id="groupTab_form" name="f" class="mx-1 mx-md-4" enctype="multipart/form-data">
+                                    <form id="groupTab_form" class="mx-1 mx-md-4" enctype="multipart/form-data">
                                         <div class="d-flex flex-row align-items-center mb-0">
                                             <i class="bi bi-map fa-lg me-3 fa-fw"></i>
                                             <div class="form-outline flex-fill mb-2">
@@ -203,6 +203,9 @@
                                                         class="form-control"
                                                         name="attachFile"
                                                         required/>
+                                                <div id="attachFileError" class="field-error">
+                                                    모임 대표 사진 오류
+                                                </div>
                                             </div>
                                         </div>
 

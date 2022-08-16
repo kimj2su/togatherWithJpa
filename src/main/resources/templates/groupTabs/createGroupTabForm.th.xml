@@ -14,5 +14,6 @@
         <attr sel="#groupNameError" th:errors="*{groupName}"/>
         <attr sel="#groupIntroError" th:errors="*{groupIntro}"/>
         <attr sel="#memberLimitError" th:errors="*{memberLimit}"/>
+        <attr sel="#attachFileError" th:errors="*{attachFile}"/>
     </attr>
 </thlogic>

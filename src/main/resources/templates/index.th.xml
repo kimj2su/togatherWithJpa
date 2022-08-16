@@ -6,10 +6,10 @@
     <attr sel="#eachDiv" th:each="groupTabs : ${groupTabs}">
         <attr sel="#interest" th:text="${groupTabs.interest}"> </attr>
         <attr sel="#memberLimit" th:text="${groupTabs.memberLimit}"> </attr>
-        <attr sel="#groupName" th:text="${groupTabs.groupName}"> </attr>
+        <attr sel="#groupName" th:text="${groupTabs.groupName}" th:href="@{'/groupTabs/' + ${groupTabs.id}}"> </attr>
         <attr sel="#groupIntro" th:text="${groupTabs.groupIntro}"> </attr>
         <attr sel="#groupLocation" th:text="${groupTabs.groupLocation}"> </attr>
-        <attr sel="#createBy" th:text="${groupTabs.createBy}"> </attr>
+        <attr sel="#userId" th:text="${groupTabs.userId}"> </attr>
         <attr sel="#groupImages" th:each="imageFile : ${groupTabs.uploadFile}" th:src="|/images/${imageFile.getStoreFileName()}|"> </attr>
     </attr>
 

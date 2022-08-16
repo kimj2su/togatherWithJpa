@@ -4,19 +4,17 @@
     <attr sel="#footer" th:replace="footer :: footer"></attr>
 
     <attr sel="#create-member-form" th:object="${member}" th:action="@{/members/new}" th:method="post">
-        <attr sel="#email" th:name="email" th:field="*{email}" th:errorclass="field-error" />
-        <attr sel="#pwd" th:name="pwd" />
         <attr sel="#username" th:name="username" th:field="*{username}" th:errorclass="field-error"/>
-        <attr sel="#nickname" th:name="nickname" th:field="*{nickname}" th:errorclass="field-error"/>
+        <attr sel="#userId" th:name="userId" th:field="*{userId}" th:errorclass="field-error"/>
+        <attr sel="#password" th:name="password" />
+        <attr sel="#email" th:name="email" th:field="*{email}" th:errorclass="field-error" />
         <attr sel="#birth" th:name="birth" th:field="*{birth}" th:errorclass="field-error"/>
         <attr sel="#gender" th:value="*{gender}" th:name="gender" th:errorclass="field-error"/>
-        <attr sel="#phone" th:name="phone" th:field="*{phone}" th:errorclass="field-error"/>
 
-        <attr sel="#emailError"  th:errors="*{email}"/>
         <attr sel="#usernameError" th:errors="*{username}"/>
-        <attr sel="#nicknameError" th:errors="*{nickname}"/>
+        <attr sel="#userIdError" th:errors="*{userId}"/>
+        <attr sel="#emailError"  th:errors="*{email}"/>
         <attr sel="#birthError" th:errors="*{birth}"/>
         <attr sel="#genderError" th:errors="*{gender}"/>
-        <attr sel="#phoneError" th:errors="*{phone}"/>
     </attr>
 </thlogic>

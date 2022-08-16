@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Togather</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <!-- Favicons -->
+    <link href="/assets/img/favicon.png" rel="icon" />
+    <link href="/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <!-- Google Fonts -->
+    <link
+            href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+            rel="stylesheet"
+    />
+
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/animate.css/animate.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+            href="/assets/vendor/bootstrap/css/bootstrap.min.css"
+            rel="stylesheet"
+    />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <link
+            href="/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+            rel="stylesheet"
+    />
+    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <!-- video용 css 04.06 대현 추가-->
+    <link href="/assets/css/video.css" rel="stylesheet" />
+    <script src="/assets/js/video.js" defer></script>
+    <script src="/assets/js/splitting.js"></script>
+    <script src="/assets/js/trim.js"></script>
+    <script src="/assets/js/typed.js"></script>
+    <!-- video용 css 끝 -->
+
+    <!-- Template Main CSS File -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
+    <!-- alert  -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <!-- jquery -->
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+<!-- ======= Header ======= -->
+<header id="header">
+    헤더 삽입부
+    <hr>
+</header>
+<!-- End Header -->
+
+<main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs" data-aos="fade-in">
+        <div class="container">
+            <h1>${groupInfo.gname}</h1>
+            <p>${groupInfo.rdate }</p>
+        </div>
+    </div>
+    <!-- End Breadcrumbs -->
+
+    <!-- ======= Cource Details Section ======= -->
+    <section id="course-details" class="course-details">
+        <div class="container" data-aos="fade-up">
+            <!-- 채팅버튼 위치 잡기위한 div (0415 대현추가)-->
+            <div style="position: relative">
+                <ul class="nav nav-tabs mb-3">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">정보</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:galleryCheck()">사진첩</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="javascript:groupMembercheck()">게시판</a>
+                    </li>
+
+                    <button class="btn btn-outline-dark" style="position: absolute; left: 93%" onclick="javascript:groupChat()">채팅하기</button>
+
+                </ul>
+            </div>
+            <div class="row">
+                <div class="col-lg-8">
+                    <img src="/assets/img/groupImages/${groupInfo.fname}"
+                         width="856px"
+                         height="383px"
+                         alt=""/>
+                    <h3>${groupInfo.gname}</h3>
+                    <p>
+                        ${groupInfo.gintro}
+                    </p>
+                </div>
+                <div class="col-lg-4">
+                    <div class="course-info d-flex justify-content-between align-items-center">
+                        <h5>모임장</h5>
+                        <p><a href="#">${groupMemberName.mname }</a></p>
+                    </div>
+
+                    <div class="course-info d-flex justify-content-between align-items-center">
+                        <h5>지역</h5>
+                        <p>${groupInfo.gloc}</p>
+                    </div>
+
+                    <div class="course-info d-flex justify-content-between align-items-center"\>
+                        <h5>관심사</h5>
+                        <p>${groupInfo.interest}</p>
+                    </div>
+
+                    <div class="course-info d-flex justify-content-between align-items-center">
+                        <h5>정원</h5>
+                        <p>${groupMemberCount}/${groupInfo.limit}</p>
+                    </div>
+                    <!-- 정모목록 부분-->
+<!--                    <c:if test="${memInGroupCheck ne null || m.athur eq 0 || m.athur eq 1}">-->
+                        <div class="accordion acoordion-flush" id="accordionExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" id="headingOne">
+                                    <button
+                                            class="accordion-button collapsed"
+                                            type="button"
+                                            data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne"
+                                            aria-expanded="true"
+                                            aria-controls="collapseOne">정모목록(${gatheringCountInGroup}/5)
+                                    </button>
+                                </h2>
+                                <div
+                                        id="collapseOne"
+                                        class="accordion-collapse collapse"
+                                        aria-labelledby="headingOne"
+                                        data-bs-parent="#accordionExample">
+<!--                                    <c:forEach items="${gatheringList}" var="gathering">-->
+                                        <div class="accordion-body">
+                                            <a href="../gathering/gatheringInfo.do?ga_seq=${gathering.ga_seq}&mnum=${m.mnum}">${gathering.ga_name}</a>
+                                        </div>
+<!--                                    </c:forEach>-->
+                                </div>
+                            </div>
+                        </div>
+<!--                    </c:if>-->
+                    <!--정모목록 끝-->
+                    <div class="d-grid gap-2 mt-3 mb-3">
+<!--                        <c:if test="${memInGroupCheck ne null || m.athur eq 0 || m.athur eq 1}">-->
+                            <button
+                                    type="button"
+                                    class="btn btn-outline-success"
+                                    onclick="location.href='javascript:gatheringCreateCheck()'">
+                                정모만들기
+                            </button>
+<!--                        </c:if>-->
+                        <button type="button" class="btn btn-outline-secondary"
+                                onclick="location.href='javascript:groupUpdateCheck()'">
+                            모임 수정하기
+                        </button>
+                        <button type="button" class="btn btn-outline-danger"
+                                onclick="location.href='javascript:groupDeleteCheck()'">
+                            모임 삭제하기
+                        </button>
+<!--                        <c:choose>-->
+<!--                            <c:when test="${memInGroupCheck eq null}">-->
+                                <button type="button" class="btn btn-outline-primary"
+                                        onclick="location.href='javascript:groupJoin()'">
+                                    모임 가입하기
+                                </button>
+<!--                            </c:when>-->
+<!--                            <c:otherwise>-->
+                                <button type="button" class="btn btn-outline-dark"
+                                        onclick="location.href='javascript:groupQuit()'">
+                                    모임 탈퇴하기
+                                </button>
+<!--                            </c:otherwise>-->
+<!--                        </c:choose>-->
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+    <!-- End Cource Details Section -->
+
+    <!-- ======= Cource Details Tabs Section ======= -->
+    <section id="cource-details-tabs" class="cource-details-tabs">
+        <div class="container" data-aos="fade-up">
+            <div class="row">
+                <div class="col-lg-3">
+                    <ul class="nav nav-tabs flex-column">
+<!--                        <c:forEach var='memInGroupName' items='${memInGroupName}' varStatus="index">-->
+<!--                            <c:choose>-->
+<!--                                <c:when test="${memInGroupName.GRADE eq 0}">-->
+<!--                                    <c:set var="grade" value="모임장"/>-->
+<!--                                </c:when>-->
+<!--                                <c:when test="${memInGroupName.GRADE eq 1}">-->
+<!--                                    <c:set var="grade" value="운영진"/>-->
+<!--                                </c:when>-->
+<!--                                <c:otherwise>-->
+<!--                                    <c:set var="grade" value=""/>-->
+<!--                                </c:otherwise>-->
+<!--                            </c:choose>-->
+<!--                            <li class='nav-item'>-->
+<!--                                <a class='nav-link' data-bs-toggle='tab' href="javascript:void(0);" onclick="memberInfo(${index.index});">${memInGroupName.MNAME}&nbsp;&nbsp;&nbsp;${grade}</a>-->
+<!--                            </li>-->
+<!--                        </c:forEach>-->
+                    </ul>
+                </div>
+                <div class="col-lg-9 mt-4 mt-lg-0" id="memInfo">
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="tab-1">
+                            <div class="row">
+                                <div class="col-lg-8 details order-2 order-lg-1">
+                                    <h3>멤버정보</h3>
+                                    <p> 이름: ${memberInfo.mname}</p>
+                                    <p> 생년월일: ${memberInfo.birth} </p>
+                                    <p> 거주지: ${memberInfo.maddr} </p>
+                                </div>
+                                <div class="col-lg-4 text-center order-1 order-lg-2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Cource Details Tabs Section -->
+</main>
+<!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<footer id="footer">
+    <hr>
+    푸터 삽입부
+</footer>
+<!-- End Footer -->
+
+<div id="preloader"></div>
+<a
+        href="#"
+        class="back-to-top d-flex align-items-center justify-content-center"
+><i class="bi bi-arrow-up-short"></i
+></a>
+
+<!-- Vendor JS Files -->
+<script src="/assets/vendor/purecounter/purecounter.js"></script>
+<script src="/assets/vendor/aos/aos.js"></script>
+<script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="/assets/vendor/php-email-form/validate.js"></script>
+
+<!-- Template Main JS File -->
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
