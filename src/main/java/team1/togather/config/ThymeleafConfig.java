@@ -8,7 +8,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 
-
+/**
+ * 디커플링 로직을 사용하기 위해 등록하였다.
+ * application.yml
+ * thymeleaf3:
+ *     decoupled-logic: true
+ * 으로 사용함.
+ * 사용 이유 => 기본 html 파일 위의 파일이름.th.xml로 디자인된 코드 위에 바로 작업 할 수 있다.
+ */
 @Configuration
 public class ThymeleafConfig {
 

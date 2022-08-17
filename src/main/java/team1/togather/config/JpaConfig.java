@@ -12,6 +12,10 @@ import team1.togather.security.auth.PrincipalDetails;
 
 import java.util.Optional;
 
+
+/**
+ * AuditingFields의 들어가는 By컬럼에 시큐리티 인증객체에서 꺼내와 제가 정의한 PrincipalDetails의 getUername을 넣어준다.
+ */
 @EnableJpaAuditing
 @Configuration
 public class JpaConfig {
@@ -23,8 +27,8 @@ public class JpaConfig {
                 .map(SecurityContext::getAuthentication)
                 .filter(Authentication::isAuthenticated)
                 .map(Authentication::getPrincipal)
-                .map(Member.class::cast)
-                .map(Member::getUserId);
+                .map(PrincipalDetails.class::cast)
+                .map(PrincipalDetails::getUsername);
     }
 }
 
