@@ -7,7 +7,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
 import team1.togather.security.auth.PrincipalDetails;
 import team1.togather.security.auth.PrincipalDetailsService;
 
@@ -27,7 +26,6 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
      * @throws AuthenticationException
      */
     @Override
-    @Transactional
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
         String password = (String)authentication.getCredentials();
@@ -38,18 +36,12 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
         //패스워드가 일치하지 않으면 인증실패
         if(!passwordEncoder.matches(password, principalDetails.getPassword())) {
-            throw new BadCredentialsException("BadCredentialsException");
+            throw new BadCredentialsException("BadCredentialsException123123");
         }
-
-//        //인증 요청시 username, password 이외의 파라미터를 받아 처리하는 곳
-//        String secretKey = ((FormWebAuthenticationDetails) authentication.getDetails()).getSecretKey();
-//        if (secretKey == null || !secretKey.equals("secret")) {
-//            throw new InsufficientAuthenticationException("Invalid Secret");
-//        }
 
         //UsernamePasswordAuthenticationToken 두번쨰 생성자의 인증객체
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(principalDetails.getMember(), null, principalDetails.getAuthorities());
+                new UsernamePasswordAuthenticationToken(principalDetails, null, principalDetails.getAuthorities());
         return authenticationToken;
     }
 

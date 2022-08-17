@@ -8,24 +8,21 @@ import org.springframework.stereotype.Service;
 import team1.togather.domain.member.Member;
 import team1.togather.repository.MemberRepository;
 
-import java.util.Optional;
 
-@Service
 @RequiredArgsConstructor
+@Service
 public class PrincipalDetailsService implements UserDetailsService {
 
     private final MemberRepository memberRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Member> findMember = memberRepository.findByEmailAndProvider(email);
-        if (findMember.isEmpty()) {
-            throw new UsernameNotFoundException("UsernameNotFoundException");
-        }
-        if (findMember != null) {
-            return new PrincipalDetails(findMember.get());
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 
-        }
-        return null;
+        /** 시큐리티 세션에 유저 정보 저장 **/
+        return new PrincipalDetails(memberRepository
+                .findByUserId(userId)
+                .map(Member.class::cast)
+                .orElseThrow(() -> new UsernameNotFoundException("No user found with username: " + userId)));
+
     }
 }

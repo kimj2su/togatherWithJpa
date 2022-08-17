@@ -1,18 +1,19 @@
 package team1.togather.security.auth;
 
-import lombok.Data;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import team1.togather.domain.member.Member;
+import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
-@Data
+@Getter
 public class PrincipalDetails implements UserDetails, OAuth2User {
 
     private  Member member;
@@ -27,28 +28,23 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         this.attributes = attributes;
     }
 
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<GrantedAuthority> collect = new ArrayList<>();
-        collect.add(new GrantedAuthority() {
-            @Override
-            public String getAuthority() {
-                return member.getMemberRoles().toString();
-            }
-        });
-        return collect;
+        return
+        member.getMemberRoles()
+                .stream()
+                .map(Role::getRoleName)
+                .map(SimpleGrantedAuthority::new).collect(Collectors.toList());
     }
 
     @Override
     public String getPassword() {
-        return member.getPwd();
+        return member.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return member.getEmail();
+        return member.getUserId();
     }
 
     @Override
@@ -82,15 +78,15 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
         return  (String) attributes.get("sub");
     }
 
-    public MemberDto toDto(Member member) {
+    public MemberDto toDto() {
         return MemberDto.of(
+                member.getId(),
                 member.getEmail(),
-                member.getPwd(),
+                member.getPassword(),
                 member.getUsername(),
-                member.getNickname(),
+                member.getUserId(),
                 member.getBirth(),
                 member.getGender(),
-                member.getPhone(),
                 member.getCategory_first(),
                 member.getCategory_second(),
                 member.getCategory_third()
@@ -100,6 +96,7 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public static PrincipalDetails of(Member member) {
         return new PrincipalDetails(member);
     }
+
     public static PrincipalDetails from(MemberDto memberDto) {
         return PrincipalDetails.of(
                 memberDto.toEntity()
