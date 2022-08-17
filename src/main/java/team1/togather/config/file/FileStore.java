@@ -4,7 +4,7 @@ package team1.togather.config.file;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
-import team1.togather.domain.group.UploadFile;
+import team1.togather.domain.groupTab.UploadFile;
 
 import java.io.File;
 import java.io.IOException;

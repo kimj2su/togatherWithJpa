@@ -7,6 +7,7 @@ import team1.togather.domain.member.Member;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
 
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -19,14 +20,12 @@ public class GroupTabRequestDto {
     private String groupName;
 
     private String groupIntro;
-    @NotBlank
+
     private String interest;
 
-    @NotBlank
-    @Size(min = 2)
+    @Min(2)
     private int memberLimit;
 
-    @NotBlank
     private MultipartFile attachFile;
 
     private UploadFile uploadFile;
@@ -47,7 +46,7 @@ public class GroupTabRequestDto {
         return new GroupTabRequestDto(groupLocation, groupName, groupIntro, interest, memberLimit, attachFile);
     }
 
-    public GroupTabDto toDto(Member member) {
+    public GroupTabDto toDto(MemberDto memberDto) {
         return GroupTabDto.of(
                 this.groupLocation,
                 this.groupName,
@@ -55,7 +54,7 @@ public class GroupTabRequestDto {
                 this.interest,
                 this.memberLimit,
                 this.uploadFile,
-                MemberDto.from(member)
+                memberDto
         );
     }
 }

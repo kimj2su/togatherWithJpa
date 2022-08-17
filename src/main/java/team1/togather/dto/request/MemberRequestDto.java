@@ -43,6 +43,7 @@ public class MemberRequestDto {
 
     public MemberDto toDto() {
         return MemberDto.of(
+                null,
                 this.username,
                 this.userId,
                 this.password,

@@ -26,15 +26,15 @@ public class MemberOauth2RequestDto {
     private final String category_third;
     private final Set<Role> userRoles;
 
-    public MemberDto toDto(Long member_id) {
+    public MemberDto toDto(Long memberId) {
         return MemberDto.of(
+                memberId,
                 this.userId,
                 this.birth,
                 this.gender,
                 this.category_first,
                 this.category_second,
-                this.category_third,
-                member_id
+                this.category_third
         );
     }
 }
