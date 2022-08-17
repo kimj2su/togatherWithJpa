@@ -2,6 +2,7 @@ package team1.togather.domain.member;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -35,14 +36,17 @@ public class Member implements Serializable {
 
     private String gender;
 
+    @Column(name = "provider")
     private String provider;
 
+    @Column(name = "provider_id")
     private String providerId;
 
     private String category_first;
     private String category_second;
     private String category_third;
 
+    @CreatedDate
     private LocalDateTime createdDate;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -69,7 +73,6 @@ public class Member implements Serializable {
         this.category_second = category_second;
         this.category_third = category_third;
         this.memberRoles = memberRoles;
-        this.createdDate = LocalDateTime.now();
     }
 
     public static Member of(String username, String userId, String password, String email,  String birth, String gender, String category_first,
@@ -88,16 +91,19 @@ public class Member implements Serializable {
         );
     }
 
-    @Builder(builderMethodName = "oauth2Builder")
-    public Member(String username, String userId, String email,
-                  Set<Role> memberRoles, String provider, String providerId) {
+    public Member(String username, String userId, String email, String provider, String providerId, Set<Role> memberRoles) {
         this.username = username;
         this.userId = userId;
         this.email = email;
-        this.createdDate = LocalDateTime.now();
-        this.memberRoles = memberRoles;
         this.provider = provider;
         this.providerId = providerId;
+        this.memberRoles = memberRoles;
+    }
+
+    public static Member oauth2Member(String username, String userId, String email,
+                                      String provider, String providerId,Set<Role> memberRoles) {
+        return new Member(username, userId, email,
+                provider, providerId, memberRoles);
     }
 
     public void oauth2Member(String userId, String birth, String gender, String category_first, String category_second, String category_third) {

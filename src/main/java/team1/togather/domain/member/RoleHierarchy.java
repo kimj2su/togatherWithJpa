@@ -10,10 +10,8 @@ import java.util.Set;
 @Entity
 @Table(name="ROLE_HIERARCHY")
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
-@Builder
-@ToString(exclude = {"parentName", "roleHierarchy"})
 //@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class)
 public class RoleHierarchy implements Serializable {
 
@@ -26,8 +24,15 @@ public class RoleHierarchy implements Serializable {
 
     @ManyToOne(cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_name", referencedColumnName = "child_name")
+    @ToString.Exclude
     private RoleHierarchy parentName;
 
     @OneToMany(mappedBy = "parentName", cascade={CascadeType.ALL})
+    @ToString.Exclude
     private Set<RoleHierarchy> roleHierarchy = new HashSet<RoleHierarchy>();
+
+    @Builder
+    public RoleHierarchy(String childName) {
+        this.childName = childName;
+    }
 }

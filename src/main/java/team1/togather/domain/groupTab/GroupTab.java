@@ -4,9 +4,13 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import team1.togather.domain.AuditingFields;
+import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -34,15 +38,18 @@ public class GroupTab extends AuditingFields {
 
     private int memberLimit;
 
+    private String userId;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "group_upload_file_id")
     private GroupUploadFile groupUploadFile;
+
     @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String userId;
-
+    @OneToMany(mappedBy = "groupTab")
+    private List<MemberInGroupTab> membersInGroupTabs = new ArrayList<>();
 
     public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
         this.groupLocation = groupLocation;
@@ -85,5 +92,10 @@ public class GroupTab extends AuditingFields {
 
     public void modifyGroupTabUploadFile(GroupUploadFile groupUploadFile) {
         this.groupUploadFile = groupUploadFile;
+    }
+
+    public void addMemberInGroupTab(MemberInGroupTab memberInGroupTab) {
+        this.membersInGroupTabs.add(memberInGroupTab);
+        memberInGroupTab.addGroupTab(this);
     }
 }
