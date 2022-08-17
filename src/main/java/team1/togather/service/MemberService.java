@@ -12,7 +12,6 @@ import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 @Slf4j
@@ -30,14 +29,14 @@ public class MemberService {
         Set<Role> roles = new HashSet<>();
         roles.add(findUserRole());
         memberDto.hasRoleMember(roles);
-        memberDto.encodingPassword(passwordEncoder.encode(memberDto.getPwd()));
+        memberDto.encodingPassword(passwordEncoder.encode(memberDto.getPassword()));
         memberRepository.save(memberDto.toEntity());
     }
 
-    public Integer nicknameCheck(String nickname) {
-        Integer findByNickname = memberRepository.countByNickname(nickname);
-        log.warn("findByNickname error nick = {}" , findByNickname);
-        return findByNickname;
+    public int userIdCheck(String userId) {
+        int countByUserId = memberRepository.countByUserId(userId);
+        log.warn("findByNickname count userId = {}" , countByUserId);
+        return countByUserId;
     }
 
     public Role findUserRole() {
@@ -47,9 +46,9 @@ public class MemberService {
 
     @Transactional
     public void saveOauth2Member(MemberDto toDto) {
-        Member member = memberRepository.getReferenceById(toDto.getMember_id());
+        Member member = memberRepository.getReferenceById(toDto.getMemberId());
         member.oauth2Member(
-                toDto.getNickname(),
+                toDto.getUserId(),
                 toDto.getBirth(),
                 toDto.getGender(),
                 toDto.getCategory_first(),

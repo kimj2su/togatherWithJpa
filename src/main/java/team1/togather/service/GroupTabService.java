@@ -30,7 +30,7 @@ public class GroupTabService {
 
 
     public void saveGroupTab(GroupTabDto dto) {
-        Member member = memberRepository.getReferenceById(dto.getMemberDto().getMember_id());
+        Member member = memberRepository.getReferenceById(dto.getMemberDto().getMemberId());
         groupTabRepository.save(dto.toEntity(member));
     }
 
@@ -44,7 +44,7 @@ public class GroupTabService {
     public void updateGroupTab(Long groupTabId, GroupTabDto dto) {
         try {
             GroupTab groupTab = groupTabRepository.getReferenceById(groupTabId);
-            Member member = memberRepository.getReferenceById(dto.getMemberDto().getMember_id());
+            Member member = memberRepository.getReferenceById(dto.getMemberDto().getMemberId());
             if (groupTab.getMember().equals(member)) {
                 if (dto.getGroupLocation() != null) {
                     groupTab.modifyGroupTabLocation(dto.getGroupLocation());
@@ -61,7 +61,6 @@ public class GroupTabService {
                 if (dto.getUploadFile() != null) {
                     groupTab.modifyGroupTabUploadFile(dto.getGroupUploadFile());
                 }
-                System.out.println("articleEnd = " + groupTab);
             }
         } catch (EntityNotFoundException e) {
             log.warn("게시글 업데이트 실패. 게시글을 수정하는데 필요한 정보를 찾을 수 없습니다. - {}", e.getLocalizedMessage());

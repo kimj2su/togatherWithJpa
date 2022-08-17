@@ -13,7 +13,7 @@ import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
-import team1.togather.security.config.SecurityConfig;
+import team1.togather.security.configs.SecurityConfig;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -49,34 +49,35 @@ class MemberServiceTest {
     }
 
     private MemberDto createNewMemberDto() {
-        return createNewMemberDto("jisu@email.com",
-                "password",
-                "jisu",
-                "nickname",
+        return createNewMemberDto(
+                1L,
+                "김지수",
+                "jisu1",
+                "1234",
+                "jisu@email.com",
                 "2022-08-07",
                 "M",
-                "010-3316-3268",
                 "category_first",
                 "category_second",
-                "category_third");
+                "category_third"
+        );
     }
 
-    private MemberDto createNewMemberDto(String email, String pwd, String username, String nickname, String birth, String gender, String phone, String category_first, String category_second, String category_third) {
+    private MemberDto createNewMemberDto(Long memberId, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third) {
         return MemberDto.of(
-                email, pwd, username, nickname, birth, gender, phone, category_first, category_second, category_third
+                memberId, username, userId, password, email, birth, gender, category_first, category_second, category_third
         );
     }
 
 
     private Member createNewMember() {
         Member of = Member.of(
+                "김지수",
+                "jisu1",
+                "1234",
                 "jisu@email.com",
-                "password",
-                "jisu",
-                "nickname",
                 "2022-08-07",
                 "M",
-                "010-3316-3268",
                 "category_first",
                 "category_second",
                 "category_third",

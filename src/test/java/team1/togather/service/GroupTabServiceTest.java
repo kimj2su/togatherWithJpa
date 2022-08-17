@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
@@ -19,6 +20,7 @@ import team1.togather.dto.MemberDto;
 import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
+import team1.togather.security.configs.TestSecurityConfig;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -29,6 +31,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
 @DisplayName("그룹 서비스 테스트")
+@Import({TestSecurityConfig.class})
 @ExtendWith(MockitoExtension.class)
 class GroupTabServiceTest {
 
@@ -84,14 +87,14 @@ class GroupTabServiceTest {
         GroupTabDto dto = createGroupTabDto();
         Member newMember = createNewMember();
         GroupTab groupTab = createGroupTab();
-        given(memberRepository.getReferenceById(dto.getMemberDto().getMember_id())).willReturn(newMember);
+        given(memberRepository.getReferenceById(dto.getMemberDto().getMemberId())).willReturn(newMember);
         given(groupTabRepository.save(any(GroupTab.class))).willReturn(groupTab);
 
         // When
         sut.saveGroupTab(dto);
 
         // Then
-        then(memberRepository).should().getReferenceById(dto.getMemberDto().getMember_id());
+        then(memberRepository).should().getReferenceById(dto.getMemberDto().getMemberId());
         then(groupTabRepository).should().save(any(GroupTab.class));
     }
 
@@ -102,7 +105,7 @@ class GroupTabServiceTest {
         GroupTab groupTab = createGroupTab();
         GroupTabDto dto = createGroupTabDto();
         given(groupTabRepository.getReferenceById(dto.getId())).willReturn(groupTab);
-        given(memberRepository.getReferenceById(dto.getMemberDto().getMember_id())).willReturn(dto.getMemberDto().toEntity());
+        given(memberRepository.getReferenceById(dto.getMemberDto().getMemberId())).willReturn(dto.getMemberDto().toEntity());
 
         // When
         sut.updateGroupTab(1L, dto);
@@ -115,7 +118,7 @@ class GroupTabServiceTest {
                 .hasFieldOrPropertyWithValue("interest", groupTab.getInterest())
                 .hasFieldOrPropertyWithValue("memberLimit", groupTab.getMemberLimit());
         then(groupTabRepository).should().getReferenceById(1L);
-        then(memberRepository).should().getReferenceById(dto.getMemberDto().getMember_id());
+        then(memberRepository).should().getReferenceById(dto.getMemberDto().getMemberId());
     }
 
     @DisplayName("모임의 ID를 입력하면, 모임을 삭제한다")
@@ -173,6 +176,7 @@ class GroupTabServiceTest {
 
     private MemberDto createMemberDto() {
         return MemberDto.of(
+                1L,
                 "jisu@email.com",
                 "password",
                 "jisu",
