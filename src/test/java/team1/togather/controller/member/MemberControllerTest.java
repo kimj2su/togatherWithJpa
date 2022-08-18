@@ -72,7 +72,7 @@ class MemberControllerTest {
         )
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/"))
-                .andExpect(redirectedUrl("y/"));
+                .andExpect(redirectedUrl("/"));
         then(memberService).should().saveMember(any(MemberDto.class));
     }
 

@@ -3,6 +3,7 @@ package team1.togather.domain.groupTab;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import team1.togather.domain.AuditingFields;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
@@ -48,6 +49,8 @@ public class GroupTab extends AuditingFields {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    @ToString.Exclude
+    @OrderBy("grade DESC")
     @OneToMany(mappedBy = "groupTab")
     private List<MemberInGroupTab> membersInGroupTabs = new ArrayList<>();
 

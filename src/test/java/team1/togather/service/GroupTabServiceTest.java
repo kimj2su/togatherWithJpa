@@ -17,16 +17,19 @@ import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
+import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
 import team1.togather.security.configs.TestSecurityConfig;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
@@ -42,6 +45,23 @@ class GroupTabServiceTest {
     @Mock private MemberRepository memberRepository;
 
     @Mock private RoleRepository roleRepository;
+
+    @DisplayName("그룹이 없으면 예외를 던진다.")
+    @Test
+    void givenNotFoundGroupTabId_whenSearchingGroupTab_thenThrowsException() {
+        //given
+        Long groupTabId = 0L;
+        given(groupTabRepository.findById(groupTabId)).willReturn(Optional.empty());
+
+        //when
+        Throwable t = catchThrowable(() -> sut.getGroupTab(groupTabId));
+
+        //then
+        assertThat(t)
+                .isInstanceOf(EntityNotFoundException.class)
+                .hasMessage("모임이 없습니다 - groupTabId: " + groupTabId);
+        then(groupTabRepository).should().findById(groupTabId);
+    }
 
     @DisplayName("그룹 페이지를 반환한다.")
     @Test
@@ -80,6 +100,46 @@ class GroupTabServiceTest {
         then(groupTabRepository).should().findById(groupTabId);
     }
 
+    @DisplayName("그룹을 ID로 조회하면, 그룹에 가입된 멤버까지 반환한다.")
+    @Test
+    void givenGroupTabId_whenSearchingMembersInGroupTab_thenReturnMembersInGroupTabs() {
+        //given
+        Long groupTabId = 1L;
+        GroupTab groupTab = createGroupTab();
+        given(groupTabRepository.findById(groupTabId)).willReturn(Optional.of(groupTab));
+
+        //when
+        GroupTabWithMembersDto membersInGroupTabDto = sut.getGroupTabWithMembers(groupTabId);
+
+        //then
+        assertThat(membersInGroupTabDto)
+                .hasFieldOrPropertyWithValue("groupLocation", groupTab.getGroupLocation())
+                .hasFieldOrPropertyWithValue("groupName", groupTab.getGroupName())
+                .hasFieldOrPropertyWithValue("groupIntro", groupTab.getGroupIntro())
+                .hasFieldOrPropertyWithValue("interest", groupTab.getInterest())
+                .hasFieldOrPropertyWithValue("memberLimit", groupTab.getMemberLimit())
+                .hasFieldOrPropertyWithValue("uploadFile", groupTab.getGroupUploadFile().getAttachFile())
+                .hasFieldOrPropertyWithValue("memberInGroupTabDto", groupTab.getMembersInGroupTabs());
+        then(groupTabRepository).should().findById(groupTabId);
+    }
+
+    @DisplayName("그룹에 가입할때 그룹이 없으면, 예외를 던진다.")
+    @Test
+    void givenNotFoundGroupTabId_whenSearchingMembersInGroupTab_thenThrowsException() {
+        //given
+        Long groupTabId = 0L;
+        given(groupTabRepository.findById(groupTabId)).willReturn(Optional.empty());
+
+        //when
+        Throwable t = catchThrowable(() -> sut.getGroupTabWithMembers(groupTabId));
+
+        //then
+        assertThat(t)
+                .isInstanceOf(EntityNotFoundException.class)
+                .hasMessage("모임이 없습니다 - groupTabId: " + groupTabId);
+        then(groupTabRepository).should().findById(groupTabId);
+    }
+
     @DisplayName("그룹 정보를 입력하면, 그룹을 생성한다.")
     @Test
     void givenGroupTabInfo_whenSavingGroupTab_thenSavesGroupTab() {
@@ -98,7 +158,7 @@ class GroupTabServiceTest {
         then(groupTabRepository).should().save(any(GroupTab.class));
     }
 
-    @DisplayName("게시글의 수정 정보를 입력하면, 게시글을 수정한다.")
+    @DisplayName("모임의 수정 정보를 입력하면, 모임을 수정한다.")
     @Test
     void givenModifiedGroupTabInfo_whenUpdatingGroupTab_thenUpdatesGroupTab() {
         // Given

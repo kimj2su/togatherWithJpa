@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.dto.GroupTabDto;
+import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
 
@@ -38,6 +39,13 @@ public class GroupTabService {
     public GroupTabDto getGroupTab(Long groupTabId) {
         return groupTabRepository.findById(groupTabId)
                 .map(GroupTabDto::from)
+                .orElseThrow(() -> new EntityNotFoundException("모임이 없습니다 - groupTabId: " + groupTabId));
+    }
+
+    @Transactional(readOnly = true)
+    public GroupTabWithMembersDto getGroupTabWithMembers(Long groupTabId) {
+        return groupTabRepository.findById(groupTabId)
+                .map(GroupTabWithMembersDto::from)
                 .orElseThrow(() -> new EntityNotFoundException("모임이 없습니다 - groupTabId: " + groupTabId));
     }
 

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.request.GroupTabRequestDto;
-import team1.togather.dto.response.GroupTabResponseDto;
+import team1.togather.dto.response.GroupTabWithMembersResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
 import team1.togather.service.GroupTabService;
 
@@ -48,9 +48,11 @@ public class GroupTabController {
 
     @GetMapping("/{groupTabId}")
     public String groupTab(@PathVariable Long groupTabId, ModelMap modelMap) {
-        GroupTabResponseDto groupTabResponseDto = GroupTabResponseDto.from(groupTabService.getGroupTab(groupTabId));
+        GroupTabWithMembersResponseDto groupTab = GroupTabWithMembersResponseDto.from(groupTabService.getGroupTabWithMembers(groupTabId));
+//        GroupTabResponseDto groupTabResponseDto = GroupTabResponseDto.from(groupTabService.getGroupTab(groupTabId));
 
-        modelMap.addAttribute("groupTab", groupTabResponseDto);
+        modelMap.addAttribute("groupTab", groupTab);
+        modelMap.addAttribute("membersInGroupTab", groupTab.getMemberInGroupTabResponseDtos());
         return "groupTabs/detail";
     }
 

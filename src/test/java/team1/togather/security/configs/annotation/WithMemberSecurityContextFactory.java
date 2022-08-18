@@ -1,26 +1,19 @@
 package team1.togather.security.configs.annotation;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithSecurityContextFactory;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.security.auth.PrincipalDetails;
-import team1.togather.security.auth.PrincipalDetailsService;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 
 public class WithMemberSecurityContextFactory implements WithSecurityContextFactory<WithMember> {
-
-    @Autowired
-    private PrincipalDetailsService principalDetailsService;
 
     @Override
     public SecurityContext createSecurityContext(WithMember withMember) {
