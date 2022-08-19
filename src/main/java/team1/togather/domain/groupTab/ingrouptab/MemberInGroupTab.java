@@ -19,16 +19,16 @@ import static javax.persistence.FetchType.LAZY;
 public class MemberInGroupTab extends AuditingFields {
 
     @Id
-    @GeneratedValue
-    Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "group_id")
     private GroupTab groupTab;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
-
 
     private Long grade;
 
@@ -37,7 +37,7 @@ public class MemberInGroupTab extends AuditingFields {
         this.member = member;
         this.grade = grade;
     }
-
+    
     public static MemberInGroupTab of(GroupTab groupTab, Member member, Long grade) {
         return new MemberInGroupTab(groupTab, member, grade);
     }

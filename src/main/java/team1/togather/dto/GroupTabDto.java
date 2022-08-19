@@ -7,6 +7,8 @@ import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.member.Member;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 public class GroupTabDto {
@@ -25,6 +27,8 @@ public class GroupTabDto {
 
     private final MemberDto memberDto;
 
+    private final List<MemberInGroupTabDto> memberInGroupTabDto;
+
     private final LocalDateTime createdAt;
     private final String createdBy;
     private final LocalDateTime modifiedAt;
@@ -32,13 +36,10 @@ public class GroupTabDto {
 
     private GroupUploadFile groupUploadFile;
 
-
-
-
     public static GroupTabDto of(String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 MemberDto memberDto) {
+                                 MemberDto memberDto, List<MemberInGroupTabDto> memberInGroupTabDto) {
         return new GroupTabDto(
                 null,
                 groupLocation,
@@ -48,6 +49,7 @@ public class GroupTabDto {
                 memberLimit,
                 uploadFile,
                 memberDto,
+                memberInGroupTabDto,
                 null,
                 null,
                 null,
@@ -58,7 +60,7 @@ public class GroupTabDto {
     public static GroupTabDto of(Long id, String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 MemberDto memberDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String userId) {
+                                 MemberDto memberDto, List<MemberInGroupTabDto> memberInGroupTabDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String userId) {
         return new GroupTabDto(
                 id,
                 groupLocation,
@@ -68,6 +70,7 @@ public class GroupTabDto {
                 memberLimit,
                 uploadFile,
                 memberDto,
+                memberInGroupTabDto,
                 createdAt,
                 createdBy,
                 modifiedAt,
@@ -85,6 +88,8 @@ public class GroupTabDto {
                 entity.getMemberLimit(),
                 entity.getGroupUploadFile().getAttachFile(),
                 MemberDto.from(entity.getMember()),
+//                entity.getMembersInGroupTab().stream().map(MemberInGroupTabDto::from).collect(Collectors.toList()),
+                null,
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),

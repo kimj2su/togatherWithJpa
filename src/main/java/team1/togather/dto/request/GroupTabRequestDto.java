@@ -6,10 +6,12 @@ import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.member.Member;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
+import team1.togather.dto.MemberInGroupTabDto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Data
 public class GroupTabRequestDto {
@@ -29,6 +31,7 @@ public class GroupTabRequestDto {
     private MultipartFile attachFile;
 
     private UploadFile uploadFile;
+
 
     public GroupTabRequestDto() {
     }
@@ -54,7 +57,8 @@ public class GroupTabRequestDto {
                 this.interest,
                 this.memberLimit,
                 this.uploadFile,
-                memberDto
+                memberDto,
+                List.of(MemberInGroupTabDto.of(memberDto, 0L))
         );
     }
 }

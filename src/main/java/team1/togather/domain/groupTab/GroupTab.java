@@ -7,11 +7,11 @@ import lombok.ToString;
 import team1.togather.domain.AuditingFields;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
+import team1.togather.domain.member.Role;
 
 import javax.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static javax.persistence.FetchType.LAZY;
 
@@ -27,6 +27,7 @@ public class GroupTab extends AuditingFields {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "group_id")
     private Long id;
 
     private String groupLocation;
@@ -50,9 +51,9 @@ public class GroupTab extends AuditingFields {
     private Member member;
 
     @ToString.Exclude
-    @OrderBy("grade DESC")
-    @OneToMany(mappedBy = "groupTab")
-    private List<MemberInGroupTab> membersInGroupTabs = new ArrayList<>();
+    @OrderBy("grade asc ")
+    @OneToMany(mappedBy = "groupTab", cascade = CascadeType.ALL)
+    private final List<MemberInGroupTab> membersInGroupTab = new ArrayList<>();
 
     public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
         this.groupLocation = groupLocation;
@@ -67,13 +68,13 @@ public class GroupTab extends AuditingFields {
 
     public static GroupTab of(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
         return new GroupTab(
-            groupLocation,
-            groupName,
-            groupIntro,
-            interest,
+                groupLocation,
+                groupName,
+                groupIntro,
+                interest,
                 memberLimit,
-            groupUploadFile,
-            member
+                groupUploadFile,
+                member
         );
     }
 
@@ -98,7 +99,20 @@ public class GroupTab extends AuditingFields {
     }
 
     public void addMemberInGroupTab(MemberInGroupTab memberInGroupTab) {
-        this.membersInGroupTabs.add(memberInGroupTab);
         memberInGroupTab.addGroupTab(this);
+        membersInGroupTab.add(memberInGroupTab);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof GroupTab)) return false;
+        GroupTab groupTab = (GroupTab) o;
+        return getId() != null && getId().equals(groupTab.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId());
     }
 }

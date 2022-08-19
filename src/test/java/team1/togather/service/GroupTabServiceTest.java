@@ -13,11 +13,13 @@ import org.springframework.test.util.ReflectionTestUtils;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.GroupTabWithMembersDto;
+import team1.togather.dto.MemberInGroupTabDto;
 import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
@@ -25,6 +27,7 @@ import team1.togather.security.configs.TestSecurityConfig;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -119,7 +122,7 @@ class GroupTabServiceTest {
                 .hasFieldOrPropertyWithValue("interest", groupTab.getInterest())
                 .hasFieldOrPropertyWithValue("memberLimit", groupTab.getMemberLimit())
                 .hasFieldOrPropertyWithValue("uploadFile", groupTab.getGroupUploadFile().getAttachFile())
-                .hasFieldOrPropertyWithValue("memberInGroupTabDto", groupTab.getMembersInGroupTabs());
+                .hasFieldOrPropertyWithValue("memberInGroupTabDto", groupTab.getMembersInGroupTab());
         then(groupTabRepository).should().findById(groupTabId);
     }
 
@@ -147,6 +150,7 @@ class GroupTabServiceTest {
         GroupTabDto dto = createGroupTabDto();
         Member newMember = createNewMember();
         GroupTab groupTab = createGroupTab();
+        groupTab.addMemberInGroupTab(createMemberInGroupTab());
         given(memberRepository.getReferenceById(dto.getMemberDto().getMemberId())).willReturn(newMember);
         given(groupTabRepository.save(any(GroupTab.class))).willReturn(groupTab);
 
@@ -213,6 +217,10 @@ class GroupTabServiceTest {
         return groupTab;
     }
 
+    private List<MemberInGroupTab> createMemberInGroupTabList() {
+        return List.of();
+    }
+
     private GroupUploadFile createGroupUploadFile() {
         return new GroupUploadFile(createUploadFile());
     }
@@ -227,10 +235,22 @@ class GroupTabServiceTest {
                 10,
                 createUploadFile(),
                 createMemberDto(),
+                createMemberInGroupTabDtoList(),
                 null,
                 null,
                 null,
                 null
+        );
+    }
+
+    private List<MemberInGroupTabDto> createMemberInGroupTabDtoList() {
+        return List.of();
+    }
+    private MemberInGroupTab createMemberInGroupTab() {
+        return  MemberInGroupTab.of(
+                createGroupTab(),
+                createNewMember(),
+                2L
         );
     }
 
