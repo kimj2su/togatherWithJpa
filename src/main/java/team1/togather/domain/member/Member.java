@@ -1,14 +1,12 @@
 package team1.togather.domain.member;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -61,6 +59,21 @@ public class Member implements Serializable {
         this.memberRoles = memberRoles;
     }
 
+    public Member(Long id, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
+        this.id = id;
+        this.username = username;
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
+        this.birth = birth;
+        this.gender = gender;
+        this.category_first = category_first;
+        this.category_second = category_second;
+        this.category_third = category_third;
+        this.createdDate = LocalDateTime.now();
+        this.memberRoles = memberRoles;
+    }
+
     @Builder
     public Member(String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
         this.username = username;
@@ -78,6 +91,23 @@ public class Member implements Serializable {
     public static Member of(String username, String userId, String password, String email,  String birth, String gender, String category_first,
                             String category_second, String category_third, Set<Role> memberRoles) {
         return new Member(
+                username,
+                userId,
+                password,
+                email,
+                birth,
+                gender,
+                category_first,
+                category_second,
+                category_third,
+                memberRoles
+        );
+    }
+
+    public static Member of(Long id, String username, String userId, String password, String email,  String birth, String gender, String category_first,
+                            String category_second, String category_third, Set<Role> memberRoles) {
+        return new Member(
+                id,
                 username,
                 userId,
                 password,
@@ -118,9 +148,9 @@ public class Member implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Member member = (Member) o;
-        return id != null && Objects.equals(id, member.id);
+        if (!(o instanceof Member)) return false;
+        Member article = (Member) o;
+        return getId() != null && getId().equals(article.getId());
     }
 
     @Override

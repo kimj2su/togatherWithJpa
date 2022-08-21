@@ -6,7 +6,10 @@ import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import java.util.List;
 
 public interface MemberInGroupTabRepository extends JpaRepository<MemberInGroupTab, Long> {
+
+    List<MemberInGroupTab> findByGroupTab_IdAndMember_Id(Long groupTabId, Long memberId);
+
     List<MemberInGroupTab> findByGroupTab_Id(Long groupTabId);
 
-    void deleteByIdAndMember_UserId(Long groupTabId, String userId);
+    void deleteByGroupTab_IdAndMember_Id(Long groupTabId, Long userId);
 }

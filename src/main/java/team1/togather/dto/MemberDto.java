@@ -1,7 +1,6 @@
 package team1.togather.dto;
 
 import lombok.Data;
-import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 
@@ -62,6 +61,10 @@ public class MemberDto {
 
     public static MemberDto of(Long memberId, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third) {
         return new MemberDto(memberId, username, userId, password, email, birth, gender, category_first, category_second, category_third);
+    }
+
+    public static MemberDto from(Long member_id) {
+        return new MemberDto(member_id, null, null, null, null, null, null, null, null, null);
     }
 
     public static MemberDto from(Member entity) {
