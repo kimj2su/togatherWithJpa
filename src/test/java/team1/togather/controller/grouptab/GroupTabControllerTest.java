@@ -16,17 +16,20 @@ import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.GroupTabWithMembersDto;
+import team1.togather.dto.MemberInGroupTabDto;
 import team1.togather.dto.request.GroupTabRequestDto;
 import team1.togather.security.configs.SecurityConfig;
 import team1.togather.security.configs.annotation.WithMember;
 import team1.togather.security.configs.annotation.WithOauth2Member;
 import team1.togather.service.GroupTabService;
+import team1.togather.service.MemberInGroupTabService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -44,6 +47,9 @@ class GroupTabControllerTest {
     private MockMvc mvc;
     @MockBean
     private GroupTabService groupTabService;
+    @MockBean
+    private MemberInGroupTabService memberInGroupTabService;
+
     @MockBean
     private FileStore fileStore;
 
@@ -137,13 +143,18 @@ class GroupTabControllerTest {
         then(groupTabService).shouldHaveNoInteractions();
     }
 
-    @WithMockUser
+    @WithMember(value = "KJS")
     @DisplayName("view - get 모임 상세 페이지 - 정상 호출, 인증된 사용자")
     @Test
     void givenNothing_whenRequestingGroupTabView_thenReturnsGroupTabView() throws Exception {
         // given
         Long groupTabId = 1L;
+        Long memberId = 1L;
+        String userId= "KJS";
+
         given(groupTabService.getGroupTabWithMembers(groupTabId)).willReturn(createGroupTabWithMembersDto());
+        MemberInGroupTabDto memberInGroupTabDto = createMemberInGroupTabDto();
+        given(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).willReturn(createMemberInGroupTabDto());
 
         // when & then
         mvc.perform(get("/groupTabs/" + groupTabId))
@@ -151,8 +162,21 @@ class GroupTabControllerTest {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("groupTabs/detail"))
                 .andExpect(model().attributeExists("groupTab"))
-                .andExpect(model().attributeExists("membersInGroupTab"));
+                .andExpect(model().attributeExists("membersNameList"));
         then(groupTabService).should().getGroupTabWithMembers(groupTabId);
+        then(memberInGroupTabService).should().searchMemberInGroupTab(groupTabId, memberId);
+//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId).size()).isEqualTo(0);
+//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isEqualTo(null);
+//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isEmpty();
+//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isEqualTo(null);
+        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isNotNull();
+    }
+
+    private MemberInGroupTabDto createMemberInGroupTabDto() {
+        return MemberInGroupTabDto.from(0L);
+    }
+    private List<MemberInGroupTabDto> createMemberInGroupTab() {
+        return List.of();
     }
 
     private GroupTabWithMembersDto createGroupTabWithMembersDto() {

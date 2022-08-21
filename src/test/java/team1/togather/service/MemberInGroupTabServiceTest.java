@@ -24,10 +24,8 @@ import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.*;
 
 @DisplayName("비즈니스 로직 - 모임 가입")
 @ExtendWith(MockitoExtension.class)
@@ -46,7 +44,7 @@ class MemberInGroupTabServiceTest {
 
     @DisplayName("모임 ID로 조회하면, 해당하는 모임에 가입한 멤버 리스트를 반환한다.")
     @Test
-    void givenArticleId_whenSearchingArticleComments_thenReturnsArticleComments() {
+    void givenGroupTabId_whenSearchingMembersInGroupTab_thenReturnsMembersInGroupTab() {
         // Given
         Long groupTabId = 1L;
         MemberInGroupTab expected = createMemberInGroupTab();
@@ -65,7 +63,7 @@ class MemberInGroupTabServiceTest {
 
     @DisplayName("회원정보를 입력하면, 모임에 가입한다.")
     @Test
-    void givenArticleCommentInfo_whenSavingArticleComment_thenSavesArticleComment() {
+    void givenMembersInGroupTabInfo_whenSavingMembersInGroupTab_thenSavesMembersInGroupTab() {
         // Given
         MemberInGroupTabDto memberInGroupTabDto = createMemberInGroupTabDto(1L);
         given(groupTabRepository.getReferenceById(memberInGroupTabDto.getGroupTabId())).willReturn(createGroupTab());
@@ -80,6 +78,23 @@ class MemberInGroupTabServiceTest {
         then(memberRepository).should().getReferenceById(memberInGroupTabDto.getMemberDto().getMemberId());
         then(memberInGroupTabRepository).should().save(any(MemberInGroupTab.class));
     }
+
+    @DisplayName("회원 정보를 입력하면, 모임에서 탈퇴한다.")
+    @Test
+    void givenMembersInGroupTabInfo_whenDeletingMembersInGroupTab_thenDeleteMembersInGroupTab() {
+        // Given
+        Long groupTabId = 1L;
+        Long memberId = 1L;
+        willDoNothing().given(memberInGroupTabRepository).deleteByGroupTab_IdAndMember_Id(groupTabId, memberId);
+
+        // When
+        sut.deleteMemberInGroupTab(groupTabId, memberId);
+
+        // Then
+        then(memberInGroupTabRepository).should().deleteByGroupTab_IdAndMember_Id(groupTabId, memberId);
+    }
+
+
 
 
     private MemberInGroupTabDto createMemberInGroupTabDto(Long memberId) {

@@ -25,6 +25,7 @@ public class WithMockCustomOAuth2AccountSecurityContextFactory implements WithSe
         attributes.put("picture", withOauth2Member.picture());
 
         Member of = Member.of(
+                1L,
                 withOauth2Member.username(),
                 withOauth2Member.username(),
                 "1234",

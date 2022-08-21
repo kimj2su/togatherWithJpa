@@ -20,6 +20,7 @@ public class WithMemberSecurityContextFactory implements WithSecurityContextFact
         String userId = withMember.value();
 
         Member of = Member.of(
+                1L,
                 "김지수",
                 userId,
                 "1234",

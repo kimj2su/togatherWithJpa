@@ -37,7 +37,7 @@ public class MemberInGroupTab extends AuditingFields {
         this.member = member;
         this.grade = grade;
     }
-    
+
     public static MemberInGroupTab of(GroupTab groupTab, Member member, Long grade) {
         return new MemberInGroupTab(groupTab, member, grade);
     }
