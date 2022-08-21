@@ -19,12 +19,29 @@ public class MemberInGroupTabDto {
     private final LocalDateTime modifiedAt;
     private final String modifiedBy;
 
+    public static MemberInGroupTabDto of(MemberDto memberDto, Long grade) {
+        return new MemberInGroupTabDto(null, null, memberDto, grade,null, null, null, null);
+    }
+
     public static MemberInGroupTabDto of(Long groupTabId, MemberDto memberDto, Long grade) {
         return new MemberInGroupTabDto(null, groupTabId, memberDto, grade,null, null, null, null);
     }
 
     public static MemberInGroupTabDto of(Long id, Long groupTabId, MemberDto memberDto, Long grade,  LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new MemberInGroupTabDto(id, groupTabId, memberDto, grade, createdAt, createdBy, modifiedAt, modifiedBy);
+    }
+
+    public static MemberInGroupTabDto from(Long grade) {
+        return new MemberInGroupTabDto(
+                null,
+                null,
+                null,
+                grade,
+                null,
+                null,
+                null,
+                null
+        );
     }
 
     public static MemberInGroupTabDto from(MemberInGroupTab entity) {

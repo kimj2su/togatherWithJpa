@@ -48,7 +48,7 @@ public class GroupTabWithMembersDto {
                 entity.getMemberLimit(),
                 entity.getGroupUploadFile().getAttachFile(),
                 MemberDto.from(entity.getMember()),
-                entity.getMembersInGroupTabs().stream()
+                entity.getMembersInGroupTab().stream()
                         .map(MemberInGroupTabDto::from)
                         .collect(Collectors.toList()),
                 entity.getCreatedAt(),

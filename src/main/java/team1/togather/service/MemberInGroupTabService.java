@@ -16,6 +16,8 @@ import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static team1.togather.config.constant.Constant.NOT_GROUP_IN_USER;
+
 @Slf4j
 @RequiredArgsConstructor
 @Transactional
@@ -25,8 +27,16 @@ public class MemberInGroupTabService {
     private final GroupTabRepository groupTabRepository;
 
     private final MemberInGroupTabRepository memberInGroupTabRepository;
-
     private final MemberRepository memberRepository;
+
+    @Transactional(readOnly = true)
+    public MemberInGroupTabDto searchMemberInGroupTab(Long groupTabId, Long memberId) {
+        List<MemberInGroupTab> by = memberInGroupTabRepository.findByGroupTab_IdAndMember_Id(groupTabId, memberId);
+        if (by.size() == 0) {
+            return MemberInGroupTabDto.from(NOT_GROUP_IN_USER);
+        }
+        return MemberInGroupTabDto.from(by.get(0));
+    }
 
     @Transactional(readOnly = true)
     public List<MemberInGroupTabDto> searchMemberInGroupTabs(Long groupTabId) {
@@ -54,7 +64,7 @@ public class MemberInGroupTabService {
         }
     }
 
-    public void deleteArticleComment(Long memberInGroupTabId, String userId) {
-        memberInGroupTabRepository.deleteByIdAndMember_UserId(memberInGroupTabId, userId);
+    public void deleteMemberInGroupTab(Long groupTabId, Long memberId) {
+        memberInGroupTabRepository.deleteByGroupTab_IdAndMember_Id(groupTabId, memberId);
     }
 }

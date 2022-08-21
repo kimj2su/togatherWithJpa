@@ -12,8 +12,10 @@ import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.request.GroupTabRequestDto;
 import team1.togather.dto.response.GroupTabWithMembersResponseDto;
+import team1.togather.dto.response.MemberInGroupTabResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
 import team1.togather.service.GroupTabService;
+import team1.togather.service.MemberInGroupTabService;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import java.io.IOException;
 public class GroupTabController {
 
     private final GroupTabService groupTabService;
+    private final MemberInGroupTabService memberInGroupTabService;
     private final FileStore fileStore;
 
     @GetMapping("/new")
@@ -47,12 +50,13 @@ public class GroupTabController {
     }
 
     @GetMapping("/{groupTabId}")
-    public String groupTab(@PathVariable Long groupTabId, ModelMap modelMap) {
+    public String groupTab(@PathVariable Long groupTabId, ModelMap modelMap, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         GroupTabWithMembersResponseDto groupTab = GroupTabWithMembersResponseDto.from(groupTabService.getGroupTabWithMembers(groupTabId));
-//        GroupTabResponseDto groupTabResponseDto = GroupTabResponseDto.from(groupTabService.getGroupTab(groupTabId));
+        MemberInGroupTabResponseDto checkMember = MemberInGroupTabResponseDto.from(memberInGroupTabService.searchMemberInGroupTab(groupTabId, principalDetails.getMember().getId()));
 
         modelMap.addAttribute("groupTab", groupTab);
-        modelMap.addAttribute("membersInGroupTab", groupTab.getMemberInGroupTabResponseDtos());
+        modelMap.addAttribute("membersNameList", groupTab.getMemberInGroupTabResponseDtos());
+        modelMap.addAttribute("checkMember", checkMember);
         return "groupTabs/detail";
     }
 

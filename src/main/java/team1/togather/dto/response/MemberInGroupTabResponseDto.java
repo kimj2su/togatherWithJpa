@@ -9,21 +9,25 @@ import java.time.LocalDateTime;
 @Data
 public class MemberInGroupTabResponseDto {
 
-    private final Long id;
+//    private final Long id;
     private final String userId;
     private final Long grade;
-    private final LocalDateTime createdAt;
+//    private final LocalDateTime createdAt;
 
-    public static MemberInGroupTabResponseDto of(Long id, String userId, Long grade, LocalDateTime createdAt) {
-        return new MemberInGroupTabResponseDto( id, userId, grade, createdAt);
+    public static MemberInGroupTabResponseDto of(String userId, Long grade) {
+        return new MemberInGroupTabResponseDto(userId, grade);
     }
 
     public static MemberInGroupTabResponseDto from(MemberInGroupTabDto memberInGroupTabDto) {
+        if (memberInGroupTabDto.getMemberDto() == null) {
+            return new MemberInGroupTabResponseDto(
+                    null,
+                    memberInGroupTabDto.getGrade()
+            );
+        }
         return new MemberInGroupTabResponseDto(
-                memberInGroupTabDto.getId(),
                 memberInGroupTabDto.getMemberDto().getUserId(),
-                memberInGroupTabDto.getGrade(),
-                memberInGroupTabDto.getCreatedAt()
+                memberInGroupTabDto.getGrade()
         );
     }
 }
