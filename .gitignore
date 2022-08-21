@@ -43,10 +43,15 @@ css/
 forms/
 img/
 table/
+images/
 js/bootstrap-table.js
 js/bootstrap.min.js
 js/jquery-2.1.3.min.js
-js/
+js/main.js
+js/main2.js
+js/map.js
+js/stringBuffer.js
+js/trim.js
 
 ### oauth 개인정보 무시 ###
 application-oauth.yml
