@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="#header" th:replace="header :: header"></attr>
+    <attr sel="#footer" th:replace="footer :: footer"></attr>
+
+    <attr sel="#groupImages" th:each="imageFile : ${groupTab.uploadFile}" th:src="|/images/${imageFile.getStoreFileName()}|"> </attr>
+    <attr sel="#groupName" th:text="${groupTab.groupName}" > </attr>
+    <attr sel="#groupIntro" th:text="${groupTab.groupIntro}"> </attr>
+    <attr sel="#userId" th:text="${groupTab.userId}"> </attr>
+    <attr sel="#groupLocation" th:text="${groupTab.groupLocation}"> </attr>
+    <attr sel="#interest" th:text="${groupTab.interest}"> </attr>
+    <attr sel="#memberLimit" th:text="${groupTab.memberLimit}"> </attr>
+
+
+<!--    <attr sel="#createGathering" th:if="${!#lists.isEmpty(checkMember)}"/>-->
+<!--    <attr sel="#modifyGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
+<!--    <attr sel="#deleteGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
+<!--    <attr sel="#joinGroup" th:if="${#lists.isEmpty(checkMember)}" th:href="@{'/groupTabs/' + ${groupTabs.id}}"/>-->
+<!--    <attr sel="#quitGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
+
+    <attr sel="#createGathering" th:if="${checkMember.grade lt 3}"/>
+
+    <attr sel="#modifyGroup" th:if="${checkMember.grade < 2}"/>
+    <attr sel="#deleteGroup" th:if="${checkMember.grade < 2}"/>
+    <attr sel="#joinGroup" th:if="${checkMember.grade eq 3}" th:onclick="|groupJoin(' ${groupTab.id} ',' ${checkMember.grade}')|"/>
+    <attr sel="#quitGroup" th:if="${checkMember.grade < 3}" th:onclick="|groupQuit(' ${groupTab.id} ',' ${checkMember.grade}')|"/>
+
+
+
+
+    <attr sel="#groupTab-member">
+        <attr sel="li[0]" th:each="membersName : ${membersNameList}"/>
+        <attr sel="a" th:text="|${membersName.userId}  ${membersName.grade}|" />
+    </attr>
+
+
+
+</thlogic>

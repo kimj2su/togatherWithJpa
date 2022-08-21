@@ -66,8 +66,8 @@
     <!-- ======= Breadcrumbs ======= -->
     <div class="breadcrumbs" data-aos="fade-in">
         <div class="container">
-            <h1>${groupInfo.gname}</h1>
-            <p>${groupInfo.rdate }</p>
+            <h1>모임 이름</h1>
+            <p>모임 만든 날짜</p>
         </div>
     </div>
     <!-- End Breadcrumbs -->
@@ -94,34 +94,34 @@
             </div>
             <div class="row">
                 <div class="col-lg-8">
-                    <img src="/assets/img/groupImages/${groupInfo.fname}"
+                    <img id="groupImages"
                          width="856px"
                          height="383px"
                          alt=""/>
-                    <h3>${groupInfo.gname}</h3>
-                    <p>
-                        ${groupInfo.gintro}
+                    <h3 id="groupName">모임 이름</h3>
+                    <p id="groupIntro">
+                        모임 소개
                     </p>
                 </div>
                 <div class="col-lg-4">
                     <div class="course-info d-flex justify-content-between align-items-center">
                         <h5>모임장</h5>
-                        <p><a href="#">${groupMemberName.mname }</a></p>
+                        <p><a id="userId" href="#">김지수</a></p>
                     </div>
 
                     <div class="course-info d-flex justify-content-between align-items-center">
                         <h5>지역</h5>
-                        <p>${groupInfo.gloc}</p>
+                        <p id="groupLocation">서울</p>
                     </div>
 
                     <div class="course-info d-flex justify-content-between align-items-center"\>
                         <h5>관심사</h5>
-                        <p>${groupInfo.interest}</p>
+                        <p id="interest">개발</p>
                     </div>
 
                     <div class="course-info d-flex justify-content-between align-items-center">
                         <h5>정원</h5>
-                        <p>${groupMemberCount}/${groupInfo.limit}</p>
+                        <p id="memberLimit">100명</p>
                     </div>
                     <!-- 정모목록 부분-->
 <!--                    <c:if test="${memInGroupCheck ne null || m.athur eq 0 || m.athur eq 1}">-->
@@ -152,33 +152,28 @@
                         </div>
 <!--                    </c:if>-->
                     <!--정모목록 끝-->
-                    <div class="d-grid gap-2 mt-3 mb-3">
+                    <div id="memberInGroupCheck" class="d-grid gap-2 mt-3 mb-3">
 <!--                        <c:if test="${memInGroupCheck ne null || m.athur eq 0 || m.athur eq 1}">-->
-                            <button
+                            <button id="createGathering"
                                     type="button"
-                                    class="btn btn-outline-success"
-                                    onclick="location.href='javascript:gatheringCreateCheck()'">
+                                    class="btn btn-outline-success">
                                 정모만들기
                             </button>
 <!--                        </c:if>-->
-                        <button type="button" class="btn btn-outline-secondary"
-                                onclick="location.href='javascript:groupUpdateCheck()'">
+                        <button id="modifyGroup" type="button" class="btn btn-outline-secondary">
                             모임 수정하기
                         </button>
-                        <button type="button" class="btn btn-outline-danger"
-                                onclick="location.href='javascript:groupDeleteCheck()'">
+                        <button id="deleteGroup" type="button" class="btn btn-outline-danger">
                             모임 삭제하기
                         </button>
 <!--                        <c:choose>-->
 <!--                            <c:when test="${memInGroupCheck eq null}">-->
-                                <button type="button" class="btn btn-outline-primary"
-                                        onclick="location.href='javascript:groupJoin()'">
+                                <button id="joinGroup" type="button" class="btn btn-outline-primary">
                                     모임 가입하기
                                 </button>
 <!--                            </c:when>-->
 <!--                            <c:otherwise>-->
-                                <button type="button" class="btn btn-outline-dark"
-                                        onclick="location.href='javascript:groupQuit()'">
+                                <button id="quitGroup" type="button" class="btn btn-outline-dark">
                                     모임 탈퇴하기
                                 </button>
 <!--                            </c:otherwise>-->
@@ -197,24 +192,9 @@
     <section id="cource-details-tabs" class="cource-details-tabs">
         <div class="container" data-aos="fade-up">
             <div class="row">
-                <div class="col-lg-3">
-                    <ul class="nav nav-tabs flex-column">
-<!--                        <c:forEach var='memInGroupName' items='${memInGroupName}' varStatus="index">-->
-<!--                            <c:choose>-->
-<!--                                <c:when test="${memInGroupName.GRADE eq 0}">-->
-<!--                                    <c:set var="grade" value="모임장"/>-->
-<!--                                </c:when>-->
-<!--                                <c:when test="${memInGroupName.GRADE eq 1}">-->
-<!--                                    <c:set var="grade" value="운영진"/>-->
-<!--                                </c:when>-->
-<!--                                <c:otherwise>-->
-<!--                                    <c:set var="grade" value=""/>-->
-<!--                                </c:otherwise>-->
-<!--                            </c:choose>-->
-<!--                            <li class='nav-item'>-->
-<!--                                <a class='nav-link' data-bs-toggle='tab' href="javascript:void(0);" onclick="memberInfo(${index.index});">${memInGroupName.MNAME}&nbsp;&nbsp;&nbsp;${grade}</a>-->
-<!--                            </li>-->
-<!--                        </c:forEach>-->
+                <div id="groupTab-member" class="col-lg-3">
+                    <ul  class="nav nav-tabs flex-column">
+                        <li class='nav-item'><a id="eachUserId" class='nav-link' data-bs-toggle='tab' href="">이름</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-9 mt-4 mt-lg-0" id="memInfo">
@@ -223,9 +203,8 @@
                             <div class="row">
                                 <div class="col-lg-8 details order-2 order-lg-1">
                                     <h3>멤버정보</h3>
-                                    <p> 이름: ${memberInfo.mname}</p>
-                                    <p> 생년월일: ${memberInfo.birth} </p>
-                                    <p> 거주지: ${memberInfo.maddr} </p>
+                                    이름 <p ></p>
+                                    권한 <p id="grade"></p>
                                 </div>
                                 <div class="col-lg-4 text-center order-1 order-lg-2">
                                 </div>
@@ -263,5 +242,6 @@
 
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
+<script type="text/javascript" th:src="@{/js/grouptabs/GroupTabs.js}"></script>
 </body>
 </html>
