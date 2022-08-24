@@ -3,15 +3,14 @@ package team1.togather.dto.request;
 import lombok.Data;
 import org.springframework.web.multipart.MultipartFile;
 import team1.togather.domain.groupTab.UploadFile;
-import team1.togather.domain.member.Member;
+import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.MemberInGroupTabDto;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class GroupTabRequestDto {
@@ -58,7 +57,7 @@ public class GroupTabRequestDto {
                 this.memberLimit,
                 this.uploadFile,
                 memberDto,
-                List.of(MemberInGroupTabDto.of(memberDto, 0L))
+                Set.of(MemberInGroupTabDto.of(memberDto, MemberGrade.GROUP_MASTER))
         );
     }
 }

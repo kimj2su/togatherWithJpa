@@ -30,15 +30,16 @@ public class MemberInGroupTab extends AuditingFields {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private Long grade;
+    @Enumerated(EnumType.STRING)
+    private MemberGrade grade;
 
-    private MemberInGroupTab(GroupTab groupTab, Member member, Long grade) {
+    private MemberInGroupTab(GroupTab groupTab, Member member, MemberGrade grade) {
         this.groupTab = groupTab;
         this.member = member;
         this.grade = grade;
     }
 
-    public static MemberInGroupTab of(GroupTab groupTab, Member member, Long grade) {
+    public static MemberInGroupTab of(GroupTab groupTab, Member member, MemberGrade grade) {
         return new MemberInGroupTab(groupTab, member, grade);
     }
 
@@ -46,7 +47,7 @@ public class MemberInGroupTab extends AuditingFields {
         this.groupTab = groupTab;
     }
 
-    public void updateGrade(Long grade) {
+    public void updateGrade(MemberGrade grade) {
         this.grade = grade;
     }
 

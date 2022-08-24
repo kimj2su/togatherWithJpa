@@ -1,7 +1,7 @@
 function groupJoin(id, grade){
     console.log("id: " + id + ", grade: " + grade);
         let groupTabId = id;
-        let result = {"groupTabId" : groupTabId, "grade" : grade};
+        let result = {"groupTabId" : groupTabId, "gradeNumber" : grade};
         $.ajax({
             url: "/mig/new/" + groupTabId,
             type: "POST",
@@ -15,7 +15,7 @@ function groupJoin(id, grade){
 function groupQuit(id, grade){
     console.log("id: " + id + ", grade: " + grade);
     let groupTabId = id;
-    let result = {"groupTabId" : groupTabId, "grade" : grade};
+    let result = {"groupTabId" : groupTabId, "gradeNumber" : grade};
     $.ajax({
         url: "/mig/delete/" + groupTabId,
         type: "POST",

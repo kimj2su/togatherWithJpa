@@ -7,12 +7,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team1.togather.domain.groupTab.GroupTab;
+import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.member.Member;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.dto.MemberInGroupTabDto;
 import team1.togather.repository.GroupTabRepository;
-import team1.togather.repository.MemberInGroupTabRepository;
 import team1.togather.repository.MemberRepository;
 
 import javax.persistence.EntityNotFoundException;
@@ -27,10 +27,6 @@ public class GroupTabService {
 
     private final MemberRepository memberRepository;
 
-    private static final long GROUP_MASTER = 0L;
-
-
-
     public Page<GroupTabDto> indexGroupTabs(Pageable pageable) {
        return groupTabRepository.findAll(pageable).map(GroupTabDto::from);
     }
@@ -39,7 +35,7 @@ public class GroupTabService {
     public void saveGroupTab(GroupTabDto dto) {
         Member member = memberRepository.getReferenceById(dto.getMemberDto().getMemberId());
         GroupTab saveGroupTab = groupTabRepository.save(dto.toEntity(member));
-        MemberInGroupTabDto memberInGroupTabDto =  MemberInGroupTabDto.of(saveGroupTab.getId(), dto.getMemberDto(), GROUP_MASTER);
+        MemberInGroupTabDto memberInGroupTabDto =  MemberInGroupTabDto.of(saveGroupTab.getId(), dto.getMemberDto(), MemberGrade.GROUP_MASTER);
         saveGroupTab.addMemberInGroupTab(memberInGroupTabDto.toEntity(saveGroupTab, member));
     }
 

@@ -7,7 +7,6 @@ import lombok.ToString;
 import team1.togather.domain.AuditingFields;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
-import team1.togather.domain.member.Role;
 
 import javax.persistence.*;
 
@@ -53,7 +52,7 @@ public class GroupTab extends AuditingFields {
     @ToString.Exclude
     @OrderBy("grade asc ")
     @OneToMany(mappedBy = "groupTab", cascade = CascadeType.ALL)
-    private final List<MemberInGroupTab> membersInGroupTab = new ArrayList<>();
+    private final Set<MemberInGroupTab> membersInGroupTab = new LinkedHashSet<>();
 
     public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
         this.groupLocation = groupLocation;

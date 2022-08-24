@@ -13,6 +13,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
@@ -243,14 +244,14 @@ class GroupTabServiceTest {
         );
     }
 
-    private List<MemberInGroupTabDto> createMemberInGroupTabDtoList() {
-        return List.of();
+    private Set<MemberInGroupTabDto> createMemberInGroupTabDtoList() {
+        return Set.of();
     }
     private MemberInGroupTab createMemberInGroupTab() {
         return  MemberInGroupTab.of(
                 createGroupTab(),
                 createNewMember(),
-                2L
+                MemberGrade.GROUP_MASTER
         );
     }
 

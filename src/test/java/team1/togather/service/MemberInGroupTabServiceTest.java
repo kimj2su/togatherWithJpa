@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
@@ -102,7 +103,7 @@ class MemberInGroupTabServiceTest {
                 memberId,
                 1L,
                 createNewMemberDto(),
-                0L,
+                MemberGrade.GROUP_MASTER,
                 LocalDateTime.now(),
                 "jisu",
                 LocalDateTime.now(),
@@ -144,7 +145,7 @@ class MemberInGroupTabServiceTest {
                         createGroupUploadFile(),
                         createNewMember())
                 ,createNewMember()
-                ,2L
+                ,MemberGrade.GROUP_MASTER
         );
     }
     private GroupUploadFile createGroupUploadFile() {

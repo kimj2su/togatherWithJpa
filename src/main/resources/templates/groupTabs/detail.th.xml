@@ -18,19 +18,19 @@
 <!--    <attr sel="#joinGroup" th:if="${#lists.isEmpty(checkMember)}" th:href="@{'/groupTabs/' + ${groupTabs.id}}"/>-->
 <!--    <attr sel="#quitGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
 
-    <attr sel="#createGathering" th:if="${checkMember.grade lt 3}"/>
+    <attr sel="#createGathering" th:if="${checkMember.grade.grade lt 3}"/>
 
-    <attr sel="#modifyGroup" th:if="${checkMember.grade < 2}"/>
-    <attr sel="#deleteGroup" th:if="${checkMember.grade < 2}"/>
-    <attr sel="#joinGroup" th:if="${checkMember.grade eq 3}" th:onclick="|groupJoin(' ${groupTab.id} ',' ${checkMember.grade}')|"/>
-    <attr sel="#quitGroup" th:if="${checkMember.grade < 3}" th:onclick="|groupQuit(' ${groupTab.id} ',' ${checkMember.grade}')|"/>
+    <attr sel="#modifyGroup" th:if="${checkMember.grade.grade < 2}"/>
+    <attr sel="#deleteGroup" th:if="${checkMember.grade.grade < 2}"/>
+    <attr sel="#joinGroup" th:if="${checkMember.grade.grade eq 3}" th:onclick="|groupJoin(' ${groupTab.id} ',' ${checkMember.grade.grade}')|"/>
+    <attr sel="#quitGroup" th:if="${checkMember.grade.grade < 3}" th:onclick="|groupQuit(' ${groupTab.id} ',' ${checkMember.grade.grade}')|"/>
 
 
 
 
     <attr sel="#groupTab-member">
         <attr sel="li[0]" th:each="membersName : ${membersNameList}"/>
-        <attr sel="a" th:text="|${membersName.userId}  ${membersName.grade}|" />
+        <attr sel="a" th:text="|${membersName.userId} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ${membersName.grade.description}|" />
     </attr>
 
 

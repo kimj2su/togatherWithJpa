@@ -8,6 +8,7 @@ import team1.togather.domain.member.Member;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -27,7 +28,7 @@ public class GroupTabDto {
 
     private final MemberDto memberDto;
 
-    private final List<MemberInGroupTabDto> memberInGroupTabDto;
+    private final Set<MemberInGroupTabDto> memberInGroupTabDto;
 
     private final LocalDateTime createdAt;
     private final String createdBy;
@@ -39,7 +40,7 @@ public class GroupTabDto {
     public static GroupTabDto of(String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 MemberDto memberDto, List<MemberInGroupTabDto> memberInGroupTabDto) {
+                                 MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto) {
         return new GroupTabDto(
                 null,
                 groupLocation,
@@ -60,7 +61,7 @@ public class GroupTabDto {
     public static GroupTabDto of(Long id, String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 MemberDto memberDto, List<MemberInGroupTabDto> memberInGroupTabDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String userId) {
+                                 MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new GroupTabDto(
                 id,
                 groupLocation,

@@ -4,7 +4,8 @@ import lombok.Data;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.GroupTabWithMembersDto;
 
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -18,9 +19,9 @@ public class GroupTabWithMembersResponseDto {
     private final int memberLimit;
     private final UploadFile uploadFile;
     private final String userId;
-    private final List<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos;
+    private final Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos;
 
-    public static GroupTabWithMembersResponseDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId, List<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos) {
+    public static GroupTabWithMembersResponseDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId, Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos) {
         return new GroupTabWithMembersResponseDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, userId, memberInGroupTabResponseDtos);
     }
 
@@ -36,7 +37,7 @@ public class GroupTabWithMembersResponseDto {
                 membersInGroupTabDto.getMemberDto().getUserId(),
                 membersInGroupTabDto.getMemberInGroupTabDto().stream()
                         .map(MemberInGroupTabResponseDto::from)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toCollection(LinkedHashSet::new))
         );
     }
 }

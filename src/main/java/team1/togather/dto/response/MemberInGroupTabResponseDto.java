@@ -1,7 +1,7 @@
 package team1.togather.dto.response;
 
 import lombok.Data;
-import team1.togather.dto.MemberDto;
+import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.dto.MemberInGroupTabDto;
 
 import java.time.LocalDateTime;
@@ -11,10 +11,10 @@ public class MemberInGroupTabResponseDto {
 
 //    private final Long id;
     private final String userId;
-    private final Long grade;
+    private final MemberGrade grade;
 //    private final LocalDateTime createdAt;
 
-    public static MemberInGroupTabResponseDto of(String userId, Long grade) {
+    public static MemberInGroupTabResponseDto of(String userId, MemberGrade grade) {
         return new MemberInGroupTabResponseDto(userId, grade);
     }
 

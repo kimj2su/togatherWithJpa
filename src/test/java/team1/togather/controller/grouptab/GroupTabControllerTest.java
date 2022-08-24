@@ -13,6 +13,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.GroupTabWithMembersDto;
@@ -28,6 +29,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -173,7 +175,7 @@ class GroupTabControllerTest {
     }
 
     private MemberInGroupTabDto createMemberInGroupTabDto() {
-        return MemberInGroupTabDto.from(0L);
+        return MemberInGroupTabDto.from(MemberGrade.GROUP_MASTER);
     }
     private List<MemberInGroupTabDto> createMemberInGroupTab() {
         return List.of();
@@ -189,7 +191,7 @@ class GroupTabControllerTest {
                 10,
                 createUploadFile(),
                 createMemberDto(),
-                List.of(),
+                Set.of(),
                 LocalDateTime.now(),
                 "jisu",
                 LocalDateTime.now(),

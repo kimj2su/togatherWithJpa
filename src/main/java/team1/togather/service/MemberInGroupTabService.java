@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team1.togather.domain.groupTab.GroupTab;
+import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.dto.MemberInGroupTabDto;
@@ -15,8 +16,6 @@ import team1.togather.repository.MemberRepository;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static team1.togather.config.constant.Constant.NOT_GROUP_IN_USER;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class MemberInGroupTabService {
     public MemberInGroupTabDto searchMemberInGroupTab(Long groupTabId, Long memberId) {
         List<MemberInGroupTab> by = memberInGroupTabRepository.findByGroupTab_IdAndMember_Id(groupTabId, memberId);
         if (by.size() == 0) {
-            return MemberInGroupTabDto.from(NOT_GROUP_IN_USER);
+            return MemberInGroupTabDto.from(MemberGrade.NOT_GROUP_IN_USER);
         }
         return MemberInGroupTabDto.from(by.get(0));
     }

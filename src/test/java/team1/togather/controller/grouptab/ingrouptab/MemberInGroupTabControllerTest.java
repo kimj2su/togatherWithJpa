@@ -53,12 +53,10 @@ class MemberInGroupTabControllerTest {
                         post("/mig/new/" + groupTabId)
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("groupTabId", String.valueOf(memberInGroupTabsRequestDto.getGroupTabId()))
-                                .param("grade", String.valueOf(memberInGroupTabsRequestDto.getGrade()))
+                                .param("gradeNumber", String.valueOf(memberInGroupTabsRequestDto.getGradeNumber()))
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/groupTabs/" + groupTabId))
-                .andExpect(redirectedUrl("/groupTabs/" + groupTabId));
+                .andExpect(status().isOk());
         then(memberInGroupTabService).should().saveMemberInGroupTab(any(MemberInGroupTabDto.class));
     }
 
@@ -79,12 +77,10 @@ class MemberInGroupTabControllerTest {
                         post("/mig/delete/" + groupTabId)
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("groupTabId", String.valueOf(memberInGroupTabsRequestDto.getGroupTabId()))
-                                .param("grade", String.valueOf(memberInGroupTabsRequestDto.getGrade()))
+                                .param("gradeNumber", String.valueOf(memberInGroupTabsRequestDto.getGradeNumber()))
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/groupTabs/" + groupTabId))
-                .andExpect(redirectedUrl("/groupTabs/" + groupTabId));
+                .andExpect(status().isOk());
         then(memberInGroupTabService).should().deleteMemberInGroupTab(groupTabId, memberId);
     }
 
@@ -104,12 +100,10 @@ class MemberInGroupTabControllerTest {
                         post("/mig/new/" + groupTabId)
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("groupTabId", String.valueOf(memberInGroupTabsRequestDto.getGroupTabId()))
-                                .param("grade", String.valueOf(memberInGroupTabsRequestDto.getGrade()))
+                                .param("gradeNumber", String.valueOf(memberInGroupTabsRequestDto.getGradeNumber()))
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/groupTabs/" + groupTabId))
-                .andExpect(redirectedUrl("/groupTabs/" + groupTabId));
+                .andExpect(status().isOk());
         then(memberInGroupTabService).should().saveMemberInGroupTab(any(MemberInGroupTabDto.class));
     }
 
@@ -130,13 +124,12 @@ class MemberInGroupTabControllerTest {
                         post("/mig/delete/" + groupTabId)
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .param("groupTabId", String.valueOf(memberInGroupTabsRequestDto.getGroupTabId()))
-                                .param("grade", String.valueOf(memberInGroupTabsRequestDto.getGrade()))
+                                .param("gradeNumber", String.valueOf(memberInGroupTabsRequestDto.getGradeNumber()))
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/groupTabs/" + groupTabId))
-                .andExpect(redirectedUrl("/groupTabs/" + groupTabId));
+                .andExpect(status().isOk());
         then(memberInGroupTabService).should().deleteMemberInGroupTab(groupTabId, memberId);
+
     }
 
     private MemberInGroupTabsRequestDto createMemberInGroupTabsRequestDto(Long groupTabId, Long grade) {

@@ -5,7 +5,8 @@ import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.UploadFile;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Data
@@ -27,14 +28,14 @@ public class GroupTabWithMembersDto {
 
     private final MemberDto memberDto;
 
-    private final List<MemberInGroupTabDto> memberInGroupTabDto;
+    private final Set<MemberInGroupTabDto> memberInGroupTabDto;
 
     private final LocalDateTime createdAt;
     private final String createdBy;
     private final LocalDateTime modifiedAt;
     private final String modifiedBy;
 
-    public static GroupTabWithMembersDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, MemberDto memberDto, List<MemberInGroupTabDto> memberInGroupTabDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+    public static GroupTabWithMembersDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new GroupTabWithMembersDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, memberDto, memberInGroupTabDto, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
@@ -50,7 +51,7 @@ public class GroupTabWithMembersDto {
                 MemberDto.from(entity.getMember()),
                 entity.getMembersInGroupTab().stream()
                         .map(MemberInGroupTabDto::from)
-                        .collect(Collectors.toList()),
+                        .collect(Collectors.toCollection(LinkedHashSet::new)),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
