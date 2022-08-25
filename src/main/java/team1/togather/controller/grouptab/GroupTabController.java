@@ -14,8 +14,8 @@ import team1.togather.dto.request.GroupTabRequestDto;
 import team1.togather.dto.response.GroupTabWithMembersResponseDto;
 import team1.togather.dto.response.MemberInGroupTabResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
-import team1.togather.service.GroupTabService;
-import team1.togather.service.MemberInGroupTabService;
+import team1.togather.service.grouptab.GroupTabService;
+import team1.togather.service.grouptab.MemberInGroupTabService;
 
 import javax.validation.Valid;
 import java.io.IOException;

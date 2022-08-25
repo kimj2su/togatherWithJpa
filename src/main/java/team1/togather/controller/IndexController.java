@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 import team1.togather.config.file.FileStore;
 import team1.togather.dto.response.GroupTabResponseDto;
-import team1.togather.service.GroupTabService;
+import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.PaginationService;
 
 import java.net.MalformedURLException;

@@ -1,4 +1,4 @@
-package team1.togather.service;
+package team1.togather.service.member;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import team1.togather.config.file.FileStore;
 import team1.togather.security.configs.TestSecurityConfig;
-import team1.togather.service.GroupTabService;
+import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.PaginationService;
 
 import java.util.List;

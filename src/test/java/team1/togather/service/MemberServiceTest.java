@@ -14,6 +14,7 @@ import team1.togather.dto.MemberDto;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
 import team1.togather.security.configs.SecurityConfig;
+import team1.togather.service.member.MemberService;
 
 import java.util.HashSet;
 import java.util.Set;

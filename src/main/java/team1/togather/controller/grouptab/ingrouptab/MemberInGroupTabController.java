@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team1.togather.dto.request.MemberInGroupTabsRequestDto;
 import team1.togather.security.auth.PrincipalDetails;
-import team1.togather.service.MemberInGroupTabService;
+import team1.togather.service.grouptab.MemberInGroupTabService;
 
 @RequiredArgsConstructor
 @RestController

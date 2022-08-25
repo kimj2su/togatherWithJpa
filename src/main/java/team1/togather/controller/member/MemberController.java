@@ -12,7 +12,8 @@ import team1.togather.dto.request.MemberOauth2RequestDto;
 import team1.togather.dto.request.MemberRequestDto;
 import team1.togather.dto.response.MemberResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
-import team1.togather.service.MemberService;
+import team1.togather.service.member.CategoryService;
+import team1.togather.service.member.MemberService;
 
 
 @Slf4j
@@ -22,10 +23,13 @@ import team1.togather.service.MemberService;
 public class MemberController {
 
     private final MemberService memberService;
+    private final CategoryService categoryService;
 
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("member", new MemberResponseDto());
+        model.addAttribute("firstCategory", categoryService.searchIntOut());
+        System.out.println("categoryService.searchIntOut(): " + categoryService.searchIntOut());
         return "members/createMemberForm";
     }
 

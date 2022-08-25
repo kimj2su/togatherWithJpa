@@ -13,7 +13,7 @@ import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.request.MemberRequestDto;
 import team1.togather.security.configs.TestSecurityConfig;
-import team1.togather.service.MemberService;
+import team1.togather.service.member.MemberService;
 
 import java.util.HashSet;
 import java.util.Set;

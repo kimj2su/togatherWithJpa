@@ -14,8 +14,8 @@ import team1.togather.dto.request.MemberInGroupTabsRequestDto;
 import team1.togather.security.configs.SecurityConfig;
 import team1.togather.security.configs.annotation.WithMember;
 import team1.togather.security.configs.annotation.WithOauth2Member;
-import team1.togather.service.GroupTabService;
-import team1.togather.service.MemberInGroupTabService;
+import team1.togather.service.grouptab.GroupTabService;
+import team1.togather.service.grouptab.MemberInGroupTabService;
 
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.then;

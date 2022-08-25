@@ -5,7 +5,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.security.access.hierarchicalroles.RoleHierarchyImpl;
 import org.springframework.stereotype.Component;
-import team1.togather.service.RoleHierarchyService;
+import team1.togather.service.member.RoleHierarchyService;
 
 @Component
 @RequiredArgsConstructor

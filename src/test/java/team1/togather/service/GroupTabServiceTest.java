@@ -25,6 +25,7 @@ import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
 import team1.togather.security.configs.TestSecurityConfig;
+import team1.togather.service.grouptab.GroupTabService;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.HashSet;

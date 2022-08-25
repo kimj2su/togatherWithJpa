@@ -44,7 +44,6 @@ public class Member implements Serializable {
     private String category_second;
     private String category_third;
 
-    @CreatedDate
     private LocalDateTime createdDate;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -85,6 +84,7 @@ public class Member implements Serializable {
         this.category_first = category_first;
         this.category_second = category_second;
         this.category_third = category_third;
+        this.createdDate = LocalDateTime.now();
         this.memberRoles = memberRoles;
     }
 
