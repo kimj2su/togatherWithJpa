@@ -32,11 +32,12 @@ public class GroupTabService {
     }
 
 
-    public void saveGroupTab(GroupTabDto dto) {
+    public Long saveGroupTab(GroupTabDto dto) {
         Member member = memberRepository.getReferenceById(dto.getMemberDto().getMemberId());
         GroupTab saveGroupTab = groupTabRepository.save(dto.toEntity(member));
         MemberInGroupTabDto memberInGroupTabDto =  MemberInGroupTabDto.of(saveGroupTab.getId(), dto.getMemberDto(), MemberGrade.GROUP_MASTER);
         saveGroupTab.addMemberInGroupTab(memberInGroupTabDto.toEntity(saveGroupTab, member));
+        return saveGroupTab.getId();
     }
 
     @Transactional(readOnly = true)

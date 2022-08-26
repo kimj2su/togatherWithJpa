@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.request.GroupTabRequestDto;
@@ -37,7 +38,8 @@ public class GroupTabController {
     }
 
     @PostMapping("/new")
-    public String saveGroupTab(@Valid @ModelAttribute("groupTab") GroupTabRequestDto groupTabRequestDto, BindingResult bindingResult, @AuthenticationPrincipal PrincipalDetails principalDetails) throws IOException {
+    public String saveGroupTab(@Valid @ModelAttribute("groupTab") GroupTabRequestDto groupTabRequestDto, BindingResult bindingResult,
+                               @AuthenticationPrincipal PrincipalDetails principalDetails, RedirectAttributes redirectAttributes) throws IOException {
         if (bindingResult.hasErrors()) {
             log.info("error={}", bindingResult);
             return "groupTabs/createGroupTabForm";
@@ -45,8 +47,9 @@ public class GroupTabController {
         UploadFile uploadFile = fileStore.storeFile(groupTabRequestDto.getAttachFile()); // UUID에서 리턴받은 파일네임
         groupTabRequestDto.setUploadFile(uploadFile);
 
-        groupTabService.saveGroupTab(groupTabRequestDto.toDto(principalDetails.toDto()));
-        return "redirect:/";
+        Long groupTabId = groupTabService.saveGroupTab(groupTabRequestDto.toDto(principalDetails.toDto()));
+        redirectAttributes.addAttribute("groupTabId", groupTabId);
+        return "redirect:/groupTabs/{groupTabId}";
     }
 
     @GetMapping("/{groupTabId}")

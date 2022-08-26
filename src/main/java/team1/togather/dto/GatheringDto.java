@@ -40,7 +40,7 @@ public class GatheringDto {
         );
     }
 
-    public Gathering toEntity(GroupTab groupTab) {
+    public Gathering toEntity(GroupTab groupTab, Member member) {
         return Gathering.of(
                 null,
                 gaName,
@@ -50,7 +50,7 @@ public class GatheringDto {
                 price,
                 gaLimit,
                 groupTab,
-                memberDto.toEntity()
+                member
         );
     }
 }

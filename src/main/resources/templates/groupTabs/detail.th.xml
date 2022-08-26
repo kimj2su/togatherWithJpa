@@ -18,7 +18,7 @@
 <!--    <attr sel="#joinGroup" th:if="${#lists.isEmpty(checkMember)}" th:href="@{'/groupTabs/' + ${groupTabs.id}}"/>-->
 <!--    <attr sel="#quitGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
 
-    <attr sel="#createGathering" th:if="${checkMember.grade.grade lt 3}"/>
+    <attr sel="#createGathering" th:if="${checkMember.grade.grade lt 3}" th:onclick="|gatheringForm('${groupTab.id}')|"/>
 
     <attr sel="#modifyGroup" th:if="${checkMember.grade.grade < 2}"/>
     <attr sel="#deleteGroup" th:if="${checkMember.grade.grade < 2}"/>

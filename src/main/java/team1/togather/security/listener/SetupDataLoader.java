@@ -69,6 +69,7 @@ public class SetupDataLoader implements ApplicationListener<ContextRefreshedEven
         createResourceIfNotFound("/admin/**", "", adminRoles, "url");
         createResourceIfNotFound("/member/new", "", userRoles, "url");
         createResourceIfNotFound("/groupTabs/**", "", userRoles, "url");
+        createResourceIfNotFound("/gatherings/**", "", userRoles, "url");
 
         createUserIfNotFound("김지수1", "jisu1", "1234","admin@gmail.com",
                 "1996-05-14", "M",  "독서", "게임", "개발", adminRoles);

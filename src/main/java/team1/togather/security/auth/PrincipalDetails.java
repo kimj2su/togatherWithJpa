@@ -81,10 +81,10 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
     public MemberDto toDto() {
         return MemberDto.of(
                 member.getId(),
-                member.getEmail(),
-                member.getPassword(),
                 member.getUsername(),
                 member.getUserId(),
+                member.getPassword(),
+                member.getEmail(),
                 member.getBirth(),
                 member.getGender(),
                 member.getCategory_first(),

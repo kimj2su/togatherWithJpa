@@ -25,3 +25,9 @@ function groupQuit(id, grade){
         }
     });
 }
+
+function gatheringForm(id){
+    console.log("id: " + id);
+    let groupTabId = id;
+    location.href="/gatherings/new/" + id;
+}

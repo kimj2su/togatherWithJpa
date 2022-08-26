@@ -75,7 +75,7 @@ class GroupTabControllerTest {
         // Given
         GroupTabRequestDto groupTabRequestDto = createGroupTabRequestDto();
 
-        willDoNothing().given(groupTabService).saveGroupTab(any(GroupTabDto.class));
+        given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(anyLong());
 
         // When & Then
         mvc.perform(
@@ -93,9 +93,7 @@ class GroupTabControllerTest {
                                 .contentType(MediaType.MULTIPART_FORM_DATA) // 4
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"))
-                .andExpect(redirectedUrl("/"));
+                .andExpect(status().is3xxRedirection());
 
         then(groupTabService).should().saveGroupTab(any(GroupTabDto.class));
     }
@@ -107,7 +105,7 @@ class GroupTabControllerTest {
         // Given
         GroupTabRequestDto groupTabRequestDto = createGroupTabRequestDto();
 
-        willDoNothing().given(groupTabService).saveGroupTab(any(GroupTabDto.class));
+        given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(anyLong());
 
         // When & Then
         mvc.perform(
@@ -125,9 +123,7 @@ class GroupTabControllerTest {
                                 .contentType(MediaType.MULTIPART_FORM_DATA) // 4
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection())
-                .andExpect(view().name("redirect:/"))
-                .andExpect(redirectedUrl("/"));
+                .andExpect(status().is3xxRedirection());
 
         then(groupTabService).should().saveGroupTab(any(GroupTabDto.class));
     }
@@ -167,10 +163,6 @@ class GroupTabControllerTest {
                 .andExpect(model().attributeExists("membersNameList"));
         then(groupTabService).should().getGroupTabWithMembers(groupTabId);
         then(memberInGroupTabService).should().searchMemberInGroupTab(groupTabId, memberId);
-//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId).size()).isEqualTo(0);
-//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isEqualTo(null);
-//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isEmpty();
-//        assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isEqualTo(null);
         assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isNotNull();
     }
 

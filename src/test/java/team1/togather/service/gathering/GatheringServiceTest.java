@@ -15,20 +15,22 @@ import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.GatheringDto;
-import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
 import team1.togather.repository.GatheringRepository;
 import team1.togather.repository.GroupTabRepository;
+import team1.togather.repository.MemberRepository;
 import team1.togather.security.configs.TestSecurityConfig;
+import team1.togather.security.configs.annotation.WithOauth2Member;
 
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.*;
 
 @DisplayName("정모 서비스 테스트")
 @Import({TestSecurityConfig.class})
@@ -42,15 +44,18 @@ class GatheringServiceTest {
     private GatheringRepository gatheringRepository;
     @Mock
     private GroupTabRepository groupTabRepository;
+    @Mock
+    private MemberRepository memberRepository;
 
+
+    @WithOauth2Member
     @DisplayName("정모 정보를 입력하면, 정모를 생성한다.")
     @Test
-    void givenGroupTabInfo_whenSavingGroupTab_thenSavesGroupTab() {
+    void givenGatheringInfo_whenSavingGathering_thenSavesGathering() {
         // Given
         GatheringDto gatheringDto = createGatheringDto();
         Gathering gathering = createGathering();
-        given(groupTabRepository.getReferenceById(gatheringDto.getGroupTabId())).willReturn(createGroupTab());
-        given(gatheringRepository.save(any(Gathering.class))).willReturn(createGathering());
+        given(gatheringRepository.save(any(Gathering.class))).willReturn(gathering);
 
         // When
         sut.saveGathering(gatheringDto);
@@ -58,6 +63,44 @@ class GatheringServiceTest {
         // Then
         then(groupTabRepository).should().getReferenceById(gatheringDto.getGroupTabId());
         then(gatheringRepository).should().save(any(Gathering.class));
+    }
+
+    @DisplayName("정모를 삭제한다.")
+    @Test
+    void givenGatheringId_whenDeletingGathering_thenDeletesGathering() {
+        // Given
+        Long gatheringId = 1L;
+        willDoNothing().given(gatheringRepository).deleteById(gatheringId);
+
+        // When
+        sut.deleteGathering(1L);
+
+        // Then
+        then(gatheringRepository).should().deleteById(gatheringId);
+    }
+
+    @DisplayName("정모을 조회하면, 정모을 반환한다.")
+    @Test
+    void givenGatheringId_whenSearchingGathering_thenReturnsGathering() {
+        // Given
+        Long gatheringId = 1L;
+        Gathering gathering = createGathering();
+        given(gatheringRepository.findById(gatheringId)).willReturn(Optional.of(gathering));
+
+        // When
+        GatheringDto gatheringDto = sut.getGathering(gatheringId);
+
+        // Then
+        assertThat(gatheringDto)
+                .hasFieldOrPropertyWithValue("gaName", gatheringDto.getGaName())
+                .hasFieldOrPropertyWithValue("gaDate", gatheringDto.getGaDate())
+                .hasFieldOrPropertyWithValue("time", gatheringDto.getTime())
+                .hasFieldOrPropertyWithValue("gaPlace", gatheringDto.getGaPlace())
+                .hasFieldOrPropertyWithValue("price", gatheringDto.getPrice())
+                .hasFieldOrPropertyWithValue("gaLimit", gatheringDto.getGaLimit())
+                .hasFieldOrPropertyWithValue("groupTabId", gatheringDto.getGroupTabId())
+                .hasFieldOrPropertyWithValue("memberDto", gatheringDto.getMemberDto());
+        then(gatheringRepository).should().findById(gatheringId);
     }
 
     private Gathering createGathering() {
@@ -95,6 +138,7 @@ class GatheringServiceTest {
     private UploadFile createUploadFile() {
         return new UploadFile("테스트 파일 이름", "테스트 서버 저장 파일 이름");
     }
+
     private GatheringDto createGatheringDto() {
         return GatheringDto.of(
                 1L,
@@ -112,11 +156,11 @@ class GatheringServiceTest {
     private MemberDto createMemberDto() {
         return MemberDto.of(
                 1L,
-                "jisu@email.com",
-                "password",
                 "jisu",
-                "jisu1",
-                "2022-08-11",
+                "jisu",
+                "password",
+                "jisu@email.com",
+                "2022-08-26",
                 "M",
                 "category_first",
                 "category_second",
@@ -126,10 +170,11 @@ class GatheringServiceTest {
 
     private Member createNewMember() {
         return Member.of(
-                "jisu@email.com",
-                "password",
+                1L,
                 "jisu",
-                "jisu1",
+                "jisu",
+                "password",
+                "jisu@email.com",
                 "2022-08-11",
                 "M",
                 "category_first",

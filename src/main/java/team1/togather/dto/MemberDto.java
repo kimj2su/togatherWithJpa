@@ -46,13 +46,13 @@ public class MemberDto {
     }
 
     public MemberDto(Long memberId, String userId, String birth, String gender, String category_first, String category_second, String category_third) {
+        this.memberId = memberId;
         this.userId = userId;
         this.birth = birth;
         this.gender = gender;
         this.category_first = category_first;
         this.category_second = category_second;
         this.category_third = category_third;
-        this.memberId = memberId;
     }
 
     public static MemberDto of(Long member_id, String userId, String birth, String gender, String category_first, String category_second, String category_third) {
