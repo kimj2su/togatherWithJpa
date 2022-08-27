@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="#header" th:replace="header :: header"></attr>
+    <attr sel="#footer" th:replace="footer :: footer"></attr>
+
+
+    <attr sel="#gathering_form" th:object="${gathering}" th:action="@{/gatherings/new}" th:method="post">
+        <attr sel="#groupTabId" th:name="groupTabId" th:value="${groupTabId}" />
+        <attr sel="#gaName" th:name="gaName" th:field="*{gaName}" th:errorclass="field-error"/>
+        <attr sel="#gaPlace" th:name="gaPlace" th:field="*{gaPlace}" th:errorclass="field-error"/>
+        <attr sel="#time" th:name="time" th:field="*{time}" th:errorclass="field-error"/>
+        <attr sel="#gaDate" th:name="gaDate" th:field="*{gaDate}" th:errorclass="field-error" />
+        <attr sel="#price" th:name="price" th:field="*{price}" th:errorclass="field-error"/>
+        <attr sel="#gaLimit" th:name="gender" th:field="*{gaLimit}" th:errorclass="field-error"/>
+
+        <attr sel="#gaNameError" th:errors="*{gaName}"/>
+        <attr sel="#gaPlaceError" th:errors="*{gaPlace}"/>
+        <attr sel="#timeError"  th:errors="*{time}"/>
+        <attr sel="#gaDateError" th:errors="*{gaDate}"/>
+        <attr sel="#priceError" th:errors="*{price}"/>
+        <attr sel="#gaLimitError" th:errors="*{gaLimit}"/>
+    </attr>
+
+</thlogic>

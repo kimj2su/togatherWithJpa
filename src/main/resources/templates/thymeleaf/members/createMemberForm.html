@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,10 +7,11 @@
     <meta name="author" content="Jisu Kim">
     <title>회원 가입</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <!-- Vendor CSS Files -->
-    <link href="/assets/vendor/animate.css/animate.min.css" rel="stylesheet" />
-    <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="/assets/vendor/animate.css/animate.min.css" rel="stylesheet"/>
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet"/>
     <link
             href="/assets/vendor/bootstrap/css/bootstrap.min.css"
             rel="stylesheet"
@@ -22,13 +23,36 @@
             href="/assets/vendor/bootstrap-icons/bootstrap-icons.css"
             rel="stylesheet"
     />
-    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet"/>
+    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet"/>
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"/>
     <!-- Template Main CSS File -->
-    <link href="/assets/css/style.css" rel="stylesheet" />
+    <link href="/assets/css/style.css" rel="stylesheet"/>
+    <script th:inline="javascript">
+        /*<![CDATA[*/
+        function category(sequence, i) {
+            console.log(sequence + "들어옴" + i);
+
+            if (sequence == 1) {
+                $('#button2').hide();
+                $('#button3').hide();
+                // let category = "";
+                // category += "<li th:each='categories, index : ${firstCategory}'>";
+                // category += "<a id='li${index.index}' class='dropdown-item' href='javascript:category(2,${index.index})' th:text='${categories}' data-value='${categories}'></a>";
+                // category += "</li>";
+                // $('#ul1').append(
+                //     category
+                // );
+                $("#div1").replaceWith([[${firstCategory}]]);
+            } else if (sequence == 2) {
+                console.log(sequence + "2찍힘");
+            }
+
+        }
+        /*]]>*/
+    </script>
 </head>
-<body>
+<body >
 <header id="header">
     header 템플릿 삽입부
     <hr>
@@ -52,8 +76,8 @@
         <div class="row mb-3 justify-content-md-center">
             <label for="userId" class="col-sm-2 col-lg-1 col-form-label text-sm-end">닉네임</label>
             <div class="col-sm-8 col-lg-9">
-                <input id="userId" type="text" class="form-control">
-                <div id="userIdError" class="field-error" >
+                <input id="userId" type="text" class="form-control" >
+                <div id="userIdError" class="field-error">
                     아이디 오류
                 </div>
             </div>
@@ -78,19 +102,66 @@
         <div class="row mb-3 justify-content-md-center">
             <label for="email" class="col-sm-2 col-lg-1 col-form-label text-sm-end">email</label>
             <div class="col-sm-8 col-lg-9">
-                <input id="email" type="email"  class="form-control" placeholder="you@example.com" required>
+                <input id="email" type="email" class="form-control" placeholder="you@example.com" required>
                 <div id="emailError" class="field-error">
                     이메일 오류
                 </div>
             </div>
         </div>
 
+        <div class="row mb-3 justify-content-md-center">
+            <label for="div1" class="col-sm-2 col-lg-1 col-form-label text-sm-end">관심사</label>
+            <div class="col-sm-8 col-lg-9">
+
+                <div id="div1" class="btn-group">
+                    <button id="button1"
+                            type="button"
+                            class="btn btn-outline-light dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style="color: black; border-color: black">
+                        <span id='span1' >관심사</span>
+                    </button>
+                    <ul id="ul1" class="dropdown-menu">
+<!--                        <li th:each="categories, index : ${firstCategory}"><a id="li${index.index}" class="dropdown-item" href="javascript:category(2,${index.index})" th:text="${categories}" data-value="${categories}"></a></li>-->
+                        <li><a class='dropdown-item'></a></li>
+                    </ul>
+                </div>
+
+                <div id="div2" class="btn-group" style="margin-left: 5px">
+                    <button
+                            type="button" id="button2"
+                            class="btn btn-outline-light dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style="color: black; border-color: black">
+                        <span id='span2'>하위관심사</span>
+                    </button>
+                    <ul id="ul2" class="dropdown-menu">
+                    </ul>
+                </div>
+
+                <div id="div3" class="btn-group" style="margin-left: 5px">
+                    <button
+                            type="button" id="button3"
+                            class="btn btn-outline-light dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            style="color: black; border-color: black">
+                        <span id='span3'>세부관심사</span>
+                    </button>
+                    <ul id="ul3" class="dropdown-menu">
+                    </ul>
+                </div>
+
+            </div>
+        </div>
 
         <div class="row mb-3 justify-content-md-center">
             <label for="birth" class="col-sm-2 col-lg-1 col-form-label text-sm-end">생년월일</label>
             <div class="col-sm-8 col-lg-9">
                 <input id="birth" type="date" class="form-control">
-                <div id="birthError" class="field-error" >
+                <div id="birthError" class="field-error">
                     생년월일 오류
                 </div>
             </div>

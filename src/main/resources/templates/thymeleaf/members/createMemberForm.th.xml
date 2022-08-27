@@ -16,5 +16,11 @@
         <attr sel="#emailError"  th:errors="*{email}"/>
         <attr sel="#birthError" th:errors="*{birth}"/>
         <attr sel="#genderError" th:errors="*{gender}"/>
+
     </attr>
+        <attr sel="#div1">
+            <attr sel="li[0]" th:each="categorys : ${firstCategory}"/>
+            <attr sel="a" th:value="${categorys}" />
+        </attr>
+
 </thlogic>
