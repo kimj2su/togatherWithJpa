@@ -13,6 +13,7 @@ import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.request.MemberRequestDto;
 import team1.togather.security.configs.TestSecurityConfig;
+import team1.togather.service.member.CategoryService;
 import team1.togather.service.member.MemberService;
 
 import java.util.HashSet;
@@ -35,6 +36,8 @@ class MemberControllerTest {
 
     @MockBean
     private MemberService memberService;
+    @MockBean
+    private CategoryService categoryService;
 
     @DisplayName("view - get 회원가입 페이지 - 정상 호출")
     @Test

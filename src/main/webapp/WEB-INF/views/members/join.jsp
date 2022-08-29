@@ -49,8 +49,217 @@
 
 
     <script>
-        <c:set var="intOut" value="${intOut}"/>
+        function checkedBox(box){
+            if(box.checked==true){
+                let checked = box.value;
+                console.log("box.checked: "+box.checked);
+                console.log("checked: "+checked);
+                if(checked=="ck1"){
+                    $('#checkBox1').val(checked);
+                    $('#ck1').remove();
+                    $('#category_first').remove();
+                    $('#category_first1').val("");
+                    $('#category_firstCheck1').val("");
+                    $('#ck1').prop('checked',false);
+                    $('#checkBox1').val("");
+                }else if(checked=="ck2"){
+                    $('#checkBox2').val(checked);
+                    $('#ck2').remove();
+                    $('#category_second').remove();
+                    $('#category_first2').val("");
+                    $('#category_firstCheck2').val("");
+                    $('#ck2').prop('checked',false);
+                    $('#checkBox2').val("");
+                }else{
+                    $('#checkBox3').val(checked);
+                    $('#ck3').remove();
+                    $('#category_third').remove();
+                    $('#category_first3').val("");
+                    $('#category_firstCheck3').val("");
+                    $('#ck3').prop('checked',false);
+                    $('#checkBox3').val("");
+                }
+            }else{
+                let checked = box.value;
+                if(checked=="ck1"){
+                    $('#checkBox1').val("");
+                }else if(checked=="ck2"){
+                    $('#checkBox2').val("");
+                }else{
+                    $('#checkBox3').val("");
+                }
+                console.log("checked: "+checked);
+                console.log("box.checked: "+box.checked);
+            }
+        }
+        function reset(){
 
+            $('#ul2').remove();
+            $('#ul3').remove();
+            $('#button2').remove();
+            $('#button3').remove();
+            $('#selectButton').remove();
+            let div2="";
+            div2+="<button id='button2' type='button' class='btn btn-outline-light dropdown-toggle' onclick='javascript:reset2()' data-bs-toggle='dropdown' aria-expanded='false' style='color: black; border-color: black'>";
+            div2+="<span id='span2'>하위관심사</span>";
+            div2+="</button>";
+            div2+="<ul id='ul2' class='dropdown-menu'>";
+            div2+="</ul>";
+            $('#div2').after(
+                div2
+            );
+            let div3="";
+            div3+="<button id='button3' type='button' class='btn btn-outline-light dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false' style='color: black; border-color: black'>";
+            div3+="<span id='span3'>세부관심사</span>";
+            div3+="</button>";
+            div3+="<ul id='ul3' class='dropdown-menu'>";
+            div3+="</ul>";
+            $('#div3').after(
+                div3
+            );
+            $('#button2').hide();
+            $('#button3').hide();
+        }
+
+        function reset2(){
+
+            $('#ul3').remove();
+            $('#button3').remove();
+            $('#selectButton').remove();
+            let div3="";
+            div3+="<button id='button3' type='button' class='btn btn-outline-light dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false' style='color: black; border-color: black'>";
+            div3+="<span id='span3'>세부관심사</span>";
+            div3+="</button>";
+            div3+="<ul id='ul3' class='dropdown-menu'>";
+            div3+="</ul>";
+            $('#div3').after(
+                div3
+            );
+            $('#button3').hide();
+        }
+
+        function selectedCategory(){
+            let categoryValue1 =$('#category_first1').val();
+            let categoryValue2 =$('#category_first2').val();
+            let categoryValue3 =$('#category_first3').val();
+            let categoryCheckValue1 =$('#category_firstCheck1').val();
+            let categoryCheckValue2 =$('#category_firstCheck2').val();
+            let categoryCheckValue3 =$('#category_firstCheck3').val();
+            if(categoryValue1==categoryValue2 || categoryValue1==categoryValue3){
+                console.log("5");
+                alert("다른 카테고리를 선택해주세요.");
+                return false;
+            }else{
+                if(categoryValue2!=""){
+                    if(categoryValue3==categoryValue2){
+                        alert("다른 카테고리를 선택해주세요.");
+                        return false;
+                    }else{
+                        if($('#category_firstCheck1').val()==""){
+                            console.log("1: ");
+                            let selectedText1="";
+                            selectedText1+="<input id='ck1' value='ck1' type='checkbox' onclick='checkedBox(this)'></input>";
+                            selectedText1+="<input id='category_first' type='text' name='category_first' style='width:100px;height:50px;border:none;text-align: center' value='"+categoryValue1+"' readonly>";
+                            $('#firstAppendDiv').append(
+                                selectedText1
+                            );
+                            $('#category_firstCheck1').val("1");
+                        }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()==""){
+                            console.log("2");
+                            let selectedText2="";
+                            selectedText2+="<input id='ck2' value='ck2' type='checkbox' onclick='checkedBox(this)'></input>";
+                            selectedText2+="<input id='category_second' type='text' name='category_second' style='width:100px;height:50px;border:none;text-align: center' value='"+categoryValue2+"' readonly>";
+                            $('#firstAppendDiv').append(
+                                selectedText2
+                            );
+                            $('#category_firstCheck2').val("2");
+                        }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!="" && $('#category_firstCheck3').val()==""){
+                            console.log("3");
+                            let selectedText3="";
+                            selectedText3+="<input id='ck3' value='ck3' type='checkbox' onclick='checkedBox(this)'></input>";
+                            selectedText3+="<input id='category_third' type='text' name='category_third' style='width:100px;height:50px;border:none;text-align: center' value='"+categoryValue3+"' readonly>";
+                            $('#firstAppendDiv').append(
+                                selectedText3
+                            );
+                            $('#category_firstCheck3').val("3");
+                            $('#button1').remove();
+                            $('#button2').remove();
+                            $('#button3').remove();
+                            $('#ul1').remove();
+                            $('#ul2').remove();
+                            $('#ul3').remove();
+                            $('#span1').remove();
+                            $('#span2').remove();
+                            $('#span3').remove();
+                            categoryCheckValue1 =$('#category_firstCheck1').val();
+                            categoryCheckValue2 =$('#category_firstCheck2').val();
+                            categoryCheckValue3 =$('#category_firstCheck3').val();
+                            console.log("categoryCheckValue1: "+categoryCheckValue1);
+                            console.log("categoryCheckValue2: "+categoryCheckValue2);
+                            console.log("categoryCheckValue3: "+categoryCheckValue3);
+                        }else {
+                            console.log("4");
+                            alert("카테고리는 3개까지만 선택가능합니다.");
+                        }
+                    }
+                }else{
+                    if($('#category_firstCheck1').val()==""){
+                        console.log("1: ");
+                        let selectedText1="";
+                        selectedText1+="<input id='ck1' value='ck1' type='checkbox' onclick='checkedBox(this)'></input>";
+                        selectedText1+="<input id='category_first' type='text' name='category_first' style='width:100px;height:50px;border:none;text-align: center' value='"+categoryValue1+"' readonly>";
+                        $('#firstAppendDiv').append(
+                            selectedText1
+                        );
+                        $('#category_firstCheck1').val("1");
+                    }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()==""){
+                        console.log("2");
+                        let selectedText2="";
+                        selectedText2+="<input id='ck2' value='ck2' type='checkbox' onclick='checkedBox(this)'></input>";
+                        selectedText2+="<input id='category_second' type='text' name='category_second' style='width:100px;height:50px;border:none;text-align: center' value='"+categoryValue2+"' readonly>";
+                        $('#firstAppendDiv').append(
+                            selectedText2
+                        );
+                        $('#category_firstCheck2').val("2");
+                    }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!="" && $('#category_firstCheck3').val()==""){
+                        console.log("3");
+                        let selectedText3="";
+                        selectedText3+="<input id='ck3' value='ck3' type='checkbox' onclick='checkedBox(this)'></input>";
+                        selectedText3+="<input id='category_third' type='text' name='category_third' style='width:100px;height:50px;border:none;text-align: center' value='"+categoryValue3+"' readonly>";
+                        $('#firstAppendDiv').append(
+                            selectedText3
+                        );
+                        $('#category_firstCheck3').val("3");
+                        $('#button1').remove();
+                        $('#button2').remove();
+                        $('#button3').remove();
+                        $('#ul1').remove();
+                        $('#ul2').remove();
+                        $('#ul3').remove();
+                        $('#span1').remove();
+                        $('#span2').remove();
+                        $('#span3').remove();
+                        categoryCheckValue1 =$('#category_firstCheck1').val();
+                        categoryCheckValue2 =$('#category_firstCheck2').val();
+                        categoryCheckValue3 =$('#category_firstCheck3').val();
+                        console.log("categoryCheckValue1: "+categoryCheckValue1);
+                        console.log("categoryCheckValue2: "+categoryCheckValue2);
+                        console.log("categoryCheckValue3: "+categoryCheckValue3);
+                    }else {
+                        console.log("4");
+                        alert("카테고리는 3개까지만 선택가능합니다.");
+                    }
+                }
+            }
+
+            $('#selectButton').remove();
+            $('#button2').hide();
+            $('#button3').hide();
+            categories(5,0);
+
+        }
+
+        <c:set var="intOut" value="${intOut}"/>
         function categories(sequence, i) {
             if (sequence == 1) {
                 $('#button2').hide();
@@ -68,22 +277,26 @@
                 index += i;
                 let categoryValue = document.getElementById(index).getAttribute('data-value');
                 $('#span1').text(categoryValue);
-                let result = {"intOut": categoryValue, "sequence": sequence};
+                let result = {"searchValue": categoryValue, "sequence": sequence};
                 $.ajax({
-                    url: "category.json",
+                    url: "/category",
                     type: "GET",
+                    dataType: "json",
                     data: result,
+                    contentType:"application/json",
                     success: function (data) {
-                        let secondCategory = data;
                         let category = "";
                         for (let i = 0; i < data.length; i++) {
-                            // let idNum = i;
-                            category += "<li><a id='" + i + "' class='dropdown-item' href='javascript:categorys(3," + i + ")' onclick='javascript:reset2()' data-value='" + secondCategory[i].int_in + "'>" + secondCategory[i].int_in + "</a></li>";
+                            category += "<li><a id='" + i + "' class='dropdown-item' href='javascript:categories(3," + i + ")' onclick='javascript:reset2()' data-value='" + data[i] + "'>" + data[i] + "</a></li>";
                         }
-
                         $('#ul2').append(
                             category
                         );
+                    },
+                    error:function(request,status,error){
+                        alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+                        let err=JSON.parse(request.responseText);
+                        console.log("에러: " + data);
                     }
                 });
             }else if(sequence==3){
@@ -91,21 +304,22 @@
                 let index=i;
                 let categoryValue=document.getElementById(index).getAttribute('data-value');
                 $('#span2').text(categoryValue);
-                let result = {"intIn":categoryValue,"sequence":sequence};
+                let result = {"searchValue":categoryValue,"sequence":sequence};
                 $.ajax({
-                    url: "category.json",
+                    url: "/category",
                     type: "GET",
+                    dataType: "json",
                     data: result,
+                    contentType:"application/json",
                     success: function(data){
-                        var thirdCategory=data;
-                        let catagory="";
+                        let category="";
                         if(Object.keys(data).length!=1){
                             $('#button3').show();
-                            for(var i =0;i<data.length;i++){
-                                catagory+="<li><a id='"+i+"li' class='dropdown-item' href='javascript:categorys(4,"+i+")' onclick='javascript:reset3()' data-value='"+thirdCategory[i].first_option+"'>"+thirdCategory[i].first_option+"</a></li>";
+                            for(let i =0; i < data.length; i++){
+                                category+="<li><a id='"+i+"li' class='dropdown-item' href='javascript:categories(4,"+i+")' onclick='javascript:reset3()' data-value='"+data[i]+"'>"+data[i]+"</a></li>";
                             }
                             $('#ul3').append(
-                                catagory
+                                category
                             );
                         }else{
                             if($('#category_firstCheck1').val()==""){
@@ -115,21 +329,112 @@
                             }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!=""){
                                 $('#category_first3').val(categoryValue);
                             }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!="" && $('#category_firstCheck3').val()!=""){
-                                Swal.fire({
-                                    title:"카테고리는 3개까지만 선택가능합니다.",
-                                    icon:"error"
-                                });
-                                categorys(5,0);
+                                alert("카테고리는 3개까지만 선택 가능합니다.");
+                                categories(5,0);
                             }
-                            let catagoryButton="<button id='Selectbutton' type='button' class='btn btn-secondary' onclick='selectedCategory()' style='margin-top:7px' >선택</button>";
-                            console.log("엘스안 categoryValue: "+categoryValue);
-                            $('#Cancelbutton').before(
-                                catagoryButton
+                            let categoryButton="<button id='selectButton' type='button' class='btn btn-secondary' onclick='selectedCategory()' style='margin-top:7px' >선택</button>";
+                            $('#cancelButton').before(
+                                categoryButton
                             );
                         }
 
                     }
                 });
+            }else if(sequence==4){
+                $('#selectButton').remove();
+                let index=i;
+                index+="li";
+                let categoryValue=document.getElementById(index).getAttribute('data-value');
+                $('#span3').text(categoryValue);
+                if($('#category_firstCheck1').val()==""){
+                    $('#category_first1').val(categoryValue);
+                }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()==""){
+                    $('#category_first2').val(categoryValue);
+                }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!=""){
+                    $('#category_first3').val(categoryValue);
+                }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!="" && $('#category_firstCheck3').val()!=""){
+                    alert("카테고리는 3개까지만 선택가능합니다.");
+                    categories(5,0);
+                }
+                let categoryButton="<button id='selectButton' type='button' class='btn btn-secondary' onclick='selectedCategory()' style='margin-top:7px' >선택</button>";
+                $('#cancelButton').before(
+                    categoryButton
+                );
+            }else if(sequence==4){
+                $('#selectButton').remove();
+                let index=i;
+                index+="li";
+                let categoryValue=document.getElementById(index).getAttribute('data-value');
+                $('#span3').text(categoryValue);
+                if($('#category_firstCheck1').val()==""){
+                    $('#category_first1').val(categoryValue);
+                }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()==""){
+                    $('#category_first2').val(categoryValue);
+                }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!=""){
+                    $('#category_first3').val(categoryValue);
+                }else if($('#category_firstCheck1').val()!="" && $('#category_firstCheck2').val()!="" && $('#category_firstCheck3').val()!=""){
+                    alert("카테고리는 3개까지만 선택가능합니다.");
+                    categories(5,0);
+                }
+                let categoryButton="<button id='selectButton' type='button' class='btn btn-secondary' onclick='selectedCategory()' style='margin-top:7px' >선택</button>";
+                $('#cancelButton').before(
+                    categoryButton
+                );
+            }else if(sequence==6){
+                $('#category_first1').val("");
+                $('#category_first2').val("");
+                $('#category_first3').val("");
+                $('#category_firstCheck1').val("");
+                $('#category_firstCheck2').val("");
+                $('#category_firstCheck3').val("");
+                $('#category_first').remove();
+                $('#category_second').remove();
+                $('#category_third').remove();
+                $('#button1').remove();
+                $('#button2').remove();
+                $('#button3').remove();
+                $('#ul1').remove();
+                $('#ul2').remove();
+                $('#ul3').remove();
+                $('#span1').remove();
+                $('#span2').remove();
+                $('#span3').remove();
+                $('#selectButton').remove();
+                $('#ck1').remove();
+                $('#ck2').remove();
+                $('#ck3').remove();
+                let div1="";
+                div1+="<button id='button1' type='button' class='btn btn-outline-light dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false' style='color: black; border-color: black'>";
+                div1+="<span id='span1'>관심사</span>";
+                div1+="</button>";
+                div1+="<ul id='ul1' class='dropdown-menu'>";
+                div1+="<c:forEach items='${intOut}' var='intOut' varStatus='index'>";
+                div1+="<li><a id='li${index.index}' class='dropdown-item' href='javascript:categories(2,${index.index})' onclick='javascript:reset()' data-value='${intOut}'>${intOut}</a></li>";
+                div1+="</c:forEach>";
+                div1+="</ul>";
+                $('#div1').after(
+                    div1
+                );
+                let div2="";
+                div2+="<button id='button2' type='button' class='btn btn-outline-light dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false' style='color: black; border-color: black'>";
+                div2+="<span id='span2'>하위관심사</span>";
+                div2+="</button>";
+                div2+="<ul id='ul2' class='dropdown-menu'>";
+                div2+="</ul>";
+                $('#div2').after(
+                    div2
+                );
+                let div3="";
+                div3+="<button id='button3' type='button' class='btn btn-outline-light dropdown-toggle' data-bs-toggle='dropdown' aria-expanded='false' style='color: black; border-color: black'>";
+                div3+="<span id='span3'>세부관심사</span>";
+                div3+="</button>";
+                div3+="<ul id='ul3' class='dropdown-menu'>";
+                div3+="</ul>";
+                $('#div3').after(
+                    div3
+                );
+                $('#button2').hide();
+                $('#button3').hide();
             }
         }
     </script>
@@ -229,8 +534,7 @@
                                                             id="birth"
                                                             class="form-control"
                                                             value=""
-                                                            min="1985-01-02"
-                                                            max="2003-12-31" path="birth"/>
+                                                            path="birth"/>
                                                 <form:errors path="birth" class="field-error"/>
                                             </div>
                                         </div>
@@ -257,7 +561,7 @@
                                             </div>
                                         </div>
 
-                                        <div id='firstappendDiv' style='padding: 0px 15px 7px'
+                                        <div id='firstAppendDiv' style='padding: 0px 15px 7px'
                                              class='d-flex flex-row align-items-center mb-0'>
                                         </div>
                                         <div id="selectdiv1" class="d-flex flex-row align-items-center mb-0">
@@ -277,8 +581,8 @@
                                                 </div>
 
                                                 <div id="div2" class="btn-group" style="margin-left: 5px">
-                                                    <button
-                                                            type="button" id="button2"
+                                                    <button id="button2"
+                                                            type="button"
                                                             class="btn btn-outline-light dropdown-toggle"
                                                             data-bs-toggle="dropdown"
                                                             aria-expanded="false"
@@ -311,8 +615,8 @@
                                                 <input id="checkBox2" type="hidden" value="">
                                                 <input id="checkBox3" type="hidden" value="">
                                                 <div align="right">
-                                                    <button id='Cancelbutton' type='button' class='btn btn-secondary'
-                                                            onclick='categorys(6,0)' style='margin:7px 0px 0px 5px'>취소
+                                                    <button id='cancelButton' type='button' class='btn btn-secondary'
+                                                            onclick='categories(6,0)' style='margin:7px 0px 0px 5px'>취소
                                                     </button>
                                                 </div>
                                                 <!-- 카테고리 붙이기 -->
@@ -323,7 +627,7 @@
                                             <label for="gender"
                                                    class="col-sm-2 col-lg-1 col-form-label text-sm-end">성별</label>
                                             <div class="col-sm-8 col-lg-9">
-                                                <select id="gender" aria-label="성별">
+                                                <select id="gender" name="gender" aria-label="성별">
                                                     <option value selected>성별</option>
                                                     <option value="M">남자</option>
                                                     <option value="F">여자</option>
