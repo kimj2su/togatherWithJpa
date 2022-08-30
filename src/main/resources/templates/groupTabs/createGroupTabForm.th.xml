@@ -15,5 +15,11 @@
         <attr sel="#groupIntroError" th:errors="*{groupIntro}"/>
         <attr sel="#memberLimitError" th:errors="*{memberLimit}"/>
         <attr sel="#attachFileError" th:errors="*{attachFile}"/>
+
+        <attr sel="#span1" th:onclick="|reset()|"/>
+        <attr sel="#ul1" >
+            <attr sel="li" th:id="'li'+ ${index.index}" th:each="intOut, index : ${intOut}"/>
+            <attr sel="a" th:id="'a'+ ${index.index}" th:value="${intOut}" th:text="${intOut}" th:onclick="|categories(2, '${index.index}')|"/>
+        </attr>
     </attr>
 </thlogic>

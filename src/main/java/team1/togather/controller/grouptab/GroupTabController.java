@@ -17,6 +17,7 @@ import team1.togather.dto.response.MemberInGroupTabResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
 import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.grouptab.MemberInGroupTabService;
+import team1.togather.service.member.CategoryService;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -29,11 +30,14 @@ public class GroupTabController {
 
     private final GroupTabService groupTabService;
     private final MemberInGroupTabService memberInGroupTabService;
+
+    private final CategoryService categoryService;
     private final FileStore fileStore;
 
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("groupTab", new GroupTabRequestDto());
+        model.addAttribute("intOut",categoryService.searchIntOut());
         return "groupTabs/createGroupTabForm";
     }
 

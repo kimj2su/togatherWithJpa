@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <thlogic>
+    <attr sel="#index" th:href="@{/}" />
     <attr sel="#home" th:href="@{/}" />
     <attr sel="#admin" sec:authorize="isAuthenticated()" th:href="@{/articles/search-hashtag}" />
     <attr sel="#username" sec:authorize="isAuthenticated()" sec:authentication="name" />

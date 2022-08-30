@@ -2,10 +2,8 @@ package team1.togather.controller.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import team1.togather.dto.request.CategoryRequestDto;
 import team1.togather.service.member.CategoryService;
 
 import java.util.ArrayList;

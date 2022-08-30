@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <thlogic>
-    <attr sel="#header" th:replace="thymeleaf/header :: header"/>
-    <attr sel="#footer" th:replace="thymeleaf/footer :: footer"/>
+    <attr sel="#header" th:replace="header :: header"/>
+    <attr sel="#footer" th:replace="footer :: footer"/>
 
     <attr sel="#eachDiv" th:each="groupTabs : ${groupTabs}">
         <attr sel="#interest" th:text="${groupTabs.interest}"> </attr>

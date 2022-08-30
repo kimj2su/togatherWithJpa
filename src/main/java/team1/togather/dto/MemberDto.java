@@ -93,7 +93,7 @@ public class MemberDto {
         this.memberRoles = roles;
     }
 
-    public void encodingPassword(String pwd) {
+    public void encodingPassword(String password) {
         this.password = password;
     }
 

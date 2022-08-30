@@ -4,10 +4,7 @@ import lombok.Data;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Set;
 
 @Data
@@ -36,6 +33,7 @@ public class MemberRequestDto {
 ////    @Pattern(regexp = "^\\d{2,3}-\\d{3,4}-\\d{4}$")
 //    private final String phone;
 
+    @NotEmpty(message = "관심사는 최소 한개 이상 설정해야됩니다.")
     private final String category_first;
     private final String category_second;
     private final String category_third;
