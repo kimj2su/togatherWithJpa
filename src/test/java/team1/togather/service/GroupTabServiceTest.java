@@ -70,6 +70,23 @@ class GroupTabServiceTest {
 
     @DisplayName("그룹 페이지를 반환한다.")
     @Test
+    void givenNoCategories_whenSearchingGroupTabs_thenReturnsGroupTabsPage() {
+        // Given
+        Pageable pageable = Pageable.ofSize(20);
+        String category_first = "독서";
+        String category_second = "게임";
+        String category_third = "개발";
+        given(groupTabRepository.MembersGroupTabs(pageable , category_first, category_second, category_third)).willReturn(Page.empty());
+
+        // When
+        Page<GroupTabDto> groupTabDtos = sut.MembersGroupTabs(pageable, category_first, category_second, category_third);
+        // Then
+        assertThat(groupTabDtos).isEmpty();
+        then(groupTabRepository).should().MembersGroupTabs(pageable, category_first, category_second, category_third);
+    }
+
+    @DisplayName("그룹 페이지를 반환한다.")
+    @Test
     void givenNoSearchParameters_whenSearchingGroupTabs_thenReturnsGroupTabsPage() {
         // Given
         Pageable pageable = Pageable.ofSize(20);

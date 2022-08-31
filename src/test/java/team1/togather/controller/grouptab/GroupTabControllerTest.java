@@ -7,6 +7,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -20,10 +21,12 @@ import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.dto.MemberInGroupTabDto;
 import team1.togather.dto.request.GroupTabRequestDto;
 import team1.togather.security.configs.SecurityConfig;
+import team1.togather.security.configs.TestSecurityConfig;
 import team1.togather.security.configs.annotation.WithMember;
 import team1.togather.security.configs.annotation.WithOauth2Member;
 import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.grouptab.MemberInGroupTabService;
+import team1.togather.service.member.CategoryService;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -51,6 +54,8 @@ class GroupTabControllerTest {
     private GroupTabService groupTabService;
     @MockBean
     private MemberInGroupTabService memberInGroupTabService;
+    @MockBean
+    private CategoryService categoryService;
 
     @MockBean
     private FileStore fileStore;
@@ -65,6 +70,7 @@ class GroupTabControllerTest {
         mvc.perform(get("/groupTabs/new"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(model().attributeExists("intOut"))
                 .andExpect(view().name("groupTabs/createGroupTabForm"));
     }
 

@@ -27,6 +27,10 @@ public class GroupTabService {
 
     private final MemberRepository memberRepository;
 
+    public Page<GroupTabDto> MembersGroupTabs(Pageable pageable, String category_first, String category_second, String category_third) {
+        return groupTabRepository.MembersGroupTabs(pageable, category_first, category_second, category_third).map(GroupTabDto::from);
+    }
+
     public Page<GroupTabDto> indexGroupTabs(Pageable pageable) {
        return groupTabRepository.findAll(pageable).map(GroupTabDto::from);
     }
