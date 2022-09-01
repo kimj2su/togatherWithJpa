@@ -11,16 +11,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 import team1.togather.domain.groupTab.GroupTab;
+import team1.togather.domain.groupTab.GroupTabCategory;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
+import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.dto.MemberInGroupTabDto;
+import team1.togather.repository.CategoryRepository;
 import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
 import team1.togather.repository.RoleRepository;
@@ -50,6 +53,8 @@ class GroupTabServiceTest {
     @Mock private MemberRepository memberRepository;
 
     @Mock private RoleRepository roleRepository;
+
+    @Mock private CategoryRepository categoryRepository;
 
     @DisplayName("그룹이 없으면 예외를 던진다.")
     @Test
@@ -169,9 +174,12 @@ class GroupTabServiceTest {
         GroupTabDto dto = createGroupTabDto();
         Member newMember = createNewMember();
         GroupTab groupTab = createGroupTab();
+        Category category = createCategory();
         groupTab.addMemberInGroupTab(createMemberInGroupTab());
+        groupTab.addGroupTabCategory(createGroupTabCategory());
         given(memberRepository.getReferenceById(dto.getMemberDto().getMemberId())).willReturn(newMember);
         given(groupTabRepository.save(any(GroupTab.class))).willReturn(groupTab);
+        given(categoryRepository.findByCategory(anyString())).willReturn(category);
 
         // When
         sut.saveGroupTab(dto);
@@ -236,6 +244,17 @@ class GroupTabServiceTest {
         return groupTab;
     }
 
+    private Category createCategory() {
+        Category category = Category.of(
+                "운동/스포츠",
+                "자전거",
+                ""
+        );
+        ReflectionTestUtils.setField(category, "id", 1L);
+
+        return category;
+    }
+
     private List<MemberInGroupTab> createMemberInGroupTabList() {
         return List.of();
     }
@@ -270,6 +289,13 @@ class GroupTabServiceTest {
                 createGroupTab(),
                 createNewMember(),
                 MemberGrade.GROUP_MASTER
+        );
+    }
+
+    private GroupTabCategory createGroupTabCategory() {
+        return GroupTabCategory.of(
+                createGroupTab(),
+                createCategory()
         );
     }
 

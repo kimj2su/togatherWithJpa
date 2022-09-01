@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="#header" th:replace="header :: header"/>
+    <attr sel="#footer" th:replace="footer :: footer"/>
+
+    <attr sel="#eachDiv" th:each="groupTabs : ${groupTabs}">
+        <attr sel="#interest" th:text="${groupTabs.interest}"> </attr>
+        <attr sel="#memberLimit" th:text="${groupTabs.memberLimit}"> </attr>
+        <attr sel="#groupName" th:text="${groupTabs.groupName}" th:href="@{'/groupTabs/' + ${groupTabs.id}}"> </attr>
+        <attr sel="#groupIntro" th:text="${groupTabs.groupIntro}"> </attr>
+        <attr sel="#groupLocation" th:text="${groupTabs.groupLocation}"> </attr>
+        <attr sel="#userId" th:text="${groupTabs.userId}"> </attr>
+        <attr sel="#groupImages" th:each="imageFile : ${groupTabs.uploadFile}" th:src="|/images/${imageFile.getStoreFileName()}|"> </attr>
+    </attr>
+
+    <attr sel="#pagination">
+        <attr sel="li[0]/a"
+              th:text="'previous'"
+              th:href="@{/(page=${groupTabs.number - 1})}"
+              th:class="'page-link' + (${groupTabs.number} <= 0 ? ' disabled' : '')"
+        />
+        <attr sel="li[1]" th:class="page-item" th:each="pageNumber : ${paginationBarNumbers}">
+            <attr sel="a"
+                  th:text="${pageNumber + 1}"
+                  th:href="@{/(page=${pageNumber})}"
+                  th:class="'page-link' + (${pageNumber} == ${groupTabs.number} ? ' disabled' : '')"
+            />
+        </attr>
+        <attr sel="li[2]/a"
+              th:text="'next'"
+              th:href="@{/(page=${groupTabs.number + 1})}"
+              th:class="'page-link' + (${groupTabs.number} >= ${groupTabs.totalPages - 1} ? ' disabled' : '')"
+        />
+    </attr>
+</thlogic>

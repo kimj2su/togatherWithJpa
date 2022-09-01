@@ -21,9 +21,9 @@ public class CategoryController {
         System.out.println("searchValue = " + searchValue);
         List<String> categories= new ArrayList<>();
         if(sequence==2) {
-            categories = cateGoryService.searchIntIn(searchValue);
+            categories = cateGoryService.getIntIn(searchValue);
         }else if(sequence==3) {
-            categories = cateGoryService.searchFirstOption(searchValue);
+            categories = cateGoryService.getFirstOption(searchValue);
         }
         System.out.println("categories = " + categories);
         return categories;

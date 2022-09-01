@@ -24,6 +24,7 @@ import team1.togather.security.configs.SecurityConfig;
 import team1.togather.security.configs.TestSecurityConfig;
 import team1.togather.security.configs.annotation.WithMember;
 import team1.togather.security.configs.annotation.WithOauth2Member;
+import team1.togather.service.PaginationService;
 import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.grouptab.MemberInGroupTabService;
 import team1.togather.service.member.CategoryService;
@@ -56,6 +57,8 @@ class GroupTabControllerTest {
     private MemberInGroupTabService memberInGroupTabService;
     @MockBean
     private CategoryService categoryService;
+    @MockBean
+    private PaginationService paginationService;
 
     @MockBean
     private FileStore fileStore;

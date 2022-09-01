@@ -36,6 +36,8 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
 
     public final StringPath groupName = createString("groupName");
 
+    public final QGroupTabCategory groupTabCategory;
+
     public final QGroupUploadFile groupUploadFile;
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
@@ -74,6 +76,7 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
 
     public QGroupTab(Class<? extends GroupTab> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
+        this.groupTabCategory = inits.isInitialized("groupTabCategory") ? new QGroupTabCategory(forProperty("groupTabCategory"), inits.get("groupTabCategory")) : null;
         this.groupUploadFile = inits.isInitialized("groupUploadFile") ? new QGroupUploadFile(forProperty("groupUploadFile"), inits.get("groupUploadFile")) : null;
         this.member = inits.isInitialized("member") ? new team1.togather.domain.member.QMember(forProperty("member")) : null;
     }

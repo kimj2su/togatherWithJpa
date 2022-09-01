@@ -8,16 +8,12 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import team1.togather.dto.request.MemberOauth2RequestDto;
 import team1.togather.dto.request.MemberRequestDto;
 import team1.togather.dto.response.MemberResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
 import team1.togather.service.member.CategoryService;
 import team1.togather.service.member.MemberService;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Slf4j
@@ -32,15 +28,15 @@ public class MemberController {
     @GetMapping("/new")
     public String createForm(Model model) {
         model.addAttribute("member", new MemberResponseDto());
-        model.addAttribute("intOut",categoryService.searchIntOut());
-        System.out.println("categoryService.searchIntOut(): " + categoryService.searchIntOut());
+        model.addAttribute("intOut",categoryService.getIntOut());
+        System.out.println("categoryService.searchIntOut(): " + categoryService.getIntOut());
         return "members/createMemberForm";
     }
 
     @PostMapping("/new")
     public String create(@Validated @ModelAttribute("member") MemberRequestDto memberRequest, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("intOut",categoryService.searchIntOut());
+            model.addAttribute("intOut",categoryService.getIntOut());
             log.info("error={}", bindingResult);
             return "members/validatedMemberForm";
         }

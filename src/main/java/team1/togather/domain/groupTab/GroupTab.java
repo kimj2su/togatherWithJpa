@@ -54,6 +54,9 @@ public class GroupTab extends AuditingFields {
     @OneToMany(mappedBy = "groupTab", cascade = CascadeType.ALL)
     private final Set<MemberInGroupTab> membersInGroupTab = new LinkedHashSet<>();
 
+    @OneToOne(mappedBy = "groupTab", cascade = CascadeType.ALL)
+    private GroupTabCategory groupTabCategory;
+
     public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
         this.groupLocation = groupLocation;
         this.groupName = groupName;
@@ -100,6 +103,11 @@ public class GroupTab extends AuditingFields {
     public void addMemberInGroupTab(MemberInGroupTab memberInGroupTab) {
         memberInGroupTab.addGroupTab(this);
         membersInGroupTab.add(memberInGroupTab);
+    }
+
+    public void addGroupTabCategory(GroupTabCategory groupTabCategory) {
+        groupTabCategory.addGroupTab(this);
+        this.groupTabCategory = groupTabCategory;
     }
 
     @Override
