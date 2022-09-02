@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.util.ReflectionTestUtils;
 import team1.togather.domain.groupTab.GroupTab;
-import team1.togather.domain.groupTab.GroupTabCategory;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
@@ -19,10 +18,7 @@ import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
-import team1.togather.dto.GroupTabDto;
-import team1.togather.dto.MemberDto;
-import team1.togather.dto.GroupTabWithMembersDto;
-import team1.togather.dto.MemberInGroupTabDto;
+import team1.togather.dto.*;
 import team1.togather.repository.CategoryRepository;
 import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
@@ -174,19 +170,20 @@ class GroupTabServiceTest {
         GroupTabDto dto = createGroupTabDto();
         Member newMember = createNewMember();
         GroupTab groupTab = createGroupTab();
-        Category category = createCategory();
         groupTab.addMemberInGroupTab(createMemberInGroupTab());
-        groupTab.addGroupTabCategory(createGroupTabCategory());
+
+        Category category = createCategory();
+
         given(memberRepository.getReferenceById(dto.getMemberDto().getMemberId())).willReturn(newMember);
         given(groupTabRepository.save(any(GroupTab.class))).willReturn(groupTab);
-        given(categoryRepository.findByCategory(anyString())).willReturn(category);
-
+        given(categoryRepository.findCategoryByIntIn("자전거")).willReturn(category);
         // When
         sut.saveGroupTab(dto);
 
         // Then
         then(memberRepository).should().getReferenceById(dto.getMemberDto().getMemberId());
         then(groupTabRepository).should().save(any(GroupTab.class));
+        then(categoryRepository).should().findCategoryByIntIn("자전거");
     }
 
     @DisplayName("모임의 수정 정보를 입력하면, 모임을 수정한다.")
@@ -227,17 +224,24 @@ class GroupTabServiceTest {
         then(groupTabRepository).should().deleteByIdAndMember_UserId(articleId, userId);
     }
 
-
+//    private GroupTabCategoryDto createGroupTabCategoryDto(Long groupTabId, Long categoryId) {
+//        return GroupTabCategoryDto.of(
+//                1L,
+//                groupTabId,
+//                categoryId
+//        );
+//    }
 
     private GroupTab createGroupTab() {
         GroupTab groupTab = GroupTab.of(
                 "서울",
                 "테스트 그룹네임",
                 "테스트 그룹 소개",
-                "테스트 그룹 관심사",
+                "자전거",
                 10,
                 createGroupUploadFile(),
-                createNewMember()
+                createNewMember(),
+                createCategory()
         );
         ReflectionTestUtils.setField(groupTab, "id", 1L);
 
@@ -269,7 +273,7 @@ class GroupTabServiceTest {
                 "서울",
                 "테스트 그룹네임",
                 "테스트 그룹 소개",
-                "테스트 그룹 관심사",
+                "자전거",
                 10,
                 createUploadFile(),
                 createMemberDto(),
@@ -292,12 +296,12 @@ class GroupTabServiceTest {
         );
     }
 
-    private GroupTabCategory createGroupTabCategory() {
-        return GroupTabCategory.of(
-                createGroupTab(),
-                createCategory()
-        );
-    }
+//    private GroupTabCategory createGroupTabCategory() {
+//        return GroupTabCategory.of(
+//                createGroupTab(),
+//                createCategory()
+//        );
+//    }
 
     private MemberDto createMemberDto() {
         return MemberDto.of(

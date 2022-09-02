@@ -10,7 +10,6 @@ import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
-import team1.togather.dto.GroupTabCategoryDto;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.dto.MemberInGroupTabDto;
@@ -19,7 +18,7 @@ import team1.togather.repository.GroupTabRepository;
 import team1.togather.repository.MemberRepository;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.stream.Collectors;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -40,20 +39,32 @@ public class GroupTabService {
 
     @Transactional(readOnly = true)
     public Page<GroupTabDto> indexGroupTabs(Pageable pageable) {
-//       return groupTabRepository.findAll(pageable).map(GroupTabDto::from);
-        return groupTabRepository.findByGroupTab(pageable).map(GroupTabDto::from);
+       return groupTabRepository.findAll(pageable).map(GroupTabDto::from);
     }
 
 
     public Long saveGroupTab(GroupTabDto dto) {
+        Category category = category(dto);
         Member member = memberRepository.getReferenceById(dto.getMemberDto().getMemberId());
-        GroupTab saveGroupTab = groupTabRepository.save(dto.toEntity(member));
-        Category category = categoryRepository.findByCategory(dto.getInterest());
+        GroupTab saveGroupTab = groupTabRepository.save(dto.toEntity(member, category));
+
         MemberInGroupTabDto memberInGroupTabDto =  MemberInGroupTabDto.of(saveGroupTab.getId(), dto.getMemberDto(), MemberGrade.GROUP_MASTER);
         saveGroupTab.addMemberInGroupTab(memberInGroupTabDto.toEntity(saveGroupTab, member));
-        GroupTabCategoryDto groupTabCategoryDto = GroupTabCategoryDto.of(saveGroupTab.getId(), category.getId());
-        saveGroupTab.addGroupTabCategory(groupTabCategoryDto.toEntity(saveGroupTab, category));
+
+
+//        GroupTabCategoryDto groupTabCategoryDto = GroupTabCategoryDto.of(saveGroupTab.getId(), category.getId());
+//        saveGroupTab.addGroupTabCategory(groupTabCategoryDto.toEntity(saveGroupTab, category));
+
         return saveGroupTab.getId();
+    }
+
+
+    private Category category(GroupTabDto dto) {
+        Category category = categoryRepository.findCategoryByIntIn(dto.getInterest());
+        if (category == null) {
+            category = categoryRepository.findCategoryByFirstOption(dto.getInterest());
+        }
+        return category;
     }
 
     @Transactional(readOnly = true)
@@ -72,7 +83,8 @@ public class GroupTabService {
 
     @Transactional(readOnly = true)
     public Page<GroupTabDto> searchGroupTabs(String searchValue, Pageable pageable) {
-        return groupTabRepository.searchGroupTabByInterest(searchValue, pageable).map(GroupTabDto::from);
+        List<Long> categoryById = categoryRepository.findCategoryByIntOut(searchValue);
+        return groupTabRepository.findGroupTabsByCategory_IdIn(categoryById, pageable).map(GroupTabDto::from);
     }
 
     public void updateGroupTab(Long groupTabId, GroupTabDto dto) {

@@ -4,6 +4,7 @@ import lombok.Data;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 
 import java.time.LocalDateTime;
@@ -98,7 +99,7 @@ public class GroupTabDto {
         );
     }
 
-    public GroupTab toEntity(Member member) {
+    public GroupTab toEntity(Member member, Category category) {
         return GroupTab.of(
                 groupLocation,
                 groupName,
@@ -106,7 +107,8 @@ public class GroupTabDto {
                 interest,
                 memberLimit,
                 toGroupUploadFile(uploadFile),
-                member
+                member,
+                category
         );
     }
 

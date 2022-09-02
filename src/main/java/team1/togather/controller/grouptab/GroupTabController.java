@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.member.CategoryType;
 import team1.togather.dto.request.GroupTabRequestDto;
 import team1.togather.dto.response.GroupTabResponseDto;
 import team1.togather.dto.response.GroupTabWithMembersResponseDto;
@@ -75,8 +76,7 @@ public class GroupTabController {
     }
 
     @GetMapping("/search-category")
-    public String searchCategory(@PageableDefault(size = 6, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, String searchValue, Model model) {
-        System.out.println("searchValue = " + searchValue);
+    public String searchCategory(@PageableDefault(size = 9, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, String searchValue, Model model) {
         Page<GroupTabResponseDto> groupTabs = groupTabService.searchGroupTabs(searchValue, pageable).map(GroupTabResponseDto::from);
         List<Integer> paginationBarNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), groupTabs.getTotalPages());
         model.addAttribute("groupTabs", groupTabs);

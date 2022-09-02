@@ -12,6 +12,7 @@ import team1.togather.domain.gathring.Gathering;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.GatheringDto;
@@ -125,11 +126,22 @@ class GatheringServiceTest {
                 "테스트 그룹 관심사",
                 10,
                 createGroupUploadFile(),
-                createNewMember()
+                createNewMember(),
+                createCategory()
         );
         ReflectionTestUtils.setField(groupTab, "id", 1L);
 
         return groupTab;
+    }
+
+    private Category createCategory() {
+        Category category = Category.of(
+                "운동/스포츠",
+                "자전거",
+                ""
+        );
+        ReflectionTestUtils.setField(category, "id", 1L);
+        return category;
     }
 
     private GroupUploadFile createGroupUploadFile() {

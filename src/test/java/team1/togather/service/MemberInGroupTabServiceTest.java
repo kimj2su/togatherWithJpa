@@ -6,11 +6,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
+import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
@@ -134,9 +136,23 @@ class MemberInGroupTabServiceTest {
                 "관심사",
                 10,
                 createGroupUploadFile(),
-                createNewMember());
+                createNewMember(),
+                createCategory()
+        );
     }
-    private MemberInGroupTab createMemberInGroupTab() {
+
+    private Category createCategory() {
+        Category category = Category.of(
+                "운동/스포츠",
+                "자전거",
+                ""
+        );
+        ReflectionTestUtils.setField(category, "id", 1L);
+        return category;
+    }
+
+
+        private MemberInGroupTab createMemberInGroupTab() {
         return MemberInGroupTab.of(
                 GroupTab.of("서울",
                         "테스트 모임",
@@ -144,7 +160,9 @@ class MemberInGroupTabServiceTest {
                         "관심사",
                         10,
                         createGroupUploadFile(),
-                        createNewMember())
+                        createNewMember(),
+                        createCategory()
+                )
                 ,createNewMember()
                 ,MemberGrade.GROUP_MASTER
         );
