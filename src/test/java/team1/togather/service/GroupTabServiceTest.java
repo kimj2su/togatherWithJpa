@@ -224,13 +224,55 @@ class GroupTabServiceTest {
         then(groupTabRepository).should().deleteByIdAndMember_UserId(articleId, userId);
     }
 
-//    private GroupTabCategoryDto createGroupTabCategoryDto(Long groupTabId, Long categoryId) {
-//        return GroupTabCategoryDto.of(
-//                1L,
-//                groupTabId,
-//                categoryId
-//        );
-//    }
+    @DisplayName("카테고리를 선택하면 , 그룹 검색 페이지를 반환한다.")
+    @Test
+    void givenCategory_whenSearchingGroupTabs_thenReturnGroupTab() {
+        // Given
+        Pageable pageable = Pageable.ofSize(20);
+        String searchValue = "운동/스포츠";
+        given(categoryRepository.findCategoryByIntOut(searchValue)).willReturn(List.of());
+        given(groupTabRepository.findGroupTabsByCategory_IdIn(List.of(), pageable)).willReturn(Page.empty());
+
+        // When
+        Page<GroupTabDto> groupTabDtos = sut.searchGroupTabs(searchValue, pageable);
+
+        // Then
+        assertThat(groupTabDtos).isEmpty();
+        then(groupTabRepository).should().findGroupTabsByCategory_IdIn(List.of(), pageable);
+    }
+
+    @DisplayName("검색어 없이 그룹을 검색하면, 그룹 검색 페이지를 반환한다.")
+    @Test
+    void givenGroupTabInfo_whenSearchingGroupTabs_thenReturnGroupTab() {
+        // Given
+        Pageable pageable = Pageable.ofSize(20);
+        given(groupTabRepository.SearchGroupTabs(null, null, null, pageable)).willReturn(Page.empty());
+
+        // When
+        Page<GroupTabDto> groupTabDtos = sut.searchGroupTabsKeyword(null, null, null, pageable);
+
+        // Then
+        assertThat(groupTabDtos).isEmpty();
+        then(groupTabRepository).should().SearchGroupTabs(null, null, null, pageable);
+    }
+
+    @DisplayName("검색어와 함께 그룹을 검색하면, 그룹 페이지를 반환한다.")
+    @Test
+    void givenSearchParameters_whenSearchingGroupTabs_thenReturnsGroupTab() {
+        // Given
+        String groupName = "테스트그룹";
+        String intOut = "운동/스포츠";
+        String groupLocation = "서울";
+        Pageable pageable = Pageable.ofSize(20);
+        given(groupTabRepository.SearchGroupTabs(groupName, intOut, groupLocation, pageable)).willReturn(Page.empty());
+
+        // When
+        Page<GroupTabDto> groupTabDtos = sut.searchGroupTabsKeyword(groupName, intOut, groupLocation, pageable);
+
+        // Then
+        assertThat(groupTabDtos).isEmpty();
+        then(groupTabRepository).should().SearchGroupTabs(groupName, intOut, groupLocation, pageable);
+    }
 
     private GroupTab createGroupTab() {
         GroupTab groupTab = GroupTab.of(

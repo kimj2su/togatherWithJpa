@@ -3,6 +3,22 @@
     <attr sel="#header" th:replace="header :: header"/>
     <attr sel="#footer" th:replace="footer :: footer"/>
 
+    <attr sel="#searchForm" th:action="@{/search-keyword}" th:method="get">
+        <attr sel="#group-name" th:name="groupName"/>
+<!--        <attr sel="#int_out" th:name="intOut" ></attr>-->
+        <attr sel="#int_out" th:name="intOut">
+            <attr sel="option[1]"
+                  th:each="intOut : ${intOut}"
+                  th:value="${intOut.toString}"
+                  th:text="${intOut.toString}"
+
+                  th:selected="${param.intOut != null && (param.intOut.toString == intOut.toString)}"
+            />
+        </attr>
+        <attr sel="#group-location" th:name="groupLocation"/>
+    </attr>
+
+
     <attr sel="#eachDiv" th:each="groupTabs : ${groupTabs}">
         <attr sel="#interest" th:text="${groupTabs.interest}"> </attr>
         <attr sel="#memberLimit" th:text="${groupTabs.memberLimit}"> </attr>
