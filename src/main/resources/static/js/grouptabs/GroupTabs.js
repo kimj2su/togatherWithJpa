@@ -134,6 +134,7 @@ function categories(sequence, i) {
                 } else {
                     if ($('#category_firstCheck1').val() == "") {
                         $('#category_first1').val(categoryValue);
+                        // $('#category-type').val("INT_IN");
                     } else if ($('#category_firstCheck1').val() != "" && $('#category_firstCheck2').val() == "") {
                         $('#category_first2').val(categoryValue);
                     } else if ($('#category_firstCheck1').val() != "" && $('#category_firstCheck2').val() != "") {
@@ -156,13 +157,14 @@ function categories(sequence, i) {
         index += "a";
         let categoryValue = document.getElementById(index).getAttribute('data-value');
         $('#span3').text(categoryValue);
-        if ($('#category_firstCheck1').val() == "") {
+        if ($('#category_firstCheck1').val() === "") {
             $('#category_first1').val(categoryValue);
-        } else if ($('#category_firstCheck1').val() != "" && $('#category_firstCheck2').val() == "") {
+            // $('#category-type').val("FIRST_OPTION");
+        } else if ($('#category_firstCheck1').val() !== "" && $('#category_firstCheck2').val() === "") {
             $('#category_first2').val(categoryValue);
-        } else if ($('#category_firstCheck1').val() != "" && $('#category_firstCheck2').val() != "") {
+        } else if ($('#category_firstCheck1').val() !== "" && $('#category_firstCheck2').val() !== "") {
             $('#category_first3').val(categoryValue);
-        } else if ($('#category_firstCheck1').val() != "" && $('#category_firstCheck2').val() != "" && $('#category_firstCheck3').val() != "") {
+        } else if ($('#category_firstCheck1').val() !== "" && $('#category_firstCheck2').val() !== "" && $('#category_firstCheck3').val() !== "") {
             alert("카테고리는 3개까지만 선택가능합니다.");
             categories(5, 0);
         }

@@ -1,4 +1,4 @@
-package team1.togather.repository;
+package team1.togather.repository.member;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;

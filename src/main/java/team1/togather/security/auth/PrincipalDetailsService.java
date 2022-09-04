@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import team1.togather.domain.member.Member;
-import team1.togather.repository.MemberRepository;
+import team1.togather.repository.member.MemberRepository;
 
 
 @RequiredArgsConstructor

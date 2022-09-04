@@ -8,5 +8,6 @@
     <attr sel="#login-form" th:action="@{/login}" th:method="post">
         <attr sel="#userId" th:name="userId" />
         <attr sel="#password" th:name="password" />
+        <attr sel="#remember-me" th:name="remember-me" />
     </attr>
 </thlogic>

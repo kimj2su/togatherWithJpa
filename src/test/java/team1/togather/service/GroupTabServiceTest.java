@@ -19,10 +19,10 @@ import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.*;
-import team1.togather.repository.CategoryRepository;
-import team1.togather.repository.GroupTabRepository;
-import team1.togather.repository.MemberRepository;
-import team1.togather.repository.RoleRepository;
+import team1.togather.repository.member.CategoryRepository;
+import team1.togather.repository.grouptab.GroupTabRepository;
+import team1.togather.repository.member.MemberRepository;
+import team1.togather.repository.member.RoleRepository;
 import team1.togather.security.configs.TestSecurityConfig;
 import team1.togather.service.grouptab.GroupTabService;
 

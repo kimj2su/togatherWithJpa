@@ -6,7 +6,7 @@ import org.springframework.security.access.SecurityConfig;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import team1.togather.domain.member.Resources;
-import team1.togather.repository.ResourcesRepository;
+import team1.togather.repository.member.ResourcesRepository;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

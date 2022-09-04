@@ -15,11 +15,11 @@ import team1.togather.config.file.FileStore;
 import team1.togather.security.configs.TestSecurityConfig;
 import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.PaginationService;
+import team1.togather.service.member.CategoryService;
 
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -37,6 +37,8 @@ class IndexControllerTest {
     @MockBean
     private  PaginationService paginationService;
     @MockBean
+    private CategoryService categoryService;
+    @MockBean
     private  FileStore fileStore;
 
 //    public HomeControllerTest(@Autowired MockMvc mvc) {
@@ -49,7 +51,8 @@ class IndexControllerTest {
         System.out.println("mvc = " + mvc);
         // given
         given(groupTabService.indexGroupTabs(any(Pageable.class))).willReturn(Page.empty());
-        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0, 1, 2, 3, 4,5));
+        given(categoryService.getIntOut()).willReturn(List.of(""));
+        given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(0, 1, 2, 3, 4, 5));
 
         // when & then
         mvc.perform(get("/"))
@@ -58,9 +61,11 @@ class IndexControllerTest {
                 .andExpect(view().name("index"))
                 .andExpect(model().attributeExists("groupTabs"))
                 .andExpect(model().attributeExists("paginationBarNumbers"))
+                .andExpect(model().attributeExists("intOut"))
                 .andDo(MockMvcResultHandlers.print());
         then(groupTabService).should().indexGroupTabs(any(Pageable.class));
         then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
+        then(categoryService).should().getIntOut();
 
     }
 }

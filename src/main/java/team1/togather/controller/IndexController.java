@@ -17,6 +17,7 @@ import team1.togather.config.file.FileStore;
 import team1.togather.dto.response.GroupTabResponseDto;
 import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.PaginationService;
+import team1.togather.service.member.CategoryService;
 
 import java.net.MalformedURLException;
 import java.util.List;
@@ -27,6 +28,7 @@ public class IndexController {
 
 	private final GroupTabService groupTabService;
 	private final PaginationService paginationService;
+	private final CategoryService categoryService;
 	private final FileStore fileStore;
 	@GetMapping("/")
 	public String index(
@@ -35,9 +37,10 @@ public class IndexController {
 	) {
 		Page<GroupTabResponseDto> groupTabs = groupTabService.indexGroupTabs(pageable).map(GroupTabResponseDto::from);
 		List<Integer> paginationBarNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), groupTabs.getTotalPages());
+		List<String> intOut = categoryService.getIntOut();
 		model.addAttribute("groupTabs", groupTabs);
 		model.addAttribute("paginationBarNumbers", paginationBarNumbers);
-
+		model.addAttribute("intOut", intOut);
 		return "index";
 	}
 

@@ -17,13 +17,12 @@ spring:
   profiles:
     include: oauth
 
-  #logging.level:
-#  org.hibernate.SQL: debug
-  org.hibernate.type: trace
-
 file:
   dir: C:/Users/kjs76/Desktop/jisu/file/
-
+logging:
+  level:
+    org.hibernate.sql: debug
+    org.hibernate.type: trace
 
 
 

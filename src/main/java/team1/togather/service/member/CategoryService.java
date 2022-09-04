@@ -2,7 +2,7 @@ package team1.togather.service.member;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import team1.togather.repository.CategoryRepository;
+import team1.togather.repository.member.CategoryRepository;
 
 import java.util.List;
 

@@ -17,9 +17,9 @@ import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
 import team1.togather.dto.MemberInGroupTabDto;
-import team1.togather.repository.GroupTabRepository;
-import team1.togather.repository.MemberInGroupTabRepository;
-import team1.togather.repository.MemberRepository;
+import team1.togather.repository.grouptab.GroupTabRepository;
+import team1.togather.repository.grouptab.MemberInGroupTabRepository;
+import team1.togather.repository.member.MemberRepository;
 import team1.togather.service.grouptab.MemberInGroupTabService;
 
 import java.time.LocalDateTime;

@@ -83,7 +83,6 @@ class GroupTabControllerTest {
     void givenBasicMemberAndNewGroupTabInfo_whenRequesting_thenSavesNewGroupTab() throws Exception {
         // Given
         GroupTabRequestDto groupTabRequestDto = createGroupTabRequestDto();
-
         given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(anyLong());
 
         // When & Then
@@ -113,7 +112,6 @@ class GroupTabControllerTest {
     void givenOauth2MemberAndNewGroupTabInfo_whenRequesting_thenSavesNewGroupTab() throws Exception {
         // Given
         GroupTabRequestDto groupTabRequestDto = createGroupTabRequestDto();
-
         given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(anyLong());
 
         // When & Then

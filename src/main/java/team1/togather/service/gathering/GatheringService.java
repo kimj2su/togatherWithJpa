@@ -7,12 +7,9 @@ import team1.togather.domain.gathring.Gathering;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.dto.GatheringDto;
-import team1.togather.dto.GroupTabDto;
-import team1.togather.dto.GroupTabWithMembersDto;
-import team1.togather.dto.request.GatheringRequestDto;
-import team1.togather.repository.GatheringRepository;
-import team1.togather.repository.GroupTabRepository;
-import team1.togather.repository.MemberRepository;
+import team1.togather.repository.gathering.GatheringRepository;
+import team1.togather.repository.grouptab.GroupTabRepository;
+import team1.togather.repository.member.MemberRepository;
 
 import javax.persistence.EntityNotFoundException;
 

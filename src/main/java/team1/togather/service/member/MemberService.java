@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.MemberDto;
-import team1.togather.repository.MemberRepository;
-import team1.togather.repository.RoleRepository;
+import team1.togather.repository.member.MemberRepository;
+import team1.togather.repository.member.RoleRepository;
 
 import java.util.HashSet;
 import java.util.Set;

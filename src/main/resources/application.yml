@@ -20,6 +20,17 @@ spring:
   devtools:
     restart:
       enabled: true
+#  mvc:
+#    view:
+#      prefix: /WEB-INF/views/
+#      suffix: .jsp
+#  thymeleaf:
+#    prefix: classpath:/templates/
+#    view-names: thymeleaf/*
+#    suffix: .html
+#    cache: false
+
+
 
 logging.level:
 #  org.hibernate.SQL: debug

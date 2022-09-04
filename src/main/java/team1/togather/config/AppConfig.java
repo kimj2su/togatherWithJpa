@@ -2,7 +2,7 @@ package team1.togather.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import team1.togather.repository.ResourcesRepository;
+import team1.togather.repository.member.ResourcesRepository;
 import team1.togather.service.SecurityResourceService;
 
 /**

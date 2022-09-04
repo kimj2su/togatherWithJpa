@@ -17,9 +17,9 @@ import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 import team1.togather.dto.GatheringDto;
 import team1.togather.dto.MemberDto;
-import team1.togather.repository.GatheringRepository;
-import team1.togather.repository.GroupTabRepository;
-import team1.togather.repository.MemberRepository;
+import team1.togather.repository.gathering.GatheringRepository;
+import team1.togather.repository.grouptab.GroupTabRepository;
+import team1.togather.repository.member.MemberRepository;
 import team1.togather.security.configs.TestSecurityConfig;
 import team1.togather.security.configs.annotation.WithOauth2Member;
 
@@ -29,7 +29,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.*;
 
