@@ -2,10 +2,6 @@ package team1.togather.controller.grouptab;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,20 +11,16 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
-import team1.togather.domain.member.CategoryType;
 import team1.togather.dto.request.GroupTabRequestDto;
-import team1.togather.dto.response.GroupTabResponseDto;
 import team1.togather.dto.response.GroupTabWithMembersResponseDto;
 import team1.togather.dto.response.MemberInGroupTabResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
-import team1.togather.service.PaginationService;
 import team1.togather.service.grouptab.GroupTabService;
 import team1.togather.service.grouptab.MemberInGroupTabService;
 import team1.togather.service.member.CategoryService;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -40,7 +32,6 @@ public class GroupTabController {
     private final MemberInGroupTabService memberInGroupTabService;
     private final CategoryService categoryService;
     private final FileStore fileStore;
-    private final PaginationService paginationService;
 
     @GetMapping("/new")
     public String createForm(Model model) {
@@ -73,15 +64,6 @@ public class GroupTabController {
         modelMap.addAttribute("membersNameList", groupTab.getMemberInGroupTabResponseDtos());
         modelMap.addAttribute("checkMember", checkMember);
         return "groupTabs/detail";
-    }
-
-    @GetMapping("/search-category")
-    public String searchCategory(@PageableDefault(size = 9, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, String searchValue, Model model) {
-        Page<GroupTabResponseDto> groupTabs = groupTabService.searchGroupTabs(searchValue, pageable).map(GroupTabResponseDto::from);
-        List<Integer> paginationBarNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), groupTabs.getTotalPages());
-        model.addAttribute("groupTabs", groupTabs);
-        model.addAttribute("paginationBarNumbers", paginationBarNumbers);
-        return "groupTabs/search-grouptab";
     }
 
 }

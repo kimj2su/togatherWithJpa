@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.member.Category;
@@ -50,11 +51,6 @@ public class GroupTabService {
 
         MemberInGroupTabDto memberInGroupTabDto =  MemberInGroupTabDto.of(saveGroupTab.getId(), dto.getMemberDto(), MemberGrade.GROUP_MASTER);
         saveGroupTab.addMemberInGroupTab(memberInGroupTabDto.toEntity(saveGroupTab, member));
-
-
-//        GroupTabCategoryDto groupTabCategoryDto = GroupTabCategoryDto.of(saveGroupTab.getId(), category.getId());
-//        saveGroupTab.addGroupTabCategory(groupTabCategoryDto.toEntity(saveGroupTab, category));
-
         return saveGroupTab.getId();
     }
 
@@ -83,8 +79,16 @@ public class GroupTabService {
 
     @Transactional(readOnly = true)
     public Page<GroupTabDto> searchGroupTabs(String searchValue, Pageable pageable) {
+        if (!StringUtils.hasText(searchValue)) {
+            return groupTabRepository.findAll(pageable).map(GroupTabDto::from);
+        }
         List<Long> categoryById = categoryRepository.findCategoryByIntOut(searchValue);
         return groupTabRepository.findGroupTabsByCategory_IdIn(categoryById, pageable).map(GroupTabDto::from);
+    }
+
+    @Transactional(readOnly = true)
+    public Page<GroupTabDto> searchGroupTabsKeyword(String groupName, String intOut, String groupLocation, Pageable pageable) {
+        return groupTabRepository.SearchGroupTabs(groupName, intOut, groupLocation, pageable).map(GroupTabDto::from);
     }
 
     public void updateGroupTab(Long groupTabId, GroupTabDto dto) {

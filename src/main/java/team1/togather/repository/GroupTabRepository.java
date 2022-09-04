@@ -9,7 +9,7 @@ import team1.togather.domain.groupTab.GroupTab;
 
 import java.util.List;
 
-public interface GroupTabRepository extends JpaRepository<GroupTab, Long>, GroupTabRepositoryCustom {
+public interface GroupTabRepository extends JpaRepository<GroupTab, Long>, GroupTabRepositoryCustom, SearchGroupTabs {
 
 
     void deleteByIdAndMember_UserId(Long articleId, String userId);
@@ -19,10 +19,8 @@ public interface GroupTabRepository extends JpaRepository<GroupTab, Long>, Group
 
     Page<GroupTab> findGroupTabsByCategory_IdIn(List<Long> categoryId, Pageable pageable);
 
-
-
     @Override
-    @EntityGraph(attributePaths = {"groupUploadFile"})
+    @EntityGraph(attributePaths = {"groupUploadFile", "membersInGroupTab"})
     Page<GroupTab> findAll(Pageable pageable);
 
 }

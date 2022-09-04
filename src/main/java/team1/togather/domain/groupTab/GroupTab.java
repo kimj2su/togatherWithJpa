@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import team1.togather.domain.AuditingFields;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
+import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 
 import javax.persistence.*;
@@ -54,10 +55,11 @@ public class GroupTab extends AuditingFields {
     @OneToMany(mappedBy = "groupTab", cascade = CascadeType.ALL)
     private final Set<MemberInGroupTab> membersInGroupTab = new LinkedHashSet<>();
 
-    @OneToOne(mappedBy = "groupTab", cascade = CascadeType.ALL)
-    private GroupTabCategory groupTabCategory;
+    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
+    public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member, Category category) {
         this.groupLocation = groupLocation;
         this.groupName = groupName;
         this.groupIntro = groupIntro;
@@ -66,9 +68,10 @@ public class GroupTab extends AuditingFields {
         this.groupUploadFile = groupUploadFile;
         this.member = member;
         this.userId = member.getUserId();
+        this.category = category;
     }
 
-    public static GroupTab of(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member) {
+    public static GroupTab of(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member, Category category) {
         return new GroupTab(
                 groupLocation,
                 groupName,
@@ -76,7 +79,8 @@ public class GroupTab extends AuditingFields {
                 interest,
                 memberLimit,
                 groupUploadFile,
-                member
+                member,
+                category
         );
     }
 
@@ -103,11 +107,6 @@ public class GroupTab extends AuditingFields {
     public void addMemberInGroupTab(MemberInGroupTab memberInGroupTab) {
         memberInGroupTab.addGroupTab(this);
         membersInGroupTab.add(memberInGroupTab);
-    }
-
-    public void addGroupTabCategory(GroupTabCategory groupTabCategory) {
-        groupTabCategory.addGroupTab(this);
-        this.groupTabCategory = groupTabCategory;
     }
 
     @Override

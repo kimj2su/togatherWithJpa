@@ -1,10 +1,12 @@
 package team1.togather.dto.response;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.GroupTabDto;
+import team1.togather.dto.MemberInGroupTabDto;
+
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,8 +19,9 @@ public class GroupTabResponseDto {
     private final int memberLimit;
     private final UploadFile uploadFile;
     private final String userId;
+    private final Set<MemberInGroupTabDto> memberInGroupTabDto;
 
-    public GroupTabResponseDto(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId) {
+    public GroupTabResponseDto(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId, Set<MemberInGroupTabDto> memberInGroupTabDto) {
         this.id = id;
         this.groupLocation = groupLocation;
         this.groupName = groupName;
@@ -27,6 +30,7 @@ public class GroupTabResponseDto {
         this.memberLimit = memberLimit;
         this.uploadFile = uploadFile;
         this.userId = userId;
+        this.memberInGroupTabDto = memberInGroupTabDto;
     }
 
     public static GroupTabResponseDto from(GroupTabDto dto) {
@@ -38,7 +42,8 @@ public class GroupTabResponseDto {
                 dto.getInterest(),
                 dto.getMemberLimit(),
                 dto.getUploadFile(),
-                dto.getMemberDto().getUserId()
+                dto.getMemberDto().getUserId(),
+                dto.getMemberInGroupTabDto()
         );
     }
 }

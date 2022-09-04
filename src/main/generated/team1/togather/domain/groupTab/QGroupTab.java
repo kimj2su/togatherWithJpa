@@ -24,6 +24,8 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
 
     public final team1.togather.domain.QAuditingFields _super = new team1.togather.domain.QAuditingFields(this);
 
+    public final team1.togather.domain.member.QCategory category;
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
@@ -35,8 +37,6 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
     public final StringPath groupLocation = createString("groupLocation");
 
     public final StringPath groupName = createString("groupName");
-
-    public final QGroupTabCategory groupTabCategory;
 
     public final QGroupUploadFile groupUploadFile;
 
@@ -76,7 +76,7 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
 
     public QGroupTab(Class<? extends GroupTab> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.groupTabCategory = inits.isInitialized("groupTabCategory") ? new QGroupTabCategory(forProperty("groupTabCategory"), inits.get("groupTabCategory")) : null;
+        this.category = inits.isInitialized("category") ? new team1.togather.domain.member.QCategory(forProperty("category")) : null;
         this.groupUploadFile = inits.isInitialized("groupUploadFile") ? new QGroupUploadFile(forProperty("groupUploadFile"), inits.get("groupUploadFile")) : null;
         this.member = inits.isInitialized("member") ? new team1.togather.domain.member.QMember(forProperty("member")) : null;
     }
