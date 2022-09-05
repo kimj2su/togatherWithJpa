@@ -23,12 +23,8 @@ public class GroupUploadFile {
     public GroupUploadFile(UploadFile attachFile){
         this.attachFile = attachFile;
     }
+
     public static GroupUploadFile of(UploadFile attachFile) {
         return new GroupUploadFile(attachFile);
-    }
-
-    public GroupUploadFile newFileNameAndAttachFile(UploadFile uploadFile) {
-        this.attachFile = uploadFile;
-        return this;
     }
 }

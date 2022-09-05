@@ -5,12 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="Jisu Kim">
-    <title>회원 가입</title>
+    <title>Togather</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <!-- Vendor CSS Files -->
-    <link href="/assets/vendor/animate.css/animate.min.css" rel="stylesheet" />
-    <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="/assets/vendor/animate.css/animate.min.css" rel="stylesheet"/>
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet"/>
     <link
             href="/assets/vendor/bootstrap/css/bootstrap.min.css"
             rel="stylesheet"
@@ -22,11 +23,11 @@
             href="/assets/vendor/bootstrap-icons/bootstrap-icons.css"
             rel="stylesheet"
     />
-    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet" />
-    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet" />
-    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+    <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet"/>
+    <link href="/assets/vendor/remixicon/remixicon.css" rel="stylesheet"/>
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet"/>
     <!-- Template Main CSS File -->
-    <link href="/assets/css/style.css" rel="stylesheet" />
+    <link href="/assets/css/style.css" rel="stylesheet"/>
     <script type="text/javascript"
             src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <style>
@@ -50,7 +51,7 @@
     <div class="breadcrumbs" data-aos="fade-in">
         <div class="container">
             <header id="groupTab-form-header">
-                <h1>모임 만들기</h1>
+                <h1>모임 수정</h1>
             </header>
         </div>
     </div>
@@ -190,20 +191,34 @@
                                             </div>
                                         </div>
 
-                                        <div class="d-flex flex-row align-items-center mb-0">
-                                            <i class="bi bi-card-image fa-lg me-3 fa-fw"></i>
-                                            <div class="form-outline flex-fill mb-2">
-                                                <label class="form-label mb-0" for="attachFile">모임대표사진</label>
-                                                <input type="file"
-                                                       id="attachFile"
-                                                       class="form-control"
-                                                       name="attachFile"
-                                                       required/>
-                                                <div id="attachFileError" class="field-error">
-                                                    모임 대표 사진 오류
-                                                </div>
+                                        <!--                                        <div class="d-flex flex-row align-items-center mb-0">-->
+                                        <!--                                            <i class="bi bi-card-image fa-lg me-3 fa-fw"></i>-->
+                                        <!--                                            <div class="form-outline flex-fill mb-2">-->
+                                        <!--                                                <label class="form-label mb-0" for="attachFile">모임대표사진</label>-->
+                                        <!--                                                <input type="file"-->
+                                        <!--                                                       id="attachFile"-->
+                                        <!--                                                       class="form-control"-->
+                                        <!--                                                       name="attachFile"-->
+                                        <!--                                                       required/>-->
+                                        <!--                                                <div id="attachFileError" class="field-error">-->
+                                        <!--                                                    모임 대표 사진 오류-->
+                                        <!--                                                </div>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
+                                        <div class="form-group file-group" id="file-list">
+                                            <div class="file-add">
+                                                <a href="#this" onclick="addFile()"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 파일추가</a>
                                             </div>
+
+                                            <div class="file-input">
+                                                <span class="glyphicon glyphicon-camera" aria-hidden="true"></span>
+                                                <span id="fileName"></span>
+                                                <input type="hidden" value="true">
+                                                <a href='#this' name='file-delete'>삭제</a>
+                                            </div>
+
                                         </div>
+
 
                                         <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                             <button type="submit"
@@ -244,5 +259,26 @@
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
 <script type="text/javascript" th:src="@{/js/grouptabs/GroupTabs.js}"></script>
+<script>
+    $(document).ready(function(){
+        $("a[name='file-delete']").on("click",function(e){
+            e.preventDefault();
+            deleteFile($(this));
+        });
+    })
+
+    function addFile(){
+        let str="<div class='file-input'><input id='attachFile' type='file' name='attachFile'><a href='#this' name='file-delete'>삭제</a></div>";
+        $("#file-list").append(str);
+        $("a[name='file-delete']").on("click", function(e) {
+            e.preventDefault();
+            deleteFile($(this));
+        });
+    }
+
+    function deleteFile(obj){
+        obj.parent().remove();
+    }
+</script>
 </body>
 </html>

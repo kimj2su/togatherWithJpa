@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.request.GroupTabRequestDto;
+import team1.togather.dto.response.GroupTabResponseDto;
 import team1.togather.dto.response.GroupTabWithMembersResponseDto;
 import team1.togather.dto.response.MemberInGroupTabResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
@@ -51,6 +52,30 @@ public class GroupTabController {
         groupTabRequestDto.setUploadFile(uploadFile);
 
         Long groupTabId = groupTabService.saveGroupTab(groupTabRequestDto.toDto(principalDetails.toDto()));
+        redirectAttributes.addAttribute("groupTabId", groupTabId);
+        return "redirect:/groupTabs/{groupTabId}";
+    }
+
+    @GetMapping("/{groupTabId}/form")
+    public String modifyGroupForm(@PathVariable Long groupTabId, Model model) {
+        GroupTabResponseDto groupTab = GroupTabResponseDto.from(groupTabService.getGroupTab(groupTabId));
+        model.addAttribute("groupTab", groupTab);
+        model.addAttribute("intOut",categoryService.getIntOut());
+        return "groupTabs/modifyGroupTabForm";
+    }
+
+    @PostMapping("/{groupTabId}/form")
+    public String modifyGroupForm(@PathVariable Long groupTabId, @Valid @ModelAttribute("groupTab") GroupTabRequestDto groupTabRequestDto, BindingResult bindingResult,
+                               @AuthenticationPrincipal PrincipalDetails principalDetails, RedirectAttributes redirectAttributes) throws IOException {
+        if (bindingResult.hasErrors()) {
+            log.info("error={}", bindingResult);
+            return "groupTabs/modifyGroupTabForm";
+        }
+        if (groupTabRequestDto.getAttachFile() != null) {
+            UploadFile uploadFile = fileStore.storeFile(groupTabRequestDto.getAttachFile()); // UUID에서 리턴받은 파일네임
+            groupTabRequestDto.setUploadFile(uploadFile);
+        }
+        groupTabService.updateGroupTab(groupTabId, groupTabRequestDto.toDto(principalDetails.toDto()));
         redirectAttributes.addAttribute("groupTabId", groupTabId);
         return "redirect:/groupTabs/{groupTabId}";
     }

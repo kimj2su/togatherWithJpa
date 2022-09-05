@@ -3,13 +3,17 @@
     <attr sel="#header" th:replace="header :: header"></attr>
     <attr sel="#footer" th:replace="footer :: footer"></attr>
 
-    <attr sel="#groupTab_form" th:object="${groupTab}" th:action="@{/groupTabs/new}" th:method="post" >
-        <attr sel="#groupLocation" th:value="*{groupLocation}" th:name="groupLocation" th:errorclass="field-error"/>
+    <attr sel="#groupTab_form" th:object="${groupTab}" th:action="@{'/groupTabs/' + ${groupTab.id} + '/form'}" th:method="post" >
+        <attr sel="#groupLocation" th:name="groupLocation" th:errorclass="field-error"/>
+        <attr sel="option[1]"
+              th:value="*{groupLocation}"
+              th:selected="*{groupLocation}"
+        />
         <attr sel="#groupName" th:name="groupName"  th:field="*{groupName}" th:errorclass="field-error"/>
         <attr sel="#groupIntro" th:name="groupIntro" th:field="*{groupIntro}" th:errorclass="field-error"/>
         <attr sel="#interest" th:name="interest" th:field="*{interest}" th:errorclass="field-error"/>
         <attr sel="#memberLimit" th:name="memberLimit" th:field="*{memberLimit}" th:errorclass="field-error"/>
-        <attr sel="#attachFile"  th:name="attachFile"  th:errorclass="field-error"/>
+        <attr sel="#fileName"  th:name="attachFile"  th:text="*{uploadFile.uploadFileName}"/>
 
         <attr sel="#groupNameError" th:errors="*{groupName}"/>
         <attr sel="#groupIntroError" th:errors="*{groupIntro}"/>

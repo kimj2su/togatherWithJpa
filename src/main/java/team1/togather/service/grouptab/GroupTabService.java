@@ -20,6 +20,7 @@ import team1.togather.repository.member.MemberRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -108,8 +109,11 @@ public class GroupTabService {
                 if (dto.getMemberLimit() != groupTab.getMemberLimit() && dto.getMemberLimit() != 0) {
                     groupTab.modifyGroupTabMemberLimit(dto.getMemberLimit());
                 }
+                if (!groupTab.getInterest().equals(dto.getInterest())) {
+                    groupTab.modifyGroupTabInterest(dto.getInterest());
+                }
                 if (dto.getUploadFile() != null) {
-                    groupTab.modifyGroupTabUploadFile(dto.getGroupUploadFile());
+                    groupTab.modifyGroupTabUploadFile(dto.getUploadFile());
                 }
             }
         } catch (EntityNotFoundException e) {

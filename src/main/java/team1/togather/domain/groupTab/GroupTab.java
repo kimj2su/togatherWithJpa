@@ -42,7 +42,7 @@ public class GroupTab extends AuditingFields {
 
     private String userId;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.PERSIST, orphanRemoval = true)
     @JoinColumn(name = "group_upload_file_id")
     private GroupUploadFile groupUploadFile;
 
@@ -99,9 +99,12 @@ public class GroupTab extends AuditingFields {
     public void modifyGroupTabMemberLimit(int memberLimit) {
         this.memberLimit = memberLimit;
     }
+    public void modifyGroupTabInterest(String interest) {
+        this.interest = interest;
+    }
 
-    public void modifyGroupTabUploadFile(GroupUploadFile groupUploadFile) {
-        this.groupUploadFile = groupUploadFile;
+    public void modifyGroupTabUploadFile(UploadFile uploadFile) {
+        this.groupUploadFile = GroupUploadFile.of( uploadFile);
     }
 
     public void addMemberInGroupTab(MemberInGroupTab memberInGroupTab) {

@@ -45,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("View 컨트롤러 - 그룹")
 @WebMvcTest(controllers = GroupTabController.class,
         excludeFilters = { //!Added!
-                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class) })
+                @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = SecurityConfig.class)})
 class GroupTabControllerTest {
 
 
@@ -82,8 +82,9 @@ class GroupTabControllerTest {
     @Test
     void givenBasicMemberAndNewGroupTabInfo_whenRequesting_thenSavesNewGroupTab() throws Exception {
         // Given
+        Long groupTabId = 1L;
         GroupTabRequestDto groupTabRequestDto = createGroupTabRequestDto();
-        given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(anyLong());
+        given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(groupTabId);
 
         // When & Then
         mvc.perform(
@@ -101,7 +102,10 @@ class GroupTabControllerTest {
                                 .contentType(MediaType.MULTIPART_FORM_DATA) // 4
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/groupTabs/" + groupTabId))
+                .andExpect(view().name("redirect:/groupTabs/{groupTabId}"))
+                .andExpect(model().attributeExists("groupTabId"));;
 
         then(groupTabService).should().saveGroupTab(any(GroupTabDto.class));
     }
@@ -111,8 +115,9 @@ class GroupTabControllerTest {
     @Test
     void givenOauth2MemberAndNewGroupTabInfo_whenRequesting_thenSavesNewGroupTab() throws Exception {
         // Given
+        Long groupTabId = 1L;
         GroupTabRequestDto groupTabRequestDto = createGroupTabRequestDto();
-        given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(anyLong());
+        given(groupTabService.saveGroupTab(any(GroupTabDto.class))).willReturn(groupTabId);
 
         // When & Then
         mvc.perform(
@@ -130,7 +135,10 @@ class GroupTabControllerTest {
                                 .contentType(MediaType.MULTIPART_FORM_DATA) // 4
                                 .with(csrf())
                 )
-                .andExpect(status().is3xxRedirection());
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/groupTabs/" + groupTabId))
+                .andExpect(view().name("redirect:/groupTabs/{groupTabId}"))
+                .andExpect(model().attributeExists("groupTabId"));
 
         then(groupTabService).should().saveGroupTab(any(GroupTabDto.class));
     }
@@ -155,7 +163,7 @@ class GroupTabControllerTest {
         // given
         Long groupTabId = 1L;
         Long memberId = 1L;
-        String userId= "KJS";
+        String userId = "KJS";
 
         given(groupTabService.getGroupTabWithMembers(groupTabId)).willReturn(createGroupTabWithMembersDto());
         MemberInGroupTabDto memberInGroupTabDto = createMemberInGroupTabDto();
@@ -173,11 +181,81 @@ class GroupTabControllerTest {
         assertThat(memberInGroupTabService.searchMemberInGroupTab(groupTabId, memberId)).isNotNull();
     }
 
+    @WithMember(value = "KJS")
+    @DisplayName("view - get 모임 수정 페이지")
+    @Test
+    void givenNothing_whenRequestingGroupTabModifyView_thenReturnsGroupTabModifyView() throws Exception {
+        // given
+        Long groupTabId = 1L;
+
+        given(groupTabService.getGroupTab(groupTabId)).willReturn(createGroupTabDto());
+
+        // when & then
+        mvc.perform(get("/groupTabs/" + groupTabId + "/form"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("groupTabs/modifyGroupTabForm"))
+                .andExpect(model().attributeExists("groupTab"));
+        then(groupTabService).should().getGroupTab(groupTabId);
+        then(categoryService).should().getIntOut();
+    }
+
+    @WithMember(value = "KJS")
+    @DisplayName("view - post 모임 수정 하기 ")
+    @Test
+    void givenNothing_whenRequestingGroupTabModify_thenReturnsGroupTabView() throws Exception {
+        // given
+        Long groupTabId = 1L;
+        GroupTabRequestDto groupTabRequestDto = createGroupTabRequestDto();
+        willDoNothing().given(groupTabService).updateGroupTab(groupTabId, createGroupTabDto());
+
+        // when & then
+        mvc.perform(
+                        multipart("/groupTabs/" + groupTabId + "/form")
+                                .file("attachFile", groupTabRequestDto.getAttachFile().getBytes())
+                                .param("groupLocation", groupTabRequestDto.getGroupLocation())
+                                .param("groupName", groupTabRequestDto.getGroupName())
+                                .param("groupIntro", groupTabRequestDto.getGroupIntro())
+                                .param("interest", groupTabRequestDto.getInterest())
+                                .param("memberLimit", String.valueOf(groupTabRequestDto.getMemberLimit()))
+                                .with(requestPostProcessor -> { // 3
+                                    requestPostProcessor.setMethod("POST");
+                                    return requestPostProcessor;
+                                })
+                                .contentType(MediaType.MULTIPART_FORM_DATA) // 4
+                                .with(csrf())
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/groupTabs/" + groupTabId))
+                .andExpect(view().name("redirect:/groupTabs/{groupTabId}"))
+                .andExpect(model().attributeExists("groupTabId"));
+        then(groupTabService).should().updateGroupTab(anyLong(), any(GroupTabDto.class));
+    }
+
     private MemberInGroupTabDto createMemberInGroupTabDto() {
         return MemberInGroupTabDto.from(MemberGrade.GROUP_MASTER);
     }
+
     private List<MemberInGroupTabDto> createMemberInGroupTab() {
         return List.of();
+    }
+
+    private GroupTabDto createGroupTabDto() {
+        return GroupTabDto.of(
+                1L,
+                "서울",
+                "테스트 모임이름",
+                "테스트 모임 소개",
+                "자전거",
+                10,
+                createUploadFile(),
+                createMemberDto(),
+                Set.of(),
+                LocalDateTime.now(),
+                "jisu",
+                LocalDateTime.now(),
+                "jisu"
+        );
     }
 
     private GroupTabWithMembersDto createGroupTabWithMembersDto() {
@@ -218,7 +296,7 @@ class GroupTabControllerTest {
     }
 
     private GroupTabRequestDto createGroupTabRequestDto() throws IOException {
-        return GroupTabRequestDto.of("서울", "테스트 모임", "테스트 모임 소개","관심사",10, createFile());
+        return GroupTabRequestDto.of("서울", "테스트 모임", "테스트 모임 소개", "관심사", 10, createFile());
     }
 
     private MockMultipartFile createFile() throws IOException {

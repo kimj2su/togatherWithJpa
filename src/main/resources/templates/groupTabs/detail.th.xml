@@ -12,15 +12,9 @@
     <attr sel="#memberLimit" th:text="${groupTab.memberLimit}"> </attr>
 
 
-<!--    <attr sel="#createGathering" th:if="${!#lists.isEmpty(checkMember)}"/>-->
-<!--    <attr sel="#modifyGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
-<!--    <attr sel="#deleteGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
-<!--    <attr sel="#joinGroup" th:if="${#lists.isEmpty(checkMember)}" th:href="@{'/groupTabs/' + ${groupTabs.id}}"/>-->
-<!--    <attr sel="#quitGroup" th:if="${!#lists.isEmpty(checkMember)}"/>-->
-
     <attr sel="#createGathering" th:if="${checkMember.grade.grade lt 3}" th:onclick="|gatheringForm('${groupTab.id}')|"/>
 
-    <attr sel="#modifyGroup" th:if="${checkMember.grade.grade < 2}"/>
+    <attr sel="#modifyGroup" th:if="${checkMember.grade.grade < 2}" th:href="'/groupTabs/' + ${groupTab.id} + '/form'"/>
     <attr sel="#deleteGroup" th:if="${checkMember.grade.grade < 2}"/>
     <attr sel="#joinGroup" th:if="${checkMember.grade.grade eq 3}" th:onclick="|groupJoin(' ${groupTab.id} ',' ${checkMember.grade.grade}')|"/>
     <attr sel="#quitGroup" th:if="${checkMember.grade.grade < 3}" th:onclick="|groupQuit(' ${groupTab.id} ',' ${checkMember.grade.grade}')|"/>
