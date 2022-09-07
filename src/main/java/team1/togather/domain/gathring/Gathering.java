@@ -19,6 +19,7 @@ public class Gathering{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "gathering_id")
     private Long id;
 
     private String gaName;

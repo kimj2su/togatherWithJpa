@@ -10,9 +10,7 @@ import team1.togather.domain.groupTab.GroupTab;
 import java.util.List;
 
 public interface GroupTabRepository extends JpaRepository<GroupTab, Long>, GroupTabRepositoryCustom, SearchGroupTabs {
-
-
-    void deleteByIdAndMember_UserId(Long articleId, String userId);
+    void deleteById(Long groupTabId);
 
     @Query("select g from GroupTab g where g.category.id in :categoryId")
     Page<GroupTab> findGroupTabByCategory(List<Long> categoryId, Pageable pageable);

@@ -215,13 +215,13 @@ class GroupTabServiceTest {
         // Given
         Long articleId = 1L;
         String userId = "jisuTest";
-        willDoNothing().given(groupTabRepository).deleteByIdAndMember_UserId(articleId, userId);
+        willDoNothing().given(groupTabRepository).deleteById(articleId);
 
         // When
-        sut.deleteGroupTab(1L, userId);
+        sut.deleteGroupTab(1L);
 
         // Then
-        then(groupTabRepository).should().deleteByIdAndMember_UserId(articleId, userId);
+        then(groupTabRepository).should().deleteById(articleId);
     }
 
     @DisplayName("카테고리를 선택하면 , 그룹 검색 페이지를 반환한다.")

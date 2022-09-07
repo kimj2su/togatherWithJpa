@@ -29,14 +29,15 @@ public class GroupTabWithMembersDto {
     private final MemberDto memberDto;
 
     private final Set<MemberInGroupTabDto> memberInGroupTabDto;
+    private final Set<GatheringDto> gatheringDtos;
 
     private final LocalDateTime createdAt;
     private final String createdBy;
     private final LocalDateTime modifiedAt;
     private final String modifiedBy;
 
-    public static GroupTabWithMembersDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new GroupTabWithMembersDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, memberDto, memberInGroupTabDto, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static GroupTabWithMembersDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, Set<GatheringDto> gatheringDtos, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new GroupTabWithMembersDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, memberDto, memberInGroupTabDto, gatheringDtos, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static GroupTabWithMembersDto from(GroupTab entity) {
@@ -51,6 +52,9 @@ public class GroupTabWithMembersDto {
                 MemberDto.from(entity.getMember()),
                 entity.getMembersInGroupTab().stream()
                         .map(MemberInGroupTabDto::from)
+                        .collect(Collectors.toCollection(LinkedHashSet::new)),
+                entity.getGathering().stream()
+                        .map(GatheringDto::from)
                         .collect(Collectors.toCollection(LinkedHashSet::new)),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),

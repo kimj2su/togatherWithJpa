@@ -20,9 +20,10 @@ public class GroupTabWithMembersResponseDto {
     private final UploadFile uploadFile;
     private final String userId;
     private final Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos;
+    private final Set<GatheringsResponseDto> gatheringsResponseDtos;
 
-    public static GroupTabWithMembersResponseDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId, Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos) {
-        return new GroupTabWithMembersResponseDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, userId, memberInGroupTabResponseDtos);
+    public static GroupTabWithMembersResponseDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId, Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos, Set<GatheringsResponseDto> gatheringsResponseDtos) {
+        return new GroupTabWithMembersResponseDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, userId, memberInGroupTabResponseDtos, gatheringsResponseDtos);
     }
 
     public static GroupTabWithMembersResponseDto from(GroupTabWithMembersDto membersInGroupTabDto) {
@@ -37,6 +38,9 @@ public class GroupTabWithMembersResponseDto {
                 membersInGroupTabDto.getMemberDto().getUserId(),
                 membersInGroupTabDto.getMemberInGroupTabDto().stream()
                         .map(MemberInGroupTabResponseDto::from)
+                        .collect(Collectors.toCollection(LinkedHashSet::new)),
+                membersInGroupTabDto.getGatheringDtos().stream()
+                        .map(GatheringsResponseDto::from)
                         .collect(Collectors.toCollection(LinkedHashSet::new))
         );
     }

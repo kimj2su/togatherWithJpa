@@ -32,6 +32,8 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
     //inherited
     public final StringPath createdBy = _super.createdBy;
 
+    public final SetPath<team1.togather.domain.gathring.Gathering, team1.togather.domain.gathring.QGathering> gathering = this.<team1.togather.domain.gathring.Gathering, team1.togather.domain.gathring.QGathering>createSet("gathering", team1.togather.domain.gathring.Gathering.class, team1.togather.domain.gathring.QGathering.class, PathInits.DIRECT2);
+
     public final StringPath groupIntro = createString("groupIntro");
 
     public final StringPath groupLocation = createString("groupLocation");

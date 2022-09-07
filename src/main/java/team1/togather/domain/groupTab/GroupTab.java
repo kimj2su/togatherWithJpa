@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import team1.togather.domain.AuditingFields;
+import team1.togather.domain.gathring.Gathering;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
@@ -46,18 +47,21 @@ public class GroupTab extends AuditingFields {
     @JoinColumn(name = "group_upload_file_id")
     private GroupUploadFile groupUploadFile;
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @ManyToOne(fetch = LAZY)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
     @ToString.Exclude
     @OrderBy("grade asc ")
     @OneToMany(mappedBy = "groupTab", cascade = CascadeType.ALL)
     private final Set<MemberInGroupTab> membersInGroupTab = new LinkedHashSet<>();
 
-    @ManyToOne(fetch = LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @OneToMany(mappedBy = "groupTab", cascade = CascadeType.ALL )
+    private final Set<Gathering> gathering = new LinkedHashSet<>();
 
     public GroupTab(String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, GroupUploadFile groupUploadFile, Member member, Category category) {
         this.groupLocation = groupLocation;

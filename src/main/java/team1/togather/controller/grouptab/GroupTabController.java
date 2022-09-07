@@ -12,6 +12,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.dto.request.GroupTabRequestDto;
+import team1.togather.dto.response.GatheringsResponseDto;
 import team1.togather.dto.response.GroupTabResponseDto;
 import team1.togather.dto.response.GroupTabWithMembersResponseDto;
 import team1.togather.dto.response.MemberInGroupTabResponseDto;
@@ -91,4 +92,9 @@ public class GroupTabController {
         return "groupTabs/detail";
     }
 
+    @PostMapping("/{groupTabId}/delete")
+    public String deleteGroupTab(@PathVariable Long groupTabId) {
+        groupTabService.deleteGroupTab(groupTabId);
+        return "redirect:/";
+    }
 }

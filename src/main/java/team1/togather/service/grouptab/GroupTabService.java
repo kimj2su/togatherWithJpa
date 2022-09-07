@@ -11,9 +11,11 @@ import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
+import team1.togather.dto.GatheringDto;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.dto.MemberInGroupTabDto;
+import team1.togather.repository.gathering.GatheringRepository;
 import team1.togather.repository.member.CategoryRepository;
 import team1.togather.repository.grouptab.GroupTabRepository;
 import team1.togather.repository.member.MemberRepository;
@@ -21,6 +23,7 @@ import team1.togather.repository.member.MemberRepository;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -121,7 +124,7 @@ public class GroupTabService {
         }
     }
 
-    public void deleteGroupTab(Long articleId, String userId) {
-        groupTabRepository.deleteByIdAndMember_UserId(articleId, userId);
+    public void deleteGroupTab(Long groupTabId) {
+        groupTabRepository.deleteById(groupTabId);
     }
 }
