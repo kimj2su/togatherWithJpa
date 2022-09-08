@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<thlogic>
+    <attr sel="#header" th:replace="header :: header"></attr>
+    <attr sel="#footer" th:replace="footer :: footer"></attr>
+
+    <attr sel="#h1_gathering_name" th:text="${gathering.gaName}"></attr>
+    <attr sel="#gathering_name" th:text="${gathering.gaName}"></attr>
+    <attr sel="#gathering_date" th:text="${gathering.gaDate}"></attr>
+    <attr sel="#gathering_time" th:text="${gathering.time}"></attr>
+    <attr sel="#gathering_place" th:text="${gathering.gaPlace}"></attr>
+    <attr sel="#gathering_price" th:text="${gathering.price}"></attr>
+    <attr sel="#gathering_limit" th:text="${gathering.gaLimit}"></attr>
+
+    <attr sel="#join_gathering" th:if="${checkMember.grade.grade eq 3}" th:onclick="|groupJoin(' ${groupTab.id} ',' ${checkMember.grade.grade}')|"/>
+    <attr sel="#quit_gathering" th:if="${checkMember.grade.grade < 3}" th:onclick="|groupQuit(' ${groupTab.id} ',' ${checkMember.grade.grade}')|"/>
+    <attr sel="#modify_gathering" th:if="${checkMember.grade.grade < 2}" th:href="'/groupTabs/' + ${groupTab.id} + '/form'"/>
+    <attr sel="#delete_gathering" th:if="${checkMember.grade.grade < 2}" th:onclick="|groupDelete(' ${groupTab.id} ')|"/>
+</thlogic>

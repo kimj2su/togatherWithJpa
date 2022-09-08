@@ -26,7 +26,10 @@ public class SearchGroupTabsController {
     private final CategoryService categoryService;
 
     @GetMapping("/search")
-    public String searchCategory(@PageableDefault(size = 9, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, String searchValue, Model model) {
+    public String searchCategory(
+            @PageableDefault(size = 9, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
+            String searchValue, Model model
+    ) {
         Page<GroupTabResponseDto> groupTabs = groupTabService.searchGroupTabs(searchValue, pageable).map(GroupTabResponseDto::from);
         List<Integer> paginationBarNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), groupTabs.getTotalPages());
         List<String> intOut = categoryService.getIntOut();

@@ -82,13 +82,14 @@ public class GroupTabController {
     }
 
     @GetMapping("/{groupTabId}")
-    public String groupTab(@PathVariable Long groupTabId, ModelMap modelMap, @AuthenticationPrincipal PrincipalDetails principalDetails) {
+    public String groupTab(@PathVariable Long groupTabId, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
         GroupTabWithMembersResponseDto groupTab = GroupTabWithMembersResponseDto.from(groupTabService.getGroupTabWithMembers(groupTabId));
         MemberInGroupTabResponseDto checkMember = MemberInGroupTabResponseDto.from(memberInGroupTabService.searchMemberInGroupTab(groupTabId, principalDetails.getMember().getId()));
 
-        modelMap.addAttribute("groupTab", groupTab);
-        modelMap.addAttribute("membersNameList", groupTab.getMemberInGroupTabResponseDtos());
-        modelMap.addAttribute("checkMember", checkMember);
+        model.addAttribute("groupTab", groupTab);
+        model.addAttribute("membersNameList", groupTab.getMemberInGroupTabResponseDtos());
+        model.addAttribute("gatherings", groupTab.getGatheringsResponseDtos());
+        model.addAttribute("checkMember", checkMember);
         return "groupTabs/detail";
     }
 

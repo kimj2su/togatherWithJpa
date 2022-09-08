@@ -35,7 +35,7 @@ class GatheringControllerTest {
     private GatheringService gatheringService;
 
     @WithMockUser
-    @DisplayName("[view][GET] 새 모임 개설 페이지")
+    @DisplayName("[view][GET] 새 정모 개설 페이지")
     @Test
     void givenNothing_whenRequesting_thenReturnsNewGatheringPage() throws Exception {
         // Given
@@ -45,6 +45,35 @@ class GatheringControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
                 .andExpect(view().name("gathering/createGatheringForm"));
+    }
+
+    @WithMockUser
+    @DisplayName("[view][GET] 정모 상세 페이지")
+    @Test
+    void givenGatheringId_whenRequesting_thenReturnsGatheringPage() throws Exception {
+        // Given
+        Long gatheringId = 1L;
+        given(gatheringService.getGathering(gatheringId)).willReturn(createGatheringDto());
+        // When & Then
+        mvc.perform(get("/gatherings/" + gatheringId))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("gatherings/detail"));
+    }
+
+    @WithMockUser
+    @DisplayName("[view][GET] 정모 장소 검색 페이지")
+    @Test
+    void givenGatheringPlace_whenRequesting_thenReturnsGatheringPlacePage() throws Exception {
+        // Given
+        String place = "서울";
+        // When & Then
+        mvc.perform(get("/gatherings/gatheringSearchMap")
+                        .param("place", place))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+                .andExpect(view().name("gatherings/searchMap"))
+                .andExpect(model().attributeExists("place"));
     }
 
     @WithMember(value = "jisu1")

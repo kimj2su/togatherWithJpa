@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team1.togather.dto.request.GatheringRequestDto;
+import team1.togather.dto.response.GatheringsResponseDto;
 import team1.togather.security.auth.PrincipalDetails;
 import team1.togather.service.gathering.GatheringService;
 
@@ -24,8 +25,7 @@ public class GatheringController {
     public String createForm(@PathVariable Long groupTabId, Model model) {
         model.addAttribute("gathering", new GatheringRequestDto());
         model.addAttribute("groupTabId", groupTabId);
-        System.out.println("groupTabId = " + groupTabId);
-        return "gathering/createGatheringForm";
+        return "gatherings/createGatheringForm";
     }
 
     @PostMapping("/new")
@@ -37,7 +37,15 @@ public class GatheringController {
     }
 
     @GetMapping("{gatheringId}")
-    public String Gathering(@PathVariable Long gatheringId) {
-        return "gathering/createGatheringForm";
+    public String Gathering(@PathVariable Long gatheringId, Model model) {
+        GatheringsResponseDto gathering = GatheringsResponseDto.from(gatheringService.getGathering(gatheringId));
+        model.addAttribute("gathering", gathering);
+        return "gatherings/detail";
+    }
+
+    @GetMapping("/gatheringSearchMap")
+    public String gatheringSearchMap(String place, Model model) {
+        model.addAttribute("place", place);
+        return "gatherings/searchMap";
     }
 }

@@ -1,3 +1,15 @@
+function groupDelete(id) {
+    let groupTabId = id;
+    let result = {"groupTabId": groupTabId};
+    $.ajax({
+        url: "/groupTabs/" + groupTabId + "/delete",
+        type: "POST",
+        data: result,
+        success: function (data) {
+            location.href="/";
+        }
+    });
+}
 function groupJoin(id, grade) {
     let groupTabId = id;
     let result = {"groupTabId": groupTabId, "gradeNumber": grade};

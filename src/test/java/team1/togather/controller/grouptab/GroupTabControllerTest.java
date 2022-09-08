@@ -269,6 +269,7 @@ class GroupTabControllerTest {
                 createUploadFile(),
                 createMemberDto(),
                 Set.of(),
+                Set.of(),
                 LocalDateTime.now(),
                 "jisu",
                 LocalDateTime.now(),

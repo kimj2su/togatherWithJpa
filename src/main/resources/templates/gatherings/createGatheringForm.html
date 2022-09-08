@@ -141,7 +141,10 @@
     footer 템플릿 삽입부
 </footer>
 <!-- End Footer -->
-
+<input type="hidden" id="latitude2" name="latitude" value="" />
+<input type="hidden" id="longitude2" name="longitude" value="" />
+<input type="hidden" id="place" name="longitude" value="" />
+<div id="preloader"></div>
 <!-- Vendor JS Files -->
 <script src="/assets/vendor/purecounter/purecounter.js"></script>
 <script src="/assets/vendor/aos/aos.js"></script>
@@ -151,5 +154,10 @@
 
 <!-- Template Main JS File -->
 <script src="/assets/js/main.js"></script>
+<script
+        type="text/javascript"
+        src="//dapi.kakao.com/v2/maps/sdk.js?appkey=11400a9267d93835389eb9255fcaad0b&libraries=services"
+></script>
+<script type="text/javascript" th:src="@{/js/gathering/Gathering.js}"></script>
 </body>
 </html>
