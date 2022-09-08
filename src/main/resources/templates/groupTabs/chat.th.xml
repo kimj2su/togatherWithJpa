@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<thlogic>
+  <attr sel="#name" th:value="${userName}"> </attr>
+  <attr sel="#chat_groupTabId" th:value="${groupTabId}"> </attr>
+  <attr sel="#groupName" th:text="${groupName}"> </attr>
+</thlogic>

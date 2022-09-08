@@ -11,6 +11,8 @@
     <attr sel="#interest" th:text="${groupTab.interest}"> </attr>
     <attr sel="#memberLimit" th:text="${groupTab.memberLimit}"> </attr>
 
+    <attr sel="#chat_button" th:onclick="|groupChat(' ${groupTab.id} ')|"/>
+
     <attr sel="#gatheringList" th:each="gathering : ${gatherings}">
         <attr sel="a" th:text="${gathering.gaName}" th:href="'/gatherings/' + ${gathering.id}"></attr>
     </attr>

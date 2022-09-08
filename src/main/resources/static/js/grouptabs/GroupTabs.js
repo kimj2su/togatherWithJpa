@@ -1,3 +1,12 @@
+function groupChat(groupTabId) {
+    let groupTabName = document.getElementById("groupName").innerText;
+    console.log(groupTabName);
+    window.name="parentForm";
+    let openWin = window.open(
+        "/groupTabs/chat?groupTabId="+ groupTabId + "&groupName=" + groupTabName, "그룹 채팅",
+        "width=1000, height=530, top=100, left=100");
+}
+
 function groupDelete(id) {
     let groupTabId = id;
     let result = {"groupTabId": groupTabId};
