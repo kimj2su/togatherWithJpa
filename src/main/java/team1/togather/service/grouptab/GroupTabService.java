@@ -11,19 +11,15 @@ import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
-import team1.togather.dto.GatheringDto;
 import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.GroupTabWithMembersDto;
 import team1.togather.dto.MemberInGroupTabDto;
-import team1.togather.repository.gathering.GatheringRepository;
 import team1.togather.repository.member.CategoryRepository;
 import team1.togather.repository.grouptab.GroupTabRepository;
 import team1.togather.repository.member.MemberRepository;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -47,7 +43,6 @@ public class GroupTabService {
        return groupTabRepository.findAll(pageable).map(GroupTabDto::from);
     }
 
-
     public Long saveGroupTab(GroupTabDto dto) {
         Category category = category(dto);
         Member member = memberRepository.getReferenceById(dto.getMemberDto().getMemberId());
@@ -57,7 +52,6 @@ public class GroupTabService {
         saveGroupTab.addMemberInGroupTab(memberInGroupTabDto.toEntity(saveGroupTab, member));
         return saveGroupTab.getId();
     }
-
 
     private Category category(GroupTabDto dto) {
         Category category = categoryRepository.findCategoryByIntIn(dto.getInterest());

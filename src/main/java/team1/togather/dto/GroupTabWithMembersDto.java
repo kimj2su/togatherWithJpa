@@ -30,14 +30,15 @@ public class GroupTabWithMembersDto {
 
     private final Set<MemberInGroupTabDto> memberInGroupTabDto;
     private final Set<GatheringDto> gatheringDtos;
+    private final ChatRoomDto chatRoomDto;
 
     private final LocalDateTime createdAt;
     private final String createdBy;
     private final LocalDateTime modifiedAt;
     private final String modifiedBy;
 
-    public static GroupTabWithMembersDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, Set<GatheringDto> gatheringDtos, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new GroupTabWithMembersDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, memberDto, memberInGroupTabDto, gatheringDtos, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static GroupTabWithMembersDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, Set<GatheringDto> gatheringDtos, ChatRoomDto chatRoomDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new GroupTabWithMembersDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, memberDto, memberInGroupTabDto, gatheringDtos, chatRoomDto, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static GroupTabWithMembersDto from(GroupTab entity) {
@@ -56,6 +57,7 @@ public class GroupTabWithMembersDto {
                 entity.getGathering().stream()
                         .map(GatheringDto::from)
                         .collect(Collectors.toCollection(LinkedHashSet::new)),
+                ChatRoomDto.from(entity.getChatRoom()),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),

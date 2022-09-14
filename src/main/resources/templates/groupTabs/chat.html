@@ -4,22 +4,22 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <title>채팅방</title>
   <link rel="stylesheet" href="/css/main.css" />
-  <script>
-    function ready(){
-      username = document.querySelector('#name').value.trim();
-
-      if(username) {
-        usernamePage.classList.add('hidden');
-        chatPage.classList.remove('hidden');
-
-        let socket = new SockJS('/ws');
-        stompClient = Stomp.over(socket);
-
-        stompClient.connect({}, onConnected, onError);
-      }
-    }
-  </script>
 </head>
+<script>
+  function ready(){
+    username = document.querySelector('#name').value.trim();
+
+    if(username) {
+      usernamePage.classList.add('hidden');
+      chatPage.classList.remove('hidden');
+
+      let socket = new SockJS('/ws');
+      stompClient = Stomp.over(socket);
+
+      stompClient.connect({}, onConnected, onError);
+    }
+  }
+</script>
 <body onload="ready()">
 
 <div id="username-page">
@@ -35,7 +35,7 @@
     </form>
   </div>
 </div>
-<input type="hidden" id="chat_groupTabId" value="그룹 번호">
+<input type="hidden" id="chat_room_Id" value="채팅 방 번호">
 <div id="chat-page" class="hidden">
   <div class="chat-container">
     <div class="chat-header">

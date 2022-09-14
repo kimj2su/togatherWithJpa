@@ -31,6 +31,8 @@ public class GroupTabDto {
 
     private final Set<MemberInGroupTabDto> memberInGroupTabDto;
 
+    private final ChatRoomDto chatRoomDto;
+
     private final LocalDateTime createdAt;
     private final String createdBy;
     private final LocalDateTime modifiedAt;
@@ -41,7 +43,7 @@ public class GroupTabDto {
     public static GroupTabDto of(String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto) {
+                                 MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, ChatRoomDto chatRoomDto) {
         return new GroupTabDto(
                 null,
                 groupLocation,
@@ -52,6 +54,7 @@ public class GroupTabDto {
                 uploadFile,
                 memberDto,
                 memberInGroupTabDto,
+                chatRoomDto,
                 null,
                 null,
                 null,
@@ -62,7 +65,7 @@ public class GroupTabDto {
     public static GroupTabDto of(Long id, String groupLocation, String groupName,
                                  String groupIntro, String interest,
                                  int memberLimit, UploadFile uploadFile,
-                                 MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+                                 MemberDto memberDto, Set<MemberInGroupTabDto> memberInGroupTabDto, ChatRoomDto chatRoomDto, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new GroupTabDto(
                 id,
                 groupLocation,
@@ -73,6 +76,7 @@ public class GroupTabDto {
                 uploadFile,
                 memberDto,
                 memberInGroupTabDto,
+                chatRoomDto,
                 createdAt,
                 createdBy,
                 modifiedAt,
@@ -91,6 +95,7 @@ public class GroupTabDto {
                 entity.getGroupUploadFile().getAttachFile(),
                 MemberDto.from(entity.getMember()),
                 null,
+                ChatRoomDto.from(entity.getChatRoom()),
                 entity.getCreatedAt(),
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
@@ -107,7 +112,8 @@ public class GroupTabDto {
                 memberLimit,
                 toGroupUploadFile(uploadFile),
                 member,
-                category
+                category,
+                chatRoomDto.toEntity()
         );
     }
 

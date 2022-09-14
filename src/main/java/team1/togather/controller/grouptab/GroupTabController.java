@@ -88,6 +88,7 @@ public class GroupTabController {
         model.addAttribute("membersNameList", groupTab.getMemberInGroupTabResponseDtos());
         model.addAttribute("gatherings", groupTab.getGatheringsResponseDtos());
         model.addAttribute("checkMember", checkMember);
+        model.addAttribute("chatRoomId", groupTab.getChatRoomDto().getId());
         return "groupTabs/detail";
     }
 
@@ -95,13 +96,5 @@ public class GroupTabController {
     public String deleteGroupTab(@PathVariable Long groupTabId) {
         groupTabService.deleteGroupTab(groupTabId);
         return "redirect:/";
-    }
-
-    @GetMapping("/chat")
-    public String chat(Long groupTabId, String groupName, Model model, @AuthenticationPrincipal PrincipalDetails principalDetails) {
-        model.addAttribute("groupTabId", groupTabId);
-        model.addAttribute("groupName", groupName);
-        model.addAttribute("userName", principalDetails.getMember().getUserId());
-        return "groupTabs/chat";
     }
 }

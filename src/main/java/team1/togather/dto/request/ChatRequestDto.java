@@ -1,4 +1,4 @@
-package team1.togather.dto;
+package team1.togather.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,10 +10,10 @@ import team1.togather.domain.constant.MessageType;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChatDto {
+public class ChatRequestDto {
 
     private MessageType type;
     private String content;
     private String sender;
-    private Long groupTabId;
+    private Long chatRoomId;
 }

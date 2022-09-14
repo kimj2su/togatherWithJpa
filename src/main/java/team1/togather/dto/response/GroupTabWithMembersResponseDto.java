@@ -2,6 +2,7 @@ package team1.togather.dto.response;
 
 import lombok.Data;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.dto.ChatRoomDto;
 import team1.togather.dto.GroupTabWithMembersDto;
 
 import java.util.LinkedHashSet;
@@ -21,9 +22,10 @@ public class GroupTabWithMembersResponseDto {
     private final String userId;
     private final Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos;
     private final Set<GatheringsResponseDto> gatheringsResponseDtos;
+    private final ChatRoomDto chatRoomDto;
 
-    public static GroupTabWithMembersResponseDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId, Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos, Set<GatheringsResponseDto> gatheringsResponseDtos) {
-        return new GroupTabWithMembersResponseDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, userId, memberInGroupTabResponseDtos, gatheringsResponseDtos);
+    public static GroupTabWithMembersResponseDto of(Long id, String groupLocation, String groupName, String groupIntro, String interest, int memberLimit, UploadFile uploadFile, String userId, Set<MemberInGroupTabResponseDto> memberInGroupTabResponseDtos, Set<GatheringsResponseDto> gatheringsResponseDtos, ChatRoomDto chatRoomDto) {
+        return new GroupTabWithMembersResponseDto(id, groupLocation, groupName, groupIntro, interest, memberLimit, uploadFile, userId, memberInGroupTabResponseDtos, gatheringsResponseDtos, chatRoomDto);
     }
 
     public static GroupTabWithMembersResponseDto from(GroupTabWithMembersDto membersInGroupTabDto) {
@@ -41,7 +43,8 @@ public class GroupTabWithMembersResponseDto {
                         .collect(Collectors.toCollection(LinkedHashSet::new)),
                 membersInGroupTabDto.getGatheringDtos().stream()
                         .map(GatheringsResponseDto::from)
-                        .collect(Collectors.toCollection(LinkedHashSet::new))
+                        .collect(Collectors.toCollection(LinkedHashSet::new)),
+                membersInGroupTabDto.getChatRoomDto()
         );
     }
 }

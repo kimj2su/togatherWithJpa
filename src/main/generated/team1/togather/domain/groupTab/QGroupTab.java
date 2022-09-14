@@ -26,6 +26,8 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
 
     public final team1.togather.domain.member.QCategory category;
 
+    public final team1.togather.domain.groupTab.ingrouptab.QChatRoom chatRoom;
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> createdAt = _super.createdAt;
 
@@ -79,6 +81,7 @@ public class QGroupTab extends EntityPathBase<GroupTab> {
     public QGroupTab(Class<? extends GroupTab> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
         this.category = inits.isInitialized("category") ? new team1.togather.domain.member.QCategory(forProperty("category")) : null;
+        this.chatRoom = inits.isInitialized("chatRoom") ? new team1.togather.domain.groupTab.ingrouptab.QChatRoom(forProperty("chatRoom")) : null;
         this.groupUploadFile = inits.isInitialized("groupUploadFile") ? new QGroupUploadFile(forProperty("groupUploadFile"), inits.get("groupUploadFile")) : null;
         this.member = inits.isInitialized("member") ? new team1.togather.domain.member.QMember(forProperty("member")) : null;
     }

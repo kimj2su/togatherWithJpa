@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 import team1.togather.domain.constant.MessageType;
-import team1.togather.dto.ChatDto;
+import team1.togather.dto.request.ChatRequestDto;
 
 @Component
 @RequiredArgsConstructor
@@ -30,14 +30,14 @@ public class WebSocketEventListener {
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
         StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
         String username = (String) headerAccessor.getSessionAttributes().get("username");
-        Long groupTabId = (Long) headerAccessor.getSessionAttributes().get("groupTabId");
+        Long chatRoomId = (Long) headerAccessor.getSessionAttributes().get("chatRoomId");
 
         if(username != null) {
             log.info("User Disconnected : " + username);
-            ChatDto chatMessage = new ChatDto();
+            ChatRequestDto chatMessage = new ChatRequestDto();
             chatMessage.setType(MessageType.LEAVE);
             chatMessage.setSender(username);
-            messagingTemplate.convertAndSend("/topic/" + groupTabId, chatMessage);
+            messagingTemplate.convertAndSend("/topic/" + chatRoomId, chatMessage);
         }
     }
 }

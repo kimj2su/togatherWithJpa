@@ -4,7 +4,7 @@ let messageForm = document.querySelector('#messageForm');
 let messageInput = document.querySelector('#message');
 let messageArea = document.querySelector('#messageArea');
 let connectingElement = document.querySelector('.connecting');
-let groupTabId =null;
+let chatRoomId =null;
 let stompClient = null;
 let username = null;
 
@@ -14,18 +14,18 @@ let colors = [
 ];
 
 function onConnected() {
-    groupTabId= document.getElementById('chat_groupTabId').value;
-    console.log(groupTabId);
+    chatRoomId= document.getElementById('chat_room_Id').value;
+    console.log(chatRoomId);
     // Subscribe to the Public Topic
-    stompClient.subscribe('/topic/'+ groupTabId, onMessageReceived);
+    stompClient.subscribe('/topic/'+ chatRoomId, onMessageReceived);
 
     // Tell your username to the server
-    stompClient.send("/pub/chat_addUser/" + groupTabId,
+    stompClient.send("/pub/chat_addUser/" + chatRoomId,
         {},
         JSON.stringify(
 		        		{	sender: username, 
 		        			type: 'JOIN',
-                            groupTabId:groupTabId
+                            chatRoomId:chatRoomId
 		        		}
 		        	)
     )
@@ -41,7 +41,7 @@ function onError(error) {
 
 
 function sendMessage(event) {
-    groupTabId= document.getElementById('chat_groupTabId').value;
+    chatRoomId= document.getElementById('chat_room_Id').value;
     let messageContent = messageInput.value.trim();
     if(messageContent && stompClient) {
         let chatMessage = {
@@ -49,7 +49,7 @@ function sendMessage(event) {
             content: messageInput.value,
             type: 'CHAT'
         };
-        stompClient.send("/pub/chat_sendMessage/"+ groupTabId, {}, JSON.stringify(chatMessage));
+        stompClient.send("/pub/chat_sendMessage/"+ chatRoomId, {}, JSON.stringify(chatMessage));
         messageInput.value = '';
     }
     event.preventDefault();

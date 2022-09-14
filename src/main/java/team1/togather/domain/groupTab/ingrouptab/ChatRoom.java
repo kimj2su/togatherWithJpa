@@ -3,13 +3,11 @@ package team1.togather.domain.groupTab.ingrouptab;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import team1.togather.domain.groupTab.GroupTab;
 
 import javax.persistence.*;
 
 import java.util.Objects;
 
-import static javax.persistence.FetchType.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -21,20 +19,12 @@ public class ChatRoom {
     @Column(name = "chat_room_id")
     private Long id;
 
-    @OneToOne(fetch = LAZY)
-    @JoinColumn(name = "group_id")
-    private GroupTab groupTab;
-
-    public ChatRoom(GroupTab groupTab) {
-        this.groupTab = groupTab;
+    public ChatRoom(Long id) {
+        this.id = id;
     }
 
-    public static ChatRoom of(GroupTab groupTab) {
-        return new ChatRoom(groupTab);
-    }
-
-    public ChatRoom addGroupTab(GroupTab groupTab) {
-        return ChatRoom.of(groupTab);
+    public static ChatRoom of() {
+        return new ChatRoom(null);
     }
 
     @Override
