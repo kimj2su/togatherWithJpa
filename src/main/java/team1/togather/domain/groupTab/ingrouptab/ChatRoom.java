@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -18,6 +20,10 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "chat_room_id")
     private Long id;
+
+    @OneToMany(mappedBy = "chatRoom")
+    @OrderBy("sendAt desc ")
+    private final List<ChatMessage> chatMessages = new ArrayList<>();
 
     public ChatRoom(Long id) {
         this.id = id;
