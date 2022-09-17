@@ -1,4 +1,4 @@
-package team1.togather.service.grouptab;
+package team1.togather.service.chat;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

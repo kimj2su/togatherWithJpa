@@ -47,7 +47,8 @@ function sendMessage(event) {
         let chatMessage = {
             sender: username,
             content: messageInput.value,
-            type: 'CHAT'
+            type: 'CHAT',
+            chatRoomId: chatRoomId
         };
         stompClient.send("/pub/chat_sendMessage/"+ chatRoomId, {}, JSON.stringify(chatMessage));
         messageInput.value = '';

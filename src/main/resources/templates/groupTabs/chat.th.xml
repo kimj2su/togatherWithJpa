@@ -3,4 +3,10 @@
   <attr sel="#name" th:value="${userName}"> </attr>
   <attr sel="#chat_room_Id" th:value="${chatRoomId}"> </attr>
   <attr sel="#groupName" th:text="${groupName}"> </attr>
+
+  <attr sel="#messageArea">
+    <attr sel="li[0]" th:each="chatMessage : ${chatMessage}"></attr>
+    <attr sel="span" th:text="${chatMessage.userName}"></attr>
+    <attr sel="p" th:text="${chatMessage.content}"></attr>
+  </attr>
 </thlogic>

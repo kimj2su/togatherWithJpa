@@ -6,7 +6,7 @@ import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.stereotype.Controller;
 import team1.togather.dto.request.ChatRequestDto;
-import team1.togather.service.grouptab.ChatMessageService;
+import team1.togather.service.chat.ChatMessageService;
 
 @Controller
 @RequiredArgsConstructor
