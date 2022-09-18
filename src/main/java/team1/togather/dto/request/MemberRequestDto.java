@@ -37,7 +37,7 @@ public class MemberRequestDto {
     private final String category_first;
     private final String category_second;
     private final String category_third;
-    private final Set<Role> userRoles;
+    private final Set<String> memberRoles;
 
     public MemberDto toDto() {
         return MemberDto.of(
@@ -51,6 +51,16 @@ public class MemberRequestDto {
                 this.category_first,
                 this.category_second,
                 this.category_third
+        );
+    }
+
+    public MemberDto toDto2() {
+        return MemberDto.of(
+                null,
+                this.password,
+                this.email,
+                this.birth,
+                this.memberRoles
         );
     }
 }

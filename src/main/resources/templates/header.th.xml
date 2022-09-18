@@ -2,7 +2,7 @@
 <thlogic>
     <attr sel="#index" th:href="@{/}" />
     <attr sel="#home" th:href="@{/}" />
-    <attr sel="#admin" sec:authorize="isAuthenticated()" th:href="@{/articles/search-hashtag}" />
+    <attr sel="#admin" sec:authorize="hasAnyRole('ROLE_ADMIN' , 'ROLE_MANAGER')" th:href="@{/admin}" />
     <attr sel="#username" sec:authorize="isAuthenticated()" sec:authentication="name" />
     <attr sel="#about" sec:authorize="!isAuthenticated()" th:href="@{/about}" />
     <attr sel="#board" sec:authorize="!isAuthenticated()" th:href="@{/board}" />

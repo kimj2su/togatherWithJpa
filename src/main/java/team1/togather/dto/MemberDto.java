@@ -4,7 +4,9 @@ import lombok.Data;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
 
+import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Data
 public class MemberDto {
@@ -31,6 +33,7 @@ public class MemberDto {
     private String provider;
 
     private String providerId;
+    private Set<String> memberRoleNames;
 
     public MemberDto(Long memberId, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third) {
         this.memberId = memberId;
@@ -55,12 +58,42 @@ public class MemberDto {
         this.category_third = category_third;
     }
 
+    public MemberDto(Long memberId, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
+        this.memberId = memberId;
+        this.username = username;
+        this.userId = userId;
+        this.password = password;
+        this.email = email;
+        this.birth = birth;
+        this.gender = gender;
+        this.category_first = category_first;
+        this.category_second = category_second;
+        this.category_third = category_third;
+        this.memberRoles = memberRoles;
+    }
+
+    public MemberDto(Long memberId, String password, String email, String birth, Set<String> memberRoleNames) {
+        this.memberId = memberId;
+        this.password = password;
+        this.email = email;
+        this.birth = birth;
+        this.memberRoleNames = memberRoleNames;
+    }
+
     public static MemberDto of(Long member_id, String userId, String birth, String gender, String category_first, String category_second, String category_third) {
         return new MemberDto(member_id, userId, birth, gender, category_first, category_second, category_third);
     }
 
     public static MemberDto of(Long memberId, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third) {
         return new MemberDto(memberId, username, userId, password, email, birth, gender, category_first, category_second, category_third);
+    }
+
+    public static MemberDto of(Long memberId, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
+        return new MemberDto(memberId, username, userId, password, email, birth, gender, category_first, category_second, category_third, memberRoles);
+    }
+
+    public static MemberDto of(Long memberId, String password, String email, String birth, Set<String> memberRoles) {
+        return new MemberDto(memberId, password, email, birth, memberRoles);
     }
 
     public static MemberDto from(Long member_id) {
@@ -78,7 +111,8 @@ public class MemberDto {
                 entity.getGender(),
                 entity.getCategory_first(),
                 entity.getCategory_second(),
-                entity.getCategory_third()
+                entity.getCategory_third(),
+                entity.getMemberRoles()
         );
     }
 

@@ -46,17 +46,13 @@ public class Member implements Serializable {
 
     private LocalDateTime createdDate;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "member_roles",
             joinColumns = {@JoinColumn(name = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "role_id")})
     @ToString.Exclude
     private Set<Role> memberRoles = new HashSet<>();
-
-    public void setMemberRoles(Set<Role> memberRoles) {
-        this.memberRoles = memberRoles;
-    }
 
     public Member(Long id, String username, String userId, String password, String email, String birth, String gender, String category_first, String category_second, String category_third, Set<Role> memberRoles) {
         this.id = id;
@@ -143,6 +139,18 @@ public class Member implements Serializable {
         this.category_first = category_first;
         this.category_second = category_second;
         this.category_third = category_third;
+    }
+
+    public void modifyPassword(String password) {
+        this.password =  password;
+    }
+
+    public void modifyBirth(String birth) {
+        this.birth =  birth;
+    }
+
+    public void modifyMemberRoles(Set<Role> memberRoles) {
+        this.memberRoles =  memberRoles;
     }
 
     @Override
