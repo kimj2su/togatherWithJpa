@@ -64,7 +64,7 @@ public class SearchGroupTabsImpl implements SearchGroupTabs{
     }
 
     private BooleanExpression eqCategoriesId(List<Long> categoriesId) {
-        if (!StringUtils.hasText(String.valueOf(categoriesId))) {
+        if (categoriesId.size() == 231) {
             return null;
         }
         return groupTab.category.id.in(categoriesId);

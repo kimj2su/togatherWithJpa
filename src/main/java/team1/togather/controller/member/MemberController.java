@@ -29,7 +29,6 @@ public class MemberController {
     public String createForm(Model model) {
         model.addAttribute("member", new MemberResponseDto());
         model.addAttribute("intOut",categoryService.getIntOut());
-        System.out.println("categoryService.searchIntOut(): " + categoryService.getIntOut());
         return "members/createMemberForm";
     }
 

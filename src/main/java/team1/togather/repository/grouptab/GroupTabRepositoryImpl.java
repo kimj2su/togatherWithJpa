@@ -12,7 +12,8 @@ import team1.togather.domain.groupTab.GroupTab;
 
 import java.util.List;
 
-import static team1.togather.domain.groupTab.QGroupTab.*;
+import static team1.togather.domain.groupTab.QGroupTab.groupTab;
+
 
 @RequiredArgsConstructor
 public class GroupTabRepositoryImpl implements GroupTabRepositoryCustom {

@@ -1,6 +1,5 @@
 package team1.togather.controller;
 
-
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
@@ -50,5 +49,4 @@ public class IndexController {
 			MalformedURLException {
 		return new UrlResource("file:" + fileStore.getFullPath(filename));
 	}
-
 }

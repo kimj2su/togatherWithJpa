@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import team1.togather.dto.ChatRoomDto;
 import team1.togather.security.auth.PrincipalDetails;
-import team1.togather.service.grouptab.ChatService;
+import team1.togather.service.chat.ChatService;
 
 @RequestMapping("/chat")
 @RequiredArgsConstructor
