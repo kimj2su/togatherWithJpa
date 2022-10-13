@@ -12,6 +12,7 @@ import team1.togather.domain.gathring.Gathering;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.groupTab.ingrouptab.ChatRoom;
 import team1.togather.domain.member.Category;
 import team1.togather.domain.member.Member;
 import team1.togather.domain.member.Role;
@@ -126,11 +127,18 @@ class GatheringServiceTest {
                 10,
                 createGroupUploadFile(),
                 createNewMember(),
-                createCategory()
+                createCategory(),
+                createChatRoom()
         );
         ReflectionTestUtils.setField(groupTab, "id", 1L);
 
         return groupTab;
+    }
+
+    private ChatRoom createChatRoom() {
+        ChatRoom chatRoom = ChatRoom.of();
+        ReflectionTestUtils.setField(chatRoom, "id", 1L);
+        return chatRoom;
     }
 
     private Category createCategory() {

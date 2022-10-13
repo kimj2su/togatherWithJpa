@@ -32,7 +32,7 @@ public class FormAuthenticationFailureHandler extends SimpleUrlAuthenticationFai
             errorMessage = "Expired password";
         }
 
-        setDefaultFailureUrl("/login?error=true&exception=" + errorMessage);
+        setDefaultFailureUrl("/loginForm?error=true&exception=" + errorMessage);
 
         super.onAuthenticationFailure(request, response, exception);
 

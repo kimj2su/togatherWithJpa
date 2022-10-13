@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.dto.GroupTabDto;
 import team1.togather.dto.request.GroupTabRequestDto;
 import team1.togather.dto.response.GroupTabResponseDto;
 import team1.togather.dto.response.GroupTabWithMembersResponseDto;
@@ -74,7 +75,9 @@ public class GroupTabController {
             UploadFile uploadFile = fileStore.storeFile(groupTabRequestDto.getAttachFile()); // UUID에서 리턴받은 파일네임
             groupTabRequestDto.setUploadFile(uploadFile);
         }
-        groupTabService.updateGroupTab(groupTabId, groupTabRequestDto.toDto(principalDetails.toDto()));
+        GroupTabDto dto = groupTabService.updateGroupTab(groupTabId, groupTabRequestDto.toDto(principalDetails.toDto()));
+        System.out.println("dto.getModifiedAt() = " + dto.getModifiedAt());
+
         redirectAttributes.addAttribute("groupTabId", groupTabId);
         return "redirect:/groupTabs/{groupTabId}";
     }

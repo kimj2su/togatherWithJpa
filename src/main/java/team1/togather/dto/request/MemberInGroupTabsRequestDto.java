@@ -7,7 +7,7 @@ import team1.togather.dto.MemberInGroupTabDto;
 
 
 @Data
-public class MemberInGroupTabsRequestDto {
+public class  MemberInGroupTabsRequestDto {
 
     private final Long groupTabId;
     private final Long gradeNumber;

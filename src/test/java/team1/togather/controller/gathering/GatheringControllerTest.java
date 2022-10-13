@@ -44,7 +44,7 @@ class GatheringControllerTest {
         mvc.perform(get("/gatherings/new/" + groupTabId))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-                .andExpect(view().name("gathering/createGatheringForm"));
+                .andExpect(view().name("gatherings/createGatheringForm"));
     }
 
     @WithMockUser

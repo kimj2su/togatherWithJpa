@@ -9,9 +9,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.util.StringUtils;
 import team1.togather.domain.groupTab.GroupTab;
+import team1.togather.domain.groupTab.QGroupTab;
 
 import java.util.List;
 
+import static team1.togather.domain.groupTab.QGroupTab.*;
 import static team1.togather.domain.groupTab.QGroupTab.groupTab;
 
 

@@ -15,10 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import team1.togather.config.file.FileStore;
 import team1.togather.domain.groupTab.UploadFile;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
-import team1.togather.dto.GroupTabDto;
-import team1.togather.dto.MemberDto;
-import team1.togather.dto.GroupTabWithMembersDto;
-import team1.togather.dto.MemberInGroupTabDto;
+import team1.togather.dto.*;
 import team1.togather.dto.request.GroupTabRequestDto;
 import team1.togather.security.configs.SecurityConfig;
 import team1.togather.security.configs.TestSecurityConfig;
@@ -251,11 +248,16 @@ class GroupTabControllerTest {
                 createUploadFile(),
                 createMemberDto(),
                 Set.of(),
+                createChatRoomDto(),
                 LocalDateTime.now(),
                 "jisu",
                 LocalDateTime.now(),
                 "jisu"
         );
+    }
+
+    private ChatRoomDto createChatRoomDto() {
+        return ChatRoomDto.of();
     }
 
     private GroupTabWithMembersDto createGroupTabWithMembersDto() {
@@ -270,6 +272,7 @@ class GroupTabControllerTest {
                 createMemberDto(),
                 Set.of(),
                 Set.of(),
+                createChatRoomDto(),
                 LocalDateTime.now(),
                 "jisu",
                 LocalDateTime.now(),

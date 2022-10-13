@@ -47,7 +47,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PrincipalOauth2UserService principalOauth2UserService;
 
-    private final String[] permitAllResources = {"/", "/loginForm","/logout",};
+    private final String[] permitAllResources = {"/", "/loginForm","/logout"};
 
     @Override
     public void configure(WebSecurity web) throws Exception {

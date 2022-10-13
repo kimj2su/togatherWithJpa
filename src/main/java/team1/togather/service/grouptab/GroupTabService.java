@@ -89,7 +89,7 @@ public class GroupTabService {
         return groupTabRepository.SearchGroupTabs(groupName, intOut, groupLocation, pageable).map(GroupTabDto::from);
     }
 
-    public void updateGroupTab(Long groupTabId, GroupTabDto dto) {
+    public GroupTabDto updateGroupTab(Long groupTabId, GroupTabDto dto) {
         try {
             GroupTab groupTab = groupTabRepository.getReferenceById(groupTabId);
             Member member = memberRepository.getReferenceById(dto.getMemberDto().getMemberId());
@@ -106,15 +106,18 @@ public class GroupTabService {
                 if (dto.getMemberLimit() != groupTab.getMemberLimit() && dto.getMemberLimit() != 0) {
                     groupTab.modifyGroupTabMemberLimit(dto.getMemberLimit());
                 }
-                if (!groupTab.getInterest().equals(dto.getInterest())) {
+                if (dto.getInterest() != null) {
                     groupTab.modifyGroupTabInterest(dto.getInterest());
                 }
                 if (dto.getUploadFile() != null) {
                     groupTab.modifyGroupTabUploadFile(dto.getUploadFile());
                 }
             }
+            groupTabRepository.flush();
+            return GroupTabDto.from(groupTab);
         } catch (EntityNotFoundException e) {
             log.warn("게시글 업데이트 실패. 게시글을 수정하는데 필요한 정보를 찾을 수 없습니다. - {}", e.getLocalizedMessage());
+            return null;
         }
     }
 

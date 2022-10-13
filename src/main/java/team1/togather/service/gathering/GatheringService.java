@@ -1,17 +1,22 @@
 package team1.togather.service.gathering;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team1.togather.domain.gathring.Gathering;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.member.Member;
 import team1.togather.dto.GatheringDto;
+import team1.togather.dto.GroupTabDto;
 import team1.togather.repository.gathering.GatheringRepository;
 import team1.togather.repository.grouptab.GroupTabRepository;
 import team1.togather.repository.member.MemberRepository;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +27,10 @@ public class GatheringService {
     private final GroupTabRepository groupTabRepository;
     private final MemberRepository memberRepository;
 
-
+    @Transactional(readOnly = true)
+    public List<GatheringDto> findAllGathering() {
+        return gatheringRepository.findAll().stream().map(GatheringDto::from).collect(Collectors.toList());
+    }
 
     public Long saveGathering(GatheringDto gatheringDto) {
         Member member = memberRepository.getReferenceById(gatheringDto.getMemberDto().getMemberId());
