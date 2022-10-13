@@ -17,8 +17,6 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
 
     private final SecurityResourceService securityResourceService;
 
-
-
     @Override
     public Collection<ConfigAttribute> getAttributes(Object object) throws IllegalArgumentException {
 

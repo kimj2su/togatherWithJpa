@@ -10,6 +10,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import team1.togather.domain.groupTab.GroupTab;
 import team1.togather.domain.groupTab.GroupUploadFile;
 import team1.togather.domain.groupTab.UploadFile;
+import team1.togather.domain.groupTab.ingrouptab.ChatRoom;
 import team1.togather.domain.groupTab.ingrouptab.MemberGrade;
 import team1.togather.domain.groupTab.ingrouptab.MemberInGroupTab;
 import team1.togather.domain.member.Category;
@@ -137,8 +138,15 @@ class MemberInGroupTabServiceTest {
                 10,
                 createGroupUploadFile(),
                 createNewMember(),
-                createCategory()
+                createCategory(),
+                createChatRoom()
         );
+    }
+
+    private ChatRoom createChatRoom() {
+        ChatRoom chatRoom = ChatRoom.of();
+        ReflectionTestUtils.setField(chatRoom, "id", 1L);
+        return chatRoom;
     }
 
     private Category createCategory() {
@@ -154,15 +162,7 @@ class MemberInGroupTabServiceTest {
 
         private MemberInGroupTab createMemberInGroupTab() {
         return MemberInGroupTab.of(
-                GroupTab.of("서울",
-                        "테스트 모임",
-                        "테스트 모임 소개",
-                        "관심사",
-                        10,
-                        createGroupUploadFile(),
-                        createNewMember(),
-                        createCategory()
-                )
+                createGroupTab()
                 ,createNewMember()
                 ,MemberGrade.GROUP_MASTER
         );

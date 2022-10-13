@@ -47,9 +47,14 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
             oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
         }  else if (userRequest.getClientRegistration().getRegistrationId().equals("facebook")) {
             log.info("페이스북 로그인 요청");
+            Map<String, Object> attributes = oAuth2User.getAttributes();
             oAuth2UserInfo = new FacebookUserInfo(oAuth2User.getAttributes());
         } else if (userRequest.getClientRegistration().getRegistrationId().equals("naver")) {
             log.info("네이버 로그인 요청");
+            Object response = oAuth2User.getAttributes().get("response");
+            System.out.println("response = " + response);
+            System.out.println("oAuth2User.getAttributes().get(\"response\") = " + oAuth2User.getAttributes().get("response"));
+            System.out.println("(Map)oAuth2User.getAttributes().get(\"response\") = " + (Map)oAuth2User.getAttributes().get("response"));
             oAuth2UserInfo = new NaverUserInfo((Map)oAuth2User.getAttributes().get("response"));
         }else {
             log.info("우리는 구글과 페이스북,네이버만 지원해요.");
@@ -64,7 +69,8 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
     private Member createOauthMember(OAuth2UserInfo oAuth2UserInfo) {
         String provider = oAuth2UserInfo.getProvider();
         String providerId = oAuth2UserInfo.getProviderId();
-        String username = provider+"_"+providerId; //username = google_107438726388440656699
+//        String username = provider+"_"+providerId; //username = google_107438726388440656699
+        String username = oAuth2UserInfo.getName();
         String email = oAuth2UserInfo.getEmail();
 
         Set<Role> roles = new HashSet<>();
